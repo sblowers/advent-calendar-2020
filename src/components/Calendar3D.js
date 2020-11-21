@@ -5,6 +5,9 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {createDoor, createDoorOutline, createAdventFrontPanel, getTabFaceIndexArray} from './MeshCreation'
 import {snowEffectParticles, updateSnowEffectParticles} from './SnowEffect'
 
+// import bodie_test from '../images/bodie_test.jpg'
+import advent_background from '../images/advent_background.png'
+
 import sound1 from "../sounds/test.mp3"
 import sound2 from "../sounds/test2.mp3"
 import sound3 from "../sounds/test3.mp3"
@@ -22,6 +25,11 @@ class Calendar3D extends React.Component {
 	}
 	
 	componentDidMount() {
+		
+		// this.front_texture = new THREE.TextureLoader().load("https://i.imgur.com/5FTxFXe.jpg")
+		this.front_texture = new THREE.TextureLoader().load(advent_background)
+		// this.front_texture.needsUpdate = true;
+		
 		
 		this.doorStates = []
 		for (var k = 0; k < 25; k++) {
@@ -107,7 +115,7 @@ class Calendar3D extends React.Component {
 
 
 		// const geometry = new THREE.PlaneGeometry( 13, 22, 1, 1 );
-		const frontPanel = createAdventFrontPanel()
+		const frontPanel = createAdventFrontPanel(this.front_texture)
 		scene.add( frontPanel )
 		
 		this.doorArrays = []
@@ -118,7 +126,8 @@ class Calendar3D extends React.Component {
 		
 		for (var i = 0; i < 6; i++) {
 			for (var j = 0; j < 4; j++) {
-				var door = createDoor(i, j)
+				var door = createDoor(i, j, this.front_texture)
+				// console.log(door[0])
 				door[0].door_id = 4*i + j
 				door[1].door_id = 4*i + j
 				scene.add( door[0] )
@@ -135,7 +144,7 @@ class Calendar3D extends React.Component {
 				
 				this.doorPositions.push( door[2] )
 				
-				var door_outline = createDoorOutline(i, j)
+				var door_outline = createDoorOutline(i, j, this.front_texture)
 				door_outline[0].door_id = 4*i + j
 				scene.add( door_outline[0] )
 				this.doorsAndOutlineArray.push( scene.children[scene.children.length-1] )
@@ -225,7 +234,7 @@ class Calendar3D extends React.Component {
 				intersects = raycaster.intersectObjects( this.doorArrays, true );
 				// console.log(intersects)
 				for (var i = 0; i < intersects.length; i++) {
-					if (getTabFaceIndexArray().includes(intersects[i].faceIndex)) {
+					// if (getTabFaceIndexArray().includes(intersects[i].faceIndex)) {
 						// console.log(intersects)
 						// console.log(intersects[0].object.door_id)
 						var door_id = intersects[i].object.door_id
@@ -259,7 +268,7 @@ class Calendar3D extends React.Component {
 							}
 							break
 						}
-					}
+					// }
 					
 				}
 			}
@@ -526,6 +535,7 @@ class Calendar3D extends React.Component {
 		}
 		
 		const onDblClick = (e) => {
+			e.preventDefault()
 			if (camera.position.z >= 5 || this.isMouseDragging) {return}
 			moveToDoor(e)
 		}
@@ -573,7 +583,7 @@ class Calendar3D extends React.Component {
 		// requestAnimationFrame(this.animate);
 		
 		this.setState({update: !this.state.update})
-		
+
 	}
 	
 	// requestAnimationFrame = () => {

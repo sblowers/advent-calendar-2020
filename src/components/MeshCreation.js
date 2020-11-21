@@ -84,7 +84,7 @@ function createDoorMesh() {
 	return(geom)
 }
 
-function createDoorOutline(row, col) {
+function createDoorOutline(row, col, texture) {
 	var geom = new THREE.Geometry();
 	var doorOutlinePointsTop = []
 	var doorOutlinePointsBottom = []
@@ -180,10 +180,42 @@ function createDoorOutline(row, col) {
 	geom.faces.push(new THREE.Face3( l+3, l+7, l+8 ))
 	geom.faces.push(new THREE.Face3( l+8, l+7, l+9 ))
 	
-	const material_outline = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: false, side: THREE.DoubleSide } );
+	var stagger = stagger_val*(col%2)
+	var offset_position_x = -CALENDAR_WIDTH/2+1+(col*3)+OUTLINE_L_MARGIN
+	var offset_position_y = CALENDAR_HEIGHT/2-((row+1)*3)+OUTLINE_B_MARGIN + stagger
+	
+	var uv_array
+	var uv_x
+	var uv_y
+	var vertex_id
+	var face
+	for ( let face_id = 0; face_id < geom.faces.length; face_id ++ ) {
+		face = geom.faces[face_id]
+		uv_array = []
+		// console.log(face)
+		vertex_id = face.a
+		uv_x = (CALENDAR_WIDTH/2 + (geom.vertices[vertex_id].x + offset_position_x)) / CALENDAR_WIDTH
+		uv_y = ((CALENDAR_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
+		uv_array.push(new THREE.Vector2(uv_x, uv_y))
+		vertex_id = face.b
+		uv_x = (CALENDAR_WIDTH/2 + (geom.vertices[vertex_id].x + offset_position_x)) / CALENDAR_WIDTH
+		uv_y = ((CALENDAR_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
+		uv_array.push(new THREE.Vector2(uv_x, uv_y))
+		vertex_id = face.c
+		uv_x = (CALENDAR_WIDTH/2 + (geom.vertices[vertex_id].x + offset_position_x)) / CALENDAR_WIDTH
+		uv_y = ((CALENDAR_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
+		uv_array.push(new THREE.Vector2(uv_x, uv_y))
+
+		// console.log(uv_array)
+		geom.faceVertexUvs[0].push(uv_array)
+	}
+	
+	const material_outline = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
+
+	// const material_outline = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: false, side: THREE.DoubleSide } );
 	const mesh_outline = new THREE.Mesh( geom, material_outline );
 	
-	var stagger = stagger_val*(col%2)
+	// var stagger = stagger_val*(col%2)
 	mesh_outline.position.set(-CALENDAR_WIDTH/2+1+(col*3)+OUTLINE_L_MARGIN, CALENDAR_HEIGHT/2-((row+1)*3)+OUTLINE_B_MARGIN + stagger, 0)
 
 	var doorOutlinePoints = doorOutlinePointsTop.concat(doorOutlinePointsBottom.reverse())
@@ -227,8 +259,43 @@ function createDoorSkeleton() {
 	return(skeleton)
 }
 
-function createDoor(row, col) {
+function createDoor(row, col, texture_front) {
 	const geometry = new createDoorMesh();
+	
+	var stagger = stagger_val*(col%2)
+	var offset_position_x = -CALENDAR_WIDTH/2+1+(col*3)+OUTLINE_L_MARGIN
+	var offset_position_y = CALENDAR_HEIGHT/2-((row+1)*3)+OUTLINE_B_MARGIN + stagger
+	
+	var uv_array
+	var uv_x
+	var uv_y
+	var vertex_id
+	var face
+	for ( let face_id = 0; face_id < geometry.faces.length; face_id ++ ) {
+		face = geometry.faces[face_id]
+		uv_array = []
+		// console.log(face)
+		vertex_id = face.a
+		uv_x = (CALENDAR_WIDTH/2 + (geometry.vertices[vertex_id].x + offset_position_x)) / CALENDAR_WIDTH
+		uv_y = ((CALENDAR_HEIGHT/2 + (geometry.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
+		uv_array.push(new THREE.Vector2(uv_x, uv_y))
+		vertex_id = face.b
+		uv_x = (CALENDAR_WIDTH/2 + (geometry.vertices[vertex_id].x + offset_position_x)) / CALENDAR_WIDTH
+		uv_y = ((CALENDAR_HEIGHT/2 + (geometry.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
+		uv_array.push(new THREE.Vector2(uv_x, uv_y))
+		vertex_id = face.c
+		uv_x = (CALENDAR_WIDTH/2 + (geometry.vertices[vertex_id].x + offset_position_x)) / CALENDAR_WIDTH
+		uv_y = ((CALENDAR_HEIGHT/2 + (geometry.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
+		uv_array.push(new THREE.Vector2(uv_x, uv_y))
+
+		// console.log(uv_array)
+		geometry.faceVertexUvs[0].push(uv_array)
+	}
+	
+	geometry.computeFaceNormals();	
+	geometry.computeVertexNormals();
+	geometry.uvsNeedUpdate = true
+	
 	var bufferGeometry = new THREE.BufferGeometry().fromGeometry( geometry );
 	
 	const position = bufferGeometry.attributes.position;
@@ -255,7 +322,11 @@ function createDoor(row, col) {
 	bufferGeometry.setAttribute( 'skinIndex', new THREE.Uint16BufferAttribute( skinIndices, 4 ) );
 	bufferGeometry.setAttribute( 'skinWeight', new THREE.Float32BufferAttribute( skinWeights, 4 ) );
 	
-	const material_front = new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe: false, side: THREE.BackSide, skinning: true } );
+	
+	const material_front = new THREE.MeshBasicMaterial( { map: texture_front, wireframe: false, side: THREE.BackSide, skinning: true } );
+	// const material_front = new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe: false, side: THREE.BackSide, skinning: true } );
+	
+	
 	const material_back = new THREE.MeshBasicMaterial( { color: 0x333333, wireframe: false, side: THREE.FrontSide, skinning: true } );
 	var meshFront = new THREE.SkinnedMesh( bufferGeometry, material_front)
 	var meshBack = new THREE.SkinnedMesh( bufferGeometry, material_back)
@@ -273,17 +344,20 @@ function createDoor(row, col) {
 	// skeleton.bones[3].rotation.y = -0.8;
 	// skeleton.bones[4].rotation.y = -0.8;
 	
-	var stagger = stagger_val*(col%2)
 	
-	meshFront.position.set(-CALENDAR_WIDTH/2+1+(col*3)+OUTLINE_L_MARGIN, CALENDAR_HEIGHT/2-((row+1)*3)+OUTLINE_B_MARGIN + stagger, 0)
-	meshBack.position.set(-CALENDAR_WIDTH/2+1+(col*3)+OUTLINE_L_MARGIN, CALENDAR_HEIGHT/2-((row+1)*3)+OUTLINE_B_MARGIN + stagger, 0)
 	
-	var meshPosition = [-CALENDAR_WIDTH/2+1+(col*3)+OUTLINE_L_MARGIN + BASE_WIDTH/2, CALENDAR_HEIGHT/2-((row+1)*3)+OUTLINE_B_MARGIN + stagger + BASE_HEIGHT/2]
+	meshFront.position.set(offset_position_x, offset_position_y, 0)
+	meshBack.position.set(offset_position_x, offset_position_y, 0)
+	
+	// console.log(meshFront)
+	
+	
+	var meshPosition = [offset_position_x + BASE_WIDTH/2, offset_position_y + BASE_HEIGHT/2]
 	return([meshFront, meshBack, meshPosition])
 }
 
 
-function createAdventFrontPanel() {
+function createAdventFrontPanel(texture) {
 	const WIDTH = CALENDAR_WIDTH
 	const HEIGHT = CALENDAR_HEIGHT
 	
@@ -342,7 +416,37 @@ function createAdventFrontPanel() {
 		}
 	}
 	
-	const material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: false, side: THREE.DoubleSide } );
+	var offset_position_x = 0
+	var offset_position_y = 0
+	var uv_array
+	var uv_x
+	var uv_y
+	var vertex_id
+	var face
+	for ( let face_id = 0; face_id < geom.faces.length; face_id ++ ) {
+		face = geom.faces[face_id]
+		uv_array = []
+		// console.log(face)
+		vertex_id = face.a
+		uv_x = (CALENDAR_WIDTH/2 + (geom.vertices[vertex_id].x + offset_position_x)) / CALENDAR_WIDTH
+		uv_y = ((CALENDAR_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
+		uv_array.push(new THREE.Vector2(uv_x, uv_y))
+		vertex_id = face.b
+		uv_x = (CALENDAR_WIDTH/2 + (geom.vertices[vertex_id].x + offset_position_x)) / CALENDAR_WIDTH
+		uv_y = ((CALENDAR_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
+		uv_array.push(new THREE.Vector2(uv_x, uv_y))
+		vertex_id = face.c
+		uv_x = (CALENDAR_WIDTH/2 + (geom.vertices[vertex_id].x + offset_position_x)) / CALENDAR_WIDTH
+		uv_y = ((CALENDAR_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
+		uv_array.push(new THREE.Vector2(uv_x, uv_y))
+
+		// console.log(uv_array)
+		geom.faceVertexUvs[0].push(uv_array)
+	}
+	geom.faceVertexUvs[1] = geom.faceVertexUvs[0] 
+
+	const material = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
+	// const material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: false, side: THREE.DoubleSide } );
 	const mesh = new THREE.Mesh( geom, material );
 	
 	return(mesh)
