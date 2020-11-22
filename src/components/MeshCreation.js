@@ -3,6 +3,9 @@ import Delaunator from 'delaunator';
 
 const CALENDAR_WIDTH = 13
 const CALENDAR_HEIGHT = 22
+const CALENDAR_DEPTH = 2
+
+const CALENDAR_INSIDE_COLOUR = 0x333333
 
 const number_of_folds = 5
 const fold_height_fraction = 0.03
@@ -259,7 +262,7 @@ function createDoorSkeleton() {
 	return(skeleton)
 }
 
-function createDoor(row, col, texture_front) {
+function createDoor(row, col, texture_front, texture_back) {
 	const geometry = new createDoorMesh();
 	
 	var stagger = stagger_val*(col%2)
@@ -326,8 +329,8 @@ function createDoor(row, col, texture_front) {
 	const material_front = new THREE.MeshBasicMaterial( { map: texture_front, wireframe: false, side: THREE.BackSide, skinning: true } );
 	// const material_front = new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe: false, side: THREE.BackSide, skinning: true } );
 	
-	
-	const material_back = new THREE.MeshBasicMaterial( { color: 0x333333, wireframe: false, side: THREE.FrontSide, skinning: true } );
+	const material_back = new THREE.MeshBasicMaterial( { map: texture_back, wireframe: false, side: THREE.FrontSide, skinning: true } );
+	// const material_back = new THREE.MeshBasicMaterial( { color: 0x333333, wireframe: false, side: THREE.FrontSide, skinning: true } );
 	var meshFront = new THREE.SkinnedMesh( bufferGeometry, material_front)
 	var meshBack = new THREE.SkinnedMesh( bufferGeometry, material_back)
 	
@@ -391,6 +394,20 @@ function createAdventFrontPanel(texture) {
 			
 		}
 	}
+	
+	i = 6
+	j = 2
+	stagger = stagger_val*(j%2)
+	
+	geom.vertices.push(new THREE.Vector3(-WIDTH/2 + 1 + 3*j, HEIGHT/2 - 1 - 3*i + stagger, 0 ))
+	geom.vertices.push(new THREE.Vector3(-WIDTH/2 + 1 + 3*j, HEIGHT/2 - 1 - 3*i - 2 + stagger, 0 ))
+	geom.vertices.push(new THREE.Vector3(-WIDTH/2 + 1 + 3*j + 2, HEIGHT/2 - 1 - 3*i + stagger, 0 ))
+	geom.vertices.push(new THREE.Vector3(-WIDTH/2 + 1 + 3*j + 2, HEIGHT/2 - 1 - 3*i - 2 + stagger, 0 ))
+	
+	door_points_lists.push([fp, fp+1, fp+2, fp+3])
+	// geom.faces.push(new THREE.Face3( fp, fp+1, fp+2))
+	// geom.faces.push(new THREE.Face3( fp+1, fp+3, fp+2))
+	fp += 4
 	
 	// get array of vertices
 	var positions = geom.vertices
@@ -459,7 +476,151 @@ function getTabFaceIndexArray() {
 	
 }
 
+function createSidePanelLeft(texture) {
+	const WIDTH = CALENDAR_WIDTH
+	const HEIGHT = CALENDAR_HEIGHT
+	
+	var offset = 0
+	var material
+	if (!texture) {
+		offset = 0.01
+		material = new THREE.MeshBasicMaterial( { color: CALENDAR_INSIDE_COLOUR, wireframe: false, side: THREE.DoubleSide } );
+	} else {
+		material = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
+	}
+	
+	var geom = new THREE.Geometry();
+	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2+offset, 0-HEIGHT/2, -CALENDAR_DEPTH ))
+	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2+offset, 0+HEIGHT/2, -CALENDAR_DEPTH ))
+	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2+offset, 0-HEIGHT/2, 0 ))
+	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2+offset, 0+HEIGHT/2, 0 ))
+	
+	geom.faceVertexUvs[0].push([new THREE.Vector2(0,0), new THREE.Vector2(0,1), new THREE.Vector2(1,0)])
+	geom.faceVertexUvs[0].push([new THREE.Vector2(1,0), new THREE.Vector2(0,1), new THREE.Vector2(1,1)])
+	
+	geom.faces.push(new THREE.Face3( 0, 1, 2 ))
+	geom.faces.push(new THREE.Face3( 2, 1, 3 ))
+		
+	var sideMesh = new THREE.Mesh(geom, material)
+		
+	return sideMesh
+}
+
+function createSidePanelRight(texture) {
+	const WIDTH = CALENDAR_WIDTH
+	const HEIGHT = CALENDAR_HEIGHT
+	
+	var offset = 0
+	var material
+	if (!texture) {
+		offset = 0.01
+		material = new THREE.MeshBasicMaterial( { color: CALENDAR_INSIDE_COLOUR, wireframe: false, side: THREE.DoubleSide } );
+	} else {
+		material = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
+	}
+	
+	var geom = new THREE.Geometry();
+	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2-offset, 0-HEIGHT/2, -CALENDAR_DEPTH ))
+	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2-offset, 0+HEIGHT/2, -CALENDAR_DEPTH ))
+	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2-offset, 0-HEIGHT/2, 0))
+	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2-offset, 0+HEIGHT/2, 0 ))
+	
+	geom.faceVertexUvs[0].push([new THREE.Vector2(0,0), new THREE.Vector2(0,1), new THREE.Vector2(1,0)])
+	geom.faceVertexUvs[0].push([new THREE.Vector2(1,0), new THREE.Vector2(0,1), new THREE.Vector2(1,1)])
+	
+	geom.faces.push(new THREE.Face3( 0, 1, 2 ))
+	geom.faces.push(new THREE.Face3( 2, 1, 3 ))
+		
+	var sideMesh = new THREE.Mesh(geom, material)
+		
+	return sideMesh
+}
+
+function createSidePanelTop(texture) {
+	const WIDTH = CALENDAR_WIDTH
+	const HEIGHT = CALENDAR_HEIGHT
+	
+	var offset = 0
+	var material
+	if (!texture) {
+		offset = 0.01
+		material = new THREE.MeshBasicMaterial( { color: CALENDAR_INSIDE_COLOUR, wireframe: false, side: THREE.DoubleSide } );
+	} else {
+		material = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
+	}
+	
+	var geom = new THREE.Geometry();
+	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0+HEIGHT/2-offset, -CALENDAR_DEPTH ))
+	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0+HEIGHT/2-offset, 0 ))
+	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0+HEIGHT/2-offset, -CALENDAR_DEPTH ))
+	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0+HEIGHT/2-offset, 0 ))
+	
+	geom.faceVertexUvs[0].push([new THREE.Vector2(0,0), new THREE.Vector2(0,1), new THREE.Vector2(1,0)])
+	geom.faceVertexUvs[0].push([new THREE.Vector2(1,0), new THREE.Vector2(0,1), new THREE.Vector2(1,1)])
+	
+	geom.faces.push(new THREE.Face3( 0, 1, 2 ))
+	geom.faces.push(new THREE.Face3( 2, 1, 3 ))
+		
+	var sideMesh = new THREE.Mesh(geom, material)
+		
+	return sideMesh
+}
+
+function createSidePanelBottom(texture) {
+	const WIDTH = CALENDAR_WIDTH
+	const HEIGHT = CALENDAR_HEIGHT
+	
+	var offset = 0
+	var material
+	if (!texture) {
+		offset = 0.01
+		material = new THREE.MeshBasicMaterial( { color: CALENDAR_INSIDE_COLOUR, wireframe: false, side: THREE.DoubleSide } );
+	} else {
+		material = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
+	}
+	
+	var geom = new THREE.Geometry();
+	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0-HEIGHT/2+offset, -CALENDAR_DEPTH ))
+	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0-HEIGHT/2+offset, 0 ))
+	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0-HEIGHT/2+offset, -CALENDAR_DEPTH ))
+	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0-HEIGHT/2+offset, 0 ))
+	
+	geom.faceVertexUvs[0].push([new THREE.Vector2(0,0), new THREE.Vector2(0,1), new THREE.Vector2(1,0)])
+	geom.faceVertexUvs[0].push([new THREE.Vector2(1,0), new THREE.Vector2(0,1), new THREE.Vector2(1,1)])
+	
+	geom.faces.push(new THREE.Face3( 0, 1, 2 ))
+	geom.faces.push(new THREE.Face3( 2, 1, 3 ))
+		
+	var sideMesh = new THREE.Mesh(geom, material)
+		
+	return sideMesh
+}
+
+function createBackPanel(texture) {
+	const WIDTH = CALENDAR_WIDTH
+	const HEIGHT = CALENDAR_HEIGHT
+	var geom = new THREE.Geometry();
+	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0-HEIGHT/2, 0	))
+	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0+HEIGHT/2, 0 ))
+	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0-HEIGHT/2, 0 ))
+	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0+HEIGHT/2, 0 ))
+	
+	geom.faces.push(new THREE.Face3( 0, 1, 2 ))
+	geom.faces.push(new THREE.Face3( 2, 1, 3 ))
+	
+	geom.faceVertexUvs[0].push([new THREE.Vector2(0,0), new THREE.Vector2(0,1), new THREE.Vector2(1,0)])
+	geom.faceVertexUvs[0].push([new THREE.Vector2(1,0), new THREE.Vector2(0,1), new THREE.Vector2(1,1)])
+	
+	const material = new THREE.MeshBasicMaterial( {map: texture, color: CALENDAR_INSIDE_COLOUR, wireframe: false, side: THREE.DoubleSide } );
+	
+	var backMesh = new THREE.Mesh(geom, material)
+	
+	backMesh.position.set(0,0,-CALENDAR_DEPTH)
+	
+	return backMesh
+}
 
 
 
-export {createDoor, createDoorOutline, createAdventFrontPanel, getTabFaceIndexArray}
+
+export {createDoor, createDoorOutline, createAdventFrontPanel, getTabFaceIndexArray, createSidePanelLeft, createSidePanelRight, createSidePanelTop, createSidePanelBottom, createBackPanel}

@@ -2,11 +2,18 @@ import React from 'react';
 import * as THREE from 'three';
 import * as TWEEN from 'tween.js'
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import {createDoor, createDoorOutline, createAdventFrontPanel, getTabFaceIndexArray} from './MeshCreation'
+import {createDoor, createDoorOutline, createAdventFrontPanel, getTabFaceIndexArray,  createSidePanelLeft, createSidePanelRight, createSidePanelTop, createSidePanelBottom, createBackPanel} from './MeshCreation'
 import {snowEffectParticles, updateSnowEffectParticles} from './SnowEffect'
+import ExplosionConfetti from './explosionConfetti2'
 
 // import bodie_test from '../images/bodie_test.jpg'
 import advent_background from '../images/advent_background.png'
+import advent_background_rear from '../images/advent_background_rear.png'
+import cardboard_rear from '../images/cardboard_back.jpg'
+import advent_side_left from '../images/advent_side_left.png'
+import advent_side_right from '../images/advent_side_right.png'
+import advent_side_top from '../images/advent_side_top.png'
+import advent_side_bottom from '../images/advent_side_bottom.png'
 
 import sound1 from "../sounds/test.mp3"
 import sound2 from "../sounds/test2.mp3"
@@ -28,8 +35,15 @@ class Calendar3D extends React.Component {
 		
 		// this.front_texture = new THREE.TextureLoader().load("https://i.imgur.com/5FTxFXe.jpg")
 		this.front_texture = new THREE.TextureLoader().load(advent_background)
+		this.back_texture = new THREE.TextureLoader().load(advent_background_rear)
+		this.side_texture_left = new THREE.TextureLoader().load(advent_side_left)
+		this.side_texture_right = new THREE.TextureLoader().load(advent_side_right)
+		this.side_texture_top = new THREE.TextureLoader().load(advent_side_top)
+		this.side_texture_bottom = new THREE.TextureLoader().load(advent_side_bottom)
+		this.rear_texture = new THREE.TextureLoader().load(cardboard_rear)
 		// this.front_texture.needsUpdate = true;
 		
+		this.confetti_group = []
 		
 		this.doorStates = []
 		for (var k = 0; k < 25; k++) {
@@ -118,6 +132,29 @@ class Calendar3D extends React.Component {
 		const frontPanel = createAdventFrontPanel(this.front_texture)
 		scene.add( frontPanel )
 		
+		const sidePanelLeft = createSidePanelLeft(this.side_texture_left)
+		const sidePanelLeft_inner = createSidePanelLeft(false)
+		scene.add( sidePanelLeft )
+		scene.add( sidePanelLeft_inner )
+		
+		const sidePanelRight = createSidePanelRight(this.side_texture_right)
+		const sidePanelRight_inner = createSidePanelRight(false)
+		scene.add( sidePanelRight )
+		scene.add( sidePanelRight_inner )
+		
+		const sidePanelTop = createSidePanelTop(this.side_texture_top)
+		const sidePanelTop_inner = createSidePanelTop(false)
+		scene.add( sidePanelTop )
+		scene.add( sidePanelTop_inner )
+		
+		const sidePanelBottom = createSidePanelBottom(this.side_texture_bottom)
+		const sidePanelBottom_inner = createSidePanelBottom(false)
+		scene.add( sidePanelBottom )
+		scene.add( sidePanelBottom_inner )
+		
+		const rearPanel = createBackPanel(this.rear_texture)
+		scene.add( rearPanel )
+		
 		this.doorArrays = []
 		this.doorsAndOutlineArray = []
 		this.doorArrayFront = []
@@ -126,7 +163,7 @@ class Calendar3D extends React.Component {
 		
 		for (var i = 0; i < 6; i++) {
 			for (var j = 0; j < 4; j++) {
-				var door = createDoor(i, j, this.front_texture)
+				var door = createDoor(i, j, this.front_texture, this.back_texture)
 				// console.log(door[0])
 				door[0].door_id = 4*i + j
 				door[1].door_id = 4*i + j
@@ -152,6 +189,33 @@ class Calendar3D extends React.Component {
 				scene.add( door_outline[1] )
 			}
 		}
+		
+		i = 6
+		j = 2
+		var door = createDoor(i, j, this.front_texture, this.back_texture)
+		door[0].door_id = 24
+		door[1].door_id = 24
+		scene.add( door[0] )
+		this.doorArrayFront.push( scene.children[scene.children.length-1] )
+		this.doorArrays.push( scene.children[scene.children.length-1] )
+		this.doorsAndOutlineArray.push( scene.children[scene.children.length-1] )
+		const helper = new THREE.SkeletonHelper( door[0] );
+		scene.add( helper )
+		
+		scene.add( door[1] )
+		this.doorArrayBack.push( scene.children[scene.children.length-1] )
+		this.doorArrays.push( scene.children[scene.children.length-1] )
+		this.doorsAndOutlineArray.push( scene.children[scene.children.length-1] )
+		
+		this.doorPositions.push( door[2] )
+		
+		var door_outline = createDoorOutline(i, j, this.front_texture)
+		door_outline[0].door_id = 24
+		scene.add( door_outline[0] )
+		this.doorsAndOutlineArray.push( scene.children[scene.children.length-1] )
+		
+		scene.add( door_outline[1] )
+		
 		
 		var testDragGeom = new THREE.Geometry();
 		testDragGeom.vertices.push(new THREE.Vector3(-100, -100, 0))
@@ -361,15 +425,15 @@ class Calendar3D extends React.Component {
 										
 					adjustDoorAngle(door, masterValue)
 					
-					if (masterValue > 0.05 && this.doorStates[door].panelSound[0]) {this.cardboardSound1.pause(); this.cardboardSound1.currentTime=0; this.cardboardSound1.play(); this.doorStates[door].panelSound[0] = false}
-					if (masterValue > 0.2 && this.doorStates[door].panelSound[1]) {this.cardboardSound2.pause(); this.cardboardSound2.currentTime=0; this.cardboardSound2.play(); this.doorStates[door].panelSound[1] = false}
-					if (masterValue > 0.3 && this.doorStates[door].panelSound[2]) {this.cardboardSound3.pause(); this.cardboardSound3.currentTime=0; this.cardboardSound3.play(); this.doorStates[door].panelSound[2] = false}
-					if (masterValue > 0.55 && this.doorStates[door].panelSound[3]) {this.cardboardSound4.pause(); this.cardboardSound4.currentTime=0; this.cardboardSound4.play(); this.doorStates[door].panelSound[3] = false}
-					if (masterValue > 0.7 && this.doorStates[door].panelSound[4]) {this.cardboardSound5.pause(); this.cardboardSound5.currentTime=0; this.cardboardSound5.play(); this.doorStates[door].panelSound[4] = false}
+					// if (masterValue > 0.05 && this.doorStates[door].panelSound[0]) {this.cardboardSound1.pause(); this.cardboardSound1.currentTime=0; this.cardboardSound1.play(); this.doorStates[door].panelSound[0] = false}
+					// if (masterValue > 0.2 && this.doorStates[door].panelSound[1]) {this.cardboardSound2.pause(); this.cardboardSound2.currentTime=0; this.cardboardSound2.play(); this.doorStates[door].panelSound[1] = false}
+					// if (masterValue > 0.3 && this.doorStates[door].panelSound[2]) {this.cardboardSound3.pause(); this.cardboardSound3.currentTime=0; this.cardboardSound3.play(); this.doorStates[door].panelSound[2] = false}
+					// if (masterValue > 0.55 && this.doorStates[door].panelSound[3]) {this.cardboardSound4.pause(); this.cardboardSound4.currentTime=0; this.cardboardSound4.play(); this.doorStates[door].panelSound[3] = false}
+					// if (masterValue > 0.7 && this.doorStates[door].panelSound[4]) {this.cardboardSound5.pause(); this.cardboardSound5.currentTime=0; this.cardboardSound5.play(); this.doorStates[door].panelSound[4] = false}
 					
-					console.log(masterValue)
-					console.log(masterValue >= 0.99 && !this.doorStates[door].open)
-					if (masterValue >= 0.99 && !this.doorStates[door].open) {console.log('yay'); this.cheerSound.pause(); this.cheerSound.currentTime=0; this.cheerSound.play(); this.doorStates[door].open = true}
+					// console.log(masterValue)
+					// console.log(masterValue >= 0.99 && !this.doorStates[door].open)
+					// if (masterValue >= 0.99 && !this.doorStates[door].open) {console.log('yay'); this.cheerSound.pause(); this.cheerSound.currentTime=0; this.cheerSound.play(); this.doorStates[door].open = true}
 						
 					this.doorStates[door].masterValue = masterValue
 				}
@@ -432,7 +496,26 @@ class Calendar3D extends React.Component {
 			if (masterValue > 0.55 && this.doorStates[door].panelSound[3]) {this.cardboardSound4.pause(); this.cardboardSound4.currentTime=0; this.cardboardSound4.play(); this.doorStates[door].panelSound[3] = false}
 			if (masterValue > 0.7 && this.doorStates[door].panelSound[4]) {this.cardboardSound5.pause(); this.cardboardSound5.currentTime=0; this.cardboardSound5.play(); this.doorStates[door].panelSound[4] = false}
 			
-			if (masterValue >= 0.99 && !this.doorStates[door].open) {this.cheerSound.pause(); this.cheerSound.currentTime=0; this.cheerSound.play(); this.doorStates[door].open = true}
+			if (masterValue >= 0.99 && !this.doorStates[door].open) {
+				this.cheerSound.pause(); this.cheerSound.currentTime=0; this.cheerSound.play(); this.doorStates[door].open = true
+				
+				var confetti_r = new ExplosionConfetti(
+					{}, 
+					new THREE.Vector3(this.doorPositions[door][0]+0, this.doorPositions[door][1]+0.2, 0.1),
+					new THREE.Vector3(0, 0, 0.5)
+				);
+				scene.add(confetti_r)
+				this.confetti_group.push(confetti_r)
+				
+				var confetti_l = new ExplosionConfetti(
+					{}, 
+					new THREE.Vector3(this.doorPositions[door][0]-0, this.doorPositions[door][1]+0.2, 0.1),
+					new THREE.Vector3(0, 0, -0.5)
+				);
+				scene.add(confetti_l)
+				this.confetti_group.push(confetti_l)
+			}
+				
 		}
 		
 		const getSliderValue = (masterValue, sliderObj) => {
@@ -570,6 +653,10 @@ class Calendar3D extends React.Component {
 			updateSnowEffectParticles(snowEffectParticles, timeStamp)
 			
 			// checkMouseIntersection()
+			
+			for (var i = 0; i < this.confetti_group.length; i++) {
+				this.confetti_group[i].update()
+			}
 
 			TWEEN.update();
 			renderer.render( scene, camera );
