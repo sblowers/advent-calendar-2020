@@ -1,4 +1,8 @@
 import * as THREE from 'three';
+import snowflake from '../images/snowflake.png'
+
+
+const snowflake_texture = new THREE.TextureLoader().load(snowflake)
 
 const particleNum = 5000;
 const maxRange = 1000;
@@ -35,7 +39,8 @@ const getTexture = () => {
 
     const texture = new THREE.Texture(canvas);
     //texture.minFilter = THREE.NearestFilter;
-    texture.type = THREE.FloatType;
+    // texture.type = THREE.FloatType;
+	texture.type = THREE.RGBAFormat
     texture.needsUpdate = true;
     return texture;
 }
@@ -55,7 +60,8 @@ const pointMaterial = new THREE.PointsMaterial({
 	size: 8,
 	color: 0xffffff,
 	vertexColors: false,
-	map: getTexture(),
+	map: snowflake_texture,
+	// map: getTexture(),
 	// blending: THREE.AdditiveBlending,
 	transparent: true,
 	// opacity: 0.8,

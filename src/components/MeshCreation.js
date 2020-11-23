@@ -621,6 +621,159 @@ function createBackPanel(texture) {
 }
 
 
+function createInsideToken(pos_x, pox_y, texture) {
+	const TOKEN_WIDTH = 1
+	const TOKEN_HEIGHT = 0.8
+	const TOKEN_RADIUS = 0.2
+	const TOKEN_RADIUS_DIVISIONS = 10
+	const TOKEN_THICKNESS = 0.07
+	
+	var geom = new THREE.Geometry();
+	
+	var x1 = -TOKEN_WIDTH/2+TOKEN_RADIUS
+	var x2 = TOKEN_WIDTH/2-TOKEN_RADIUS
+	var y1 = -TOKEN_HEIGHT/2+TOKEN_RADIUS
+	var y2 = TOKEN_HEIGHT/2-TOKEN_RADIUS
+	
+	geom.vertices.push(new THREE.Vector3(x1, y1, 0))
+	geom.vertices.push(new THREE.Vector3(x1, y2, 0))
+	geom.vertices.push(new THREE.Vector3(x2, y2, 0))
+	geom.vertices.push(new THREE.Vector3(x2, y1, 0))
+	
+	geom.faces.push(new THREE.Face3( 0, 1, 2 ))
+	geom.faces.push(new THREE.Face3( 0, 2, 3 ))
+	
+	var fp = 4
+	
+	var i
+	var x_radius
+	var y_radius
+	for ( i = 0; i < TOKEN_RADIUS_DIVISIONS+1; i ++ ) { 
+		x_radius = TOKEN_RADIUS*Math.sin(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
+		y_radius = TOKEN_RADIUS*Math.cos(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
+		
+		geom.vertices.push(new THREE.Vector3(x1-x_radius, y1-y_radius, 0))
+		
+		if (i >= 1) {
+			geom.faces.push(new THREE.Face3( fp+i-1, fp+i, 0 ))
+		}
+	}
+	
+	fp = fp + TOKEN_RADIUS_DIVISIONS+1
+	
+	geom.faces.push(new THREE.Face3( 0, fp-1, fp ))
+	geom.faces.push(new THREE.Face3( 0, fp, 1 ))
+	
+	for ( i = 0; i < TOKEN_RADIUS_DIVISIONS+1; i ++ ) { 
+		x_radius = TOKEN_RADIUS*Math.cos(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
+		y_radius = TOKEN_RADIUS*Math.sin(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
+		
+		geom.vertices.push(new THREE.Vector3(x1-x_radius, y2+y_radius, 0))
+		
+		if (i >= 1) {
+			geom.faces.push(new THREE.Face3( fp+i-1, fp+i, 1 ))
+		}
+	}
+	
+	fp = fp + TOKEN_RADIUS_DIVISIONS+1
+	
+	geom.faces.push(new THREE.Face3( 1, fp-1, fp ))
+	geom.faces.push(new THREE.Face3( 1, fp, 2 ))
+	
+	for ( i = 0; i < TOKEN_RADIUS_DIVISIONS+1; i ++ ) { 
+		x_radius = TOKEN_RADIUS*Math.sin(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
+		y_radius = TOKEN_RADIUS*Math.cos(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
+		
+		geom.vertices.push(new THREE.Vector3(x2+x_radius, y2+y_radius, 0))
+		
+		if (i >= 1) {
+			geom.faces.push(new THREE.Face3( fp+i-1, fp+i, 2 ))
+		}
+	}
+	
+	fp = fp + TOKEN_RADIUS_DIVISIONS+1
+	
+	geom.faces.push(new THREE.Face3( 2, fp-1, fp ))
+	geom.faces.push(new THREE.Face3( 2, fp, 3 ))
+	
+	for ( i = 0; i < TOKEN_RADIUS_DIVISIONS+1; i ++ ) { 
+		x_radius = TOKEN_RADIUS*Math.cos(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
+		y_radius = TOKEN_RADIUS*Math.sin(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
+		
+		geom.vertices.push(new THREE.Vector3(x2+x_radius, y1-y_radius, 0))
+		
+		if (i >= 1) {
+			geom.faces.push(new THREE.Face3( fp+i-1, fp+i, 3 ))
+		}
+	}
+	
+	fp = fp + TOKEN_RADIUS_DIVISIONS+1
+	
+	geom.faces.push(new THREE.Face3( 3, fp-1, 4 ))
+	geom.faces.push(new THREE.Face3( 3, 4, 0 ))
+	
+	var old_point
+	for (i = 0; i < fp; i ++ ) {
+		old_point = geom.vertices[i]
+		geom.vertices.push(new THREE.Vector3(old_point.x, old_point.y, -TOKEN_THICKNESS))
+	}
+
+	var no_faces = geom.faces.length
+	var old_face
+	for ( i = 0; i < no_faces; i ++ ) { 
+		old_face = geom.faces[i]
+		geom.faces.push(new THREE.Face3(old_face.a+fp, old_face.b+fp, old_face.c+fp))
+	}
+	
+	for (i = 5; i < fp; i ++ ) {
+		geom.faces.push(new THREE.Face3(i, i-1, i-1+fp))
+		geom.faces.push(new THREE.Face3(i, i-1+fp, i+fp))
+	}
+	
+	geom.faces.push(new THREE.Face3( fp, 2*fp-1, 4 ))
+	geom.faces.push(new THREE.Face3( 2*fp-1, 4+fp, 4 ))
+	
+	var offset_position_x = 0
+	var offset_position_y = 0
+	var uv_array
+	var uv_x
+	var uv_y
+	var vertex_id
+	var face
+	for ( let face_id = 0; face_id < geom.faces.length; face_id ++ ) {
+		face = geom.faces[face_id]
+		uv_array = []
+		// console.log(face)
+		vertex_id = face.a
+		uv_x = (TOKEN_WIDTH/2 + (geom.vertices[vertex_id].x + offset_position_x)) / TOKEN_WIDTH
+		uv_y = ((TOKEN_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / TOKEN_HEIGHT)
+		uv_array.push(new THREE.Vector2(uv_x, uv_y))
+		vertex_id = face.b
+		uv_x = (TOKEN_WIDTH/2 + (geom.vertices[vertex_id].x + offset_position_x)) / TOKEN_WIDTH
+		uv_y = ((TOKEN_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / TOKEN_HEIGHT)
+		uv_array.push(new THREE.Vector2(uv_x, uv_y))
+		vertex_id = face.c
+		uv_x = (TOKEN_WIDTH/2 + (geom.vertices[vertex_id].x + offset_position_x)) / TOKEN_WIDTH
+		uv_y = ((TOKEN_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / TOKEN_HEIGHT)
+		uv_array.push(new THREE.Vector2(uv_x, uv_y))
+
+		// console.log(uv_array)
+		geom.faceVertexUvs[0].push(uv_array)
+	}
+	
+
+	const material = new THREE.MeshBasicMaterial( {map: texture, wireframe: false, side: THREE.DoubleSide } );
+	
+	var tokenMesh = new THREE.Mesh(geom, material)
+	
+	tokenMesh.position.set(pos_x,pox_y,-0.2)
+	
+	return tokenMesh
+	
+	
+}
 
 
-export {createDoor, createDoorOutline, createAdventFrontPanel, getTabFaceIndexArray, createSidePanelLeft, createSidePanelRight, createSidePanelTop, createSidePanelBottom, createBackPanel}
+
+
+export {createDoor, createDoorOutline, createAdventFrontPanel, getTabFaceIndexArray, createSidePanelLeft, createSidePanelRight, createSidePanelTop, createSidePanelBottom, createBackPanel, createInsideToken}

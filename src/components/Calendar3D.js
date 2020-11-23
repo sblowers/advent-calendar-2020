@@ -2,7 +2,7 @@ import React from 'react';
 import * as THREE from 'three';
 import * as TWEEN from 'tween.js'
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import {createDoor, createDoorOutline, createAdventFrontPanel, getTabFaceIndexArray,  createSidePanelLeft, createSidePanelRight, createSidePanelTop, createSidePanelBottom, createBackPanel} from './MeshCreation'
+import {createDoor, createDoorOutline, createAdventFrontPanel, getTabFaceIndexArray,  createSidePanelLeft, createSidePanelRight, createSidePanelTop, createSidePanelBottom, createBackPanel, createInsideToken} from './MeshCreation'
 import {snowEffectParticles, updateSnowEffectParticles} from './SnowEffect'
 import ExplosionConfetti from './explosionConfetti2'
 
@@ -14,6 +14,7 @@ import advent_side_left from '../images/advent_side_left.png'
 import advent_side_right from '../images/advent_side_right.png'
 import advent_side_top from '../images/advent_side_top.png'
 import advent_side_bottom from '../images/advent_side_bottom.png'
+import token_envelope from '../images/token_envelope.png'
 
 import sound1 from "../sounds/test.mp3"
 import sound2 from "../sounds/test2.mp3"
@@ -41,6 +42,7 @@ class Calendar3D extends React.Component {
 		this.side_texture_top = new THREE.TextureLoader().load(advent_side_top)
 		this.side_texture_bottom = new THREE.TextureLoader().load(advent_side_bottom)
 		this.rear_texture = new THREE.TextureLoader().load(cardboard_rear)
+		this.token_texture = new THREE.TextureLoader().load(token_envelope)
 		// this.front_texture.needsUpdate = true;
 		
 		this.confetti_group = []
@@ -160,6 +162,7 @@ class Calendar3D extends React.Component {
 		this.doorArrayFront = []
 		this.doorArrayBack = []
 		this.doorPositions = []
+		this.tokenTweens = []
 		
 		for (var i = 0; i < 6; i++) {
 			for (var j = 0; j < 4; j++) {
@@ -187,6 +190,30 @@ class Calendar3D extends React.Component {
 				this.doorsAndOutlineArray.push( scene.children[scene.children.length-1] )
 				
 				scene.add( door_outline[1] )
+				
+				var token_mesh = createInsideToken(door[2][0], door[2][1], this.token_texture)
+				scene.add(token_mesh)
+				token_mesh.door_id = 4*i + j
+				
+				this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
+				  .to({ y: door[2][1]+0.05 }, 500)
+				  .easing(TWEEN.Easing.Back.In)
+				)
+				this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
+				  .to({ y: door[2][1]+0.13 }, 500)
+				  .easing(TWEEN.Easing.Cubic.Out)
+				)
+				this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
+				  .to({ y: door[2][1]-0.1 }, 2000)
+				  .easing(TWEEN.Easing.Elastic.Out)
+				)
+				
+				this.tokenTweens[this.tokenTweens.length-3].chain(this.tokenTweens[this.tokenTweens.length-2])
+				this.tokenTweens[this.tokenTweens.length-2].chain(this.tokenTweens[this.tokenTweens.length-1])
+				this.tokenTweens[this.tokenTweens.length-1].chain(this.tokenTweens[this.tokenTweens.length-3])
+				
+				this.tokenTweens[this.tokenTweens.length-3].start()
+				
 			}
 		}
 		
