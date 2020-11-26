@@ -54,13 +54,32 @@ canvas {
 }
 
 .modal {
-	backdrop-filter: blur(6px);
+	/* backdrop-filter: blur(6px); */
+}
+
+.modal-backdrop.show {
+    opacity: 0.7;
 }
 
 .modal-content>img {
 	width: 100%;
 	position: absolute;
 	bottom: 100%;
+}
+
+.modal-dialog {
+	width: 90vw;
+	max-width: 900px;
+}
+
+.settings-button {
+	position: absolute;
+	top: 80%;
+	left: 5%;
+	width: 20vw;
+	max-width: 150px;
+	min-width: 20px;
+	user-select: none;
 }
 
 

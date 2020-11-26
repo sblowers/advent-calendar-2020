@@ -2,7 +2,7 @@ import React from 'react';
 import * as THREE from 'three';
 import * as TWEEN from 'tween.js'
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
-import {createDoor, createDoorOutline, createAdventFrontPanel, getTabFaceIndexArray,  createSidePanelLeft, createSidePanelRight, createSidePanelTop, createSidePanelBottom, createBackPanel, createInsideToken} from './MeshCreation'
+import {createDoor, createDoorOutline, createAdventFrontPanel, createSidePanelLeft, createSidePanelRight, createSidePanelTop, createSidePanelBottom, createBackPanel, createInsideToken} from './MeshCreation'
 import {snowEffectParticles, updateSnowEffectParticles} from './SnowEffect'
 import ExplosionConfetti from './explosionConfetti2'
 
@@ -162,6 +162,7 @@ class Calendar3D extends React.Component {
 		this.doorArrayFront = []
 		this.doorArrayBack = []
 		this.doorPositions = []
+		this.doorTokens = []
 		this.tokenTweens = []
 		
 		for (var i = 0; i < 6; i++) {
@@ -193,6 +194,7 @@ class Calendar3D extends React.Component {
 				
 				var token_mesh = createInsideToken(door[2][0], door[2][1], this.token_texture)
 				scene.add(token_mesh)
+				this.doorTokens.push( scene.children[scene.children.length-1] )
 				token_mesh.door_id = 4*i + j
 				
 				this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
@@ -219,7 +221,7 @@ class Calendar3D extends React.Component {
 		
 		i = 6
 		j = 2
-		var door = createDoor(i, j, this.front_texture, this.back_texture)
+		door = createDoor(i, j, this.front_texture, this.back_texture)
 		door[0].door_id = 24
 		door[1].door_id = 24
 		scene.add( door[0] )
@@ -236,12 +238,36 @@ class Calendar3D extends React.Component {
 		
 		this.doorPositions.push( door[2] )
 		
-		var door_outline = createDoorOutline(i, j, this.front_texture)
+		door_outline = createDoorOutline(i, j, this.front_texture)
 		door_outline[0].door_id = 24
 		scene.add( door_outline[0] )
 		this.doorsAndOutlineArray.push( scene.children[scene.children.length-1] )
 		
 		scene.add( door_outline[1] )
+		
+		token_mesh = createInsideToken(door[2][0], door[2][1], this.token_texture)
+		scene.add(token_mesh)
+		this.doorTokens.push( scene.children[scene.children.length-1] )
+		token_mesh.door_id = 24
+		
+		this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
+		  .to({ y: door[2][1]+0.05 }, 500)
+		  .easing(TWEEN.Easing.Back.In)
+		)
+		this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
+		  .to({ y: door[2][1]+0.13 }, 500)
+		  .easing(TWEEN.Easing.Cubic.Out)
+		)
+		this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
+		  .to({ y: door[2][1]-0.1 }, 2000)
+		  .easing(TWEEN.Easing.Elastic.Out)
+		)
+		
+		this.tokenTweens[this.tokenTweens.length-3].chain(this.tokenTweens[this.tokenTweens.length-2])
+		this.tokenTweens[this.tokenTweens.length-2].chain(this.tokenTweens[this.tokenTweens.length-1])
+		this.tokenTweens[this.tokenTweens.length-1].chain(this.tokenTweens[this.tokenTweens.length-3])
+		
+		this.tokenTweens[this.tokenTweens.length-3].start()
 		
 		
 		var testDragGeom = new THREE.Geometry();
@@ -568,14 +594,14 @@ class Calendar3D extends React.Component {
 			this.isMouseDragging = true
 		}
 		const stopDragCheck = () => {
-			this.canvas.removeEventListener( 'mousemove', isDragging, false );
-			this.canvas.removeEventListener( 'mouseup', stopDragCheck, false );	
+			this.canvas.removeEventListener( 'mousemove', isDragging, true );
+			this.canvas.removeEventListener( 'mouseup', stopDragCheck, true );	
 			
 		}
 		const checkForDrag = () => {
 			this.isMouseDragging = false
-			this.canvas.addEventListener( 'mousemove', isDragging, false );
-			this.canvas.addEventListener( 'mouseup', stopDragCheck, false );	
+			this.canvas.addEventListener( 'mousemove', isDragging, true );
+			this.canvas.addEventListener( 'mouseup', stopDragCheck, true );	
 		}
 		
 		const stopWheelZoom = (e) => {
@@ -639,13 +665,37 @@ class Calendar3D extends React.Component {
 
 		}
 		
+		const checkContentsIntersect = (event) => {
+			// console.log('here')
+			var mouse = new THREE.Vector2();
+			mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+			mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;			
+			var raycaster = new THREE.Raycaster();
+			raycaster.setFromCamera( mouse, camera );
+			var intersects = raycaster.intersectObjects( this.doorTokens, true )
+			if (intersects.length > 0) {
+				// console.log('here  2')
+				var door_id = intersects[0].object.door_id
+				// console.log(door_id)
+				if (this.doorStates[door_id].open) {
+					this.props.showContents(door_id)
+					return true
+				} else {
+					return false
+				}
+			} else {
+				return false
+			}
+		}
+		
 		const onClick = (e) => {
+			if (this.isMouseDragging) {return}
+			if (checkContentsIntersect(e)) {return}
 			if (camera.position.z <5 || this.isMouseDragging) {return}
 			moveToDoor(e)
 		}
 		
-		const onDblClick = (e) => {
-			e.preventDefault()
+		const onDblClick = (e) => {			
 			if (camera.position.z >= 5 || this.isMouseDragging) {return}
 			moveToDoor(e)
 		}
@@ -654,7 +704,7 @@ class Calendar3D extends React.Component {
 		
 		
 		this.canvas.addEventListener( 'click', onClick, false)
-		this.canvas.addEventListener( 'dblclick', onDblClick, false)
+		this.canvas.addEventListener( 'dblclick', onDblClick, true)
 		this.canvas.addEventListener( 'mousedown', checkForDrag, false );	
 		this.canvas.addEventListener( 'mousedown', checkMouseIntersection, false );
 		this.canvas.addEventListener( 'mouseup', () => {controls.enableRotate = true}, false);

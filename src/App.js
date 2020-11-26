@@ -4,7 +4,7 @@ import React from 'react';
 
 import Calendar3D from './components/Calendar3D'
 import SettingsModal from './components/SettingsModal'
-import ReactBootstrapSlider from 'react-bootstrap-slider';
+import ContentModal from  './components/ContentModal'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-slider/dist/css/bootstrap-slider.css"
@@ -25,6 +25,10 @@ class App extends React.Component {
 	playAnimation = () => {
 		this.setState({playAnimation: true})
 	}
+	
+	showContents = (door_id) => {
+		this.contentsModal.showModal(door_id)
+	}
   
   
   render() {
@@ -33,6 +37,7 @@ class App extends React.Component {
 		
 		  <Calendar3D 
 			play={this.state.playAnimation}
+			showContents = {this.showContents}
 		  />
 		  
 		  <div className="wreath-border left">
@@ -42,7 +47,12 @@ class App extends React.Component {
 			<img src={wreath} alt="" />
 		  </div>
 		  
-		  <SettingsModal buttonStyle={{position: 'absolute', top: '50%'}} pauseAnimation={this.pauseAnimation} playAnimation={this.playAnimation} />
+		  <SettingsModal pauseAnimation={this.pauseAnimation} playAnimation={this.playAnimation} />
+		  <ContentModal 
+			ref={ref => (this.contentsModal = ref)}
+			pauseAnimation={this.pauseAnimation} 
+			playAnimation={this.playAnimation}
+		  />
 
 		</div>
 	  )
