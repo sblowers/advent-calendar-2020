@@ -29,7 +29,7 @@ class SettingsModal extends React.Component {
 
 		if ( viewport ) {
 			viewport.content = "initial-scale=0.1";
-			viewport.content = "width=device-width";
+			viewport.content = "width=device-width, initial-scale=1, minimum-scale=1";
 		}
 	}
 	

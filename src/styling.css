@@ -1,10 +1,14 @@
 
 body {
   margin: 0;
-  overflow: hidden;	
 }
 canvas { 
   display: block; 
+}
+
+.app-container {
+  overflow: hidden;	
+  width: 100%;
 }
 
 #c {
@@ -17,6 +21,12 @@ canvas {
   background-size: cover;
 }
 
+iframe {
+	max-width: 560px;
+	width: 95%;
+	height: 290px;
+	
+}
 
 .wreath-border.left{
 	position: absolute;
@@ -74,7 +84,7 @@ canvas {
 
 .settings-button {
 	position: absolute;
-	top: 80%;
+	bottom: 5%;
 	left: 5%;
 	width: 20vw;
 	max-width: 150px;

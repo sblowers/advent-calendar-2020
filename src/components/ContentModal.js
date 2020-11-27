@@ -6,6 +6,8 @@ import Tab from 'react-bootstrap/Tab';
 
 import decor from "../images/modal_decor.png"
 
+import number_one from "../images/numbers/one.png"
+
 class ContentModal extends React.Component {
 	constructor(props) {
 	  super(props);
@@ -22,7 +24,7 @@ class ContentModal extends React.Component {
 
 		if ( viewport ) {
 			viewport.content = "initial-scale=0.1";
-			viewport.content = "width=device-width";
+			viewport.content = "width=device-width, initial-scale=1, minimum-scale=1";
 		}
 	}
 	
@@ -32,7 +34,18 @@ class ContentModal extends React.Component {
 	}
 	
 	titleGenerator() {
-		return(this.state.door_id + 1)
+		switch(this.state.door_id) {
+		
+			case 0: 
+				return(
+					<img src={number_one} alt="" />
+				)
+			
+			
+			default:
+				return(this.state.door_id + 1)
+		}
+			
 	}
 	
 	contentGeneratorASide() {
@@ -65,19 +78,28 @@ class ContentModal extends React.Component {
 		
 			case 0: 
 				return(
-					<>
+					<div style={{maxHeight: "50vw"}}>
 						<p>
 							This is the B-Side!!!!
 						</p>
-						<iframe title= "All I Need" width="560" height="315" src="https://www.youtube.com/embed/MJpiozQUJvE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-					</>
+						<div style = {{width: "100%", textAlign: "center"}}>
+							<iframe 
+								title= "All I Need" 
+								src="https://www.youtube.com/embed/MJpiozQUJvE" 
+								frameBorder="0" 
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+								allowFullScreen />
+						</div>
+					</div>
 				)
 			
 			default:
 				return(
-					<p>
-						Normal B-Side
-					</p>
+					<div style={{maxHeight: "50vw"}}>
+						<p>
+							Normal B-Side
+						</p>
+					</div>
 				)
 		}
 	}
@@ -103,7 +125,7 @@ class ContentModal extends React.Component {
 						  <Tab eventKey="aside" title="A-Side">
 							{this.contentGeneratorASide()}
 						  </Tab>
-						  <Tab eventKey="bside" title="B-Side">
+						  <Tab eventKey="bside" title="B-Side" style={{overflowY: "scroll"}}>
 							{this.contentGeneratorBSide()}
 						  </Tab>
 						</Tabs>
