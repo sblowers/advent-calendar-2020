@@ -38,7 +38,10 @@ class ContentModal extends React.Component {
 		
 			case 0: 
 				return(
-					<img src={number_one} alt="" />
+					<>
+						<img src={number_one} alt="" className = "content-number" style={{width: "10%"}}/>
+						<p>{"24 Days till Christmas!"}</p>
+					</>
 				)
 			
 			

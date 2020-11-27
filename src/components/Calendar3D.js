@@ -47,16 +47,39 @@ class Calendar3D extends React.Component {
 		
 		this.confetti_group = []
 		
+		var door_initial = this.props.readCookie()
+		// console.log(door_initial)
+		
+		
 		this.doorStates = []
 		for (var k = 0; k < 25; k++) {
-			this.doorStates.push(
-				{
-					open: false,
-					isMoving: false,
-					panelSound: [true, true, true, true, true],
-					masterValue: 0
-				}
-			)
+			if (!door_initial[k]) {
+				this.doorStates.push(
+					{
+						open: false,
+						isMoving: false,
+						panelSound: [true, true, true, true, true],
+						masterValue: 0
+					}
+				)
+			} else {
+				this.doorStates.push(
+					{
+						open: true,
+						isMoving: false,
+						panelSound: [false, false, false, false, false],
+						masterValue: 1
+					}
+				)
+			}
+		}
+		
+		const updateCookie = () => {
+			var array = []
+			for (var k = 0; k < 25; k++) {
+				array.push(this.doorStates[k].open)
+			}
+			this.props.updateCookie(array)
 		}
 		
 		const loadSound = (src) => {
@@ -567,6 +590,8 @@ class Calendar3D extends React.Component {
 				);
 				scene.add(confetti_l)
 				this.confetti_group.push(confetti_l)
+				
+				updateCookie()
 			}
 				
 		}
@@ -584,6 +609,27 @@ class Calendar3D extends React.Component {
 		  return output
 		  
 		  
+		}
+		
+		for (k = 0; k < 25; k++) { 
+			if (this.doorStates[k].open) {
+				adjustDoorAngle(k, 1)
+			}
+		}
+		
+		this.resetDoors = () => {
+			for (k = 0; k < 25; k++) { 
+				adjustDoorAngle(k, 0)
+				this.doorStates[k] = {
+					open: false,
+					isMoving: false,
+					panelSound: [true, true, true, true, true],
+					masterValue: 0
+				}
+			}
+			
+			updateCookie()
+			
 		}
 		
 		this.isMouseDragging = false

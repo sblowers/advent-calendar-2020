@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Tabs from 'react-bootstrap/Tabs'; 
 import Tab from 'react-bootstrap/Tab'; 
@@ -41,7 +42,6 @@ class SettingsModal extends React.Component {
 	}
 	
 	onMouseEnter() {
-		console.log('here')
 		this.cog_button.src = cog_hover
 	}
 	
@@ -92,6 +92,7 @@ class SettingsModal extends React.Component {
 							<p>
 								{`This is where the settings part will go`}
 							</p>
+							<Button onClick = {() => {this.props.resetDoors()}} >Reset Doors</Button>
 						  </Tab>
 						  <Tab eventKey="unlock" title="Unlock Doors">
 							<p>
