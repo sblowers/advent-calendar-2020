@@ -14,7 +14,35 @@ import advent_side_left from '../images/advent_side_left.png'
 import advent_side_right from '../images/advent_side_right.png'
 import advent_side_top from '../images/advent_side_top.png'
 import advent_side_bottom from '../images/advent_side_bottom.png'
-import token_envelope from '../images/token_envelope.png'
+// import token_envelope from '../images/token_envelope.png'
+
+import token_day1 from '../images/tokens/day1.png'
+import token_day2 from '../images/tokens/day2.png'
+import token_day3 from '../images/tokens/day3.png'
+import token_day4 from '../images/tokens/day4.png'
+import token_day5 from '../images/tokens/day5.png'
+import token_day6 from '../images/tokens/day6.png'
+import token_day7 from '../images/tokens/day7.png'
+import token_day8 from '../images/tokens/day8.png'
+import token_day9 from '../images/tokens/day9.png'
+import token_day10 from '../images/tokens/day10.png'
+import token_day11 from '../images/tokens/day11.png'
+import token_day12 from '../images/tokens/day12.png'
+import token_day13 from '../images/tokens/day13.png'
+import token_day14 from '../images/tokens/day14.png'
+import token_day15 from '../images/tokens/day15.png'
+import token_day16 from '../images/tokens/day16.png'
+import token_day17 from '../images/tokens/day17.png'
+import token_day18 from '../images/tokens/day18.png'
+import token_day19 from '../images/tokens/day19.png'
+import token_day20 from '../images/tokens/day20.png'
+import token_day21 from '../images/tokens/day21.png'
+import token_day22 from '../images/tokens/day22.png'
+import token_day23 from '../images/tokens/day23.png'
+import token_day24 from '../images/tokens/day24.png'
+import token_day25 from '../images/tokens/day25.png'
+
+
 
 import sound1 from "../sounds/test.mp3"
 import sound2 from "../sounds/test2.mp3"
@@ -42,13 +70,42 @@ class Calendar3D extends React.Component {
 		this.side_texture_top = new THREE.TextureLoader().load(advent_side_top)
 		this.side_texture_bottom = new THREE.TextureLoader().load(advent_side_bottom)
 		this.rear_texture = new THREE.TextureLoader().load(cardboard_rear)
-		this.token_texture = new THREE.TextureLoader().load(token_envelope)
+		
+		this.token_textures = []
+		this.token_textures.push(new THREE.TextureLoader().load(token_day1))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day2))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day3))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day4))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day5))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day6))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day7))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day8))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day9))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day10))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day11))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day12))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day13))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day14))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day15))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day16))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day17))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day18))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day19))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day20))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day21))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day22))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day23))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day24))
+		this.token_textures.push(new THREE.TextureLoader().load(token_day25))
+		// this.token_texture = new THREE.TextureLoader().load(token_envelope)
 		// this.front_texture.needsUpdate = true;
 		
 		this.confetti_group = []
 		
 		var door_initial = this.props.readCookie()
 		// console.log(door_initial)
+		
+		this.open_year = 2019
 		
 		
 		this.doorStates = []
@@ -59,7 +116,8 @@ class Calendar3D extends React.Component {
 						open: false,
 						isMoving: false,
 						panelSound: [true, true, true, true, true],
-						masterValue: 0
+						masterValue: 0,
+						open_date: `${this.open_year}/12/${k+1}`
 					}
 				)
 			} else {
@@ -68,7 +126,8 @@ class Calendar3D extends React.Component {
 						open: true,
 						isMoving: false,
 						panelSound: [false, false, false, false, false],
-						masterValue: 1
+						masterValue: 1,
+						open_date: `${this.open_year}/12/${k+1}`
 					}
 				)
 			}
@@ -215,7 +274,7 @@ class Calendar3D extends React.Component {
 				
 				scene.add( door_outline[1] )
 				
-				var token_mesh = createInsideToken(door[2][0], door[2][1], this.token_texture)
+				var token_mesh = createInsideToken(door[2][0], door[2][1], this.token_textures[4*i + j])
 				scene.add(token_mesh)
 				this.doorTokens.push( scene.children[scene.children.length-1] )
 				token_mesh.door_id = 4*i + j
@@ -268,7 +327,7 @@ class Calendar3D extends React.Component {
 		
 		scene.add( door_outline[1] )
 		
-		token_mesh = createInsideToken(door[2][0], door[2][1], this.token_texture)
+		token_mesh = createInsideToken(door[2][0], door[2][1], this.token_textures[24])
 		scene.add(token_mesh)
 		this.doorTokens.push( scene.children[scene.children.length-1] )
 		token_mesh.door_id = 24
@@ -498,20 +557,17 @@ class Calendar3D extends React.Component {
 					
 					masterValue = Math.min(DOOR_OPEN_MAX, masterValue)
 					masterValue = Math.max(DOOR_OPEN_MIN, masterValue)
-										
-					adjustDoorAngle(door, masterValue)
 					
-					// if (masterValue > 0.05 && this.doorStates[door].panelSound[0]) {this.cardboardSound1.pause(); this.cardboardSound1.currentTime=0; this.cardboardSound1.play(); this.doorStates[door].panelSound[0] = false}
-					// if (masterValue > 0.2 && this.doorStates[door].panelSound[1]) {this.cardboardSound2.pause(); this.cardboardSound2.currentTime=0; this.cardboardSound2.play(); this.doorStates[door].panelSound[1] = false}
-					// if (masterValue > 0.3 && this.doorStates[door].panelSound[2]) {this.cardboardSound3.pause(); this.cardboardSound3.currentTime=0; this.cardboardSound3.play(); this.doorStates[door].panelSound[2] = false}
-					// if (masterValue > 0.55 && this.doorStates[door].panelSound[3]) {this.cardboardSound4.pause(); this.cardboardSound4.currentTime=0; this.cardboardSound4.play(); this.doorStates[door].panelSound[3] = false}
-					// if (masterValue > 0.7 && this.doorStates[door].panelSound[4]) {this.cardboardSound5.pause(); this.cardboardSound5.currentTime=0; this.cardboardSound5.play(); this.doorStates[door].panelSound[4] = false}
-					
-					// console.log(masterValue)
-					// console.log(masterValue >= 0.99 && !this.doorStates[door].open)
-					// if (masterValue >= 0.99 && !this.doorStates[door].open) {console.log('yay'); this.cheerSound.pause(); this.cheerSound.currentTime=0; this.cheerSound.play(); this.doorStates[door].open = true}
-						
-					this.doorStates[door].masterValue = masterValue
+					if (!this.doorStates[door].open && (new Date().getTime() > new Date(this.doorStates[door].open_date).getTime())) {
+						adjustDoorAngle(door, masterValue)
+						this.doorStates[door].masterValue = masterValue
+					} else {
+						if (masterValue > 0.5) {
+							var day_diff =  Math.ceil(( new Date(this.doorStates[door].open_date).getTime() - new Date().getTime() ) / 86400000);
+							this.props.showBadDoor(day_diff)
+							endOpenDoor(null)
+						}
+					}
 				}
 			}
 			
@@ -624,7 +680,8 @@ class Calendar3D extends React.Component {
 					open: false,
 					isMoving: false,
 					panelSound: [true, true, true, true, true],
-					masterValue: 0
+					masterValue: 0,
+					open_date: `${this.open_year}/12/${k+1}`
 				}
 			}
 			
@@ -661,7 +718,7 @@ class Calendar3D extends React.Component {
 			mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;			
 			var raycaster = new THREE.Raycaster();
 			raycaster.setFromCamera( mouse, camera );
-			var intersects = raycaster.intersectObjects( this.doorsAndOutlineArray, true )
+			var intersects = raycaster.intersectObjects( this.doorsAndOutlineArray.concat(this.doorTokens), true )
 			
 			if (intersects.length > 0) {
 				var door_id = intersects[0].object.door_id
@@ -736,9 +793,13 @@ class Calendar3D extends React.Component {
 		
 		const onClick = (e) => {
 			if (this.isMouseDragging) {return}
-			if (checkContentsIntersect(e)) {return}
-			if (camera.position.z <5 || this.isMouseDragging) {return}
-			moveToDoor(e)
+			
+			if (this.isMouseDragging) {return}
+			if (camera.position.z <5) {
+				if (checkContentsIntersect(e)) {return}
+			} else {
+				moveToDoor(e)
+			}
 		}
 		
 		const onDblClick = (e) => {			

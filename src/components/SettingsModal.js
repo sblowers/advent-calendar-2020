@@ -11,11 +11,18 @@ import cog from "../images/cog_normal.png"
 import cog_hover from "../images/cog_hover.png"
 import cog_press from "../images/cog_pressed.png"
 
+import checkmark from "../images/check_mark.png"
+import crossmark from "../images/cross_mark.png"
+
 class SettingsModal extends React.Component {
 	constructor(props) {
 	  super(props);
 	  // Don't call this.setState() here!
-	  this.state = { show: false };
+	  this.state = { show: false, 
+					resetDoorsCheck: false, 
+					doorsReset: false,
+					unlockDoorsCheck: false,
+					unlockDoors: false};
 	}
 	
 	componentDidMount() {
@@ -23,6 +30,8 @@ class SettingsModal extends React.Component {
 	}
 	
 	onClose() {
+		this.setState({resetDoorsCheck: false, doorsReset: false, unlockDoorsCheck: false, unlockDoors: false})
+		
 		this.setState({show: false}); 
 		this.props.playAnimation()
 		
@@ -51,6 +60,21 @@ class SettingsModal extends React.Component {
 	
 	onMouseDown() {
 		this.cog_button.src = cog_press
+	}
+	
+	resetDoors() {
+		this.props.resetDoors()
+		
+		this.setState({resetDoorsCheck: false, doorsReset: true})
+	}
+	
+	showContents(door) {
+		if (this.state.unlockDoors) {
+			this.setState({show: false})
+			this.onClose()
+			
+			this.props.showContents(door)
+		}
 	}
 	
 	render() {
@@ -82,22 +106,82 @@ class SettingsModal extends React.Component {
 					</Modal.Header>
 					<Modal.Body>
 						<Tabs defaultActiveKey="intro" id="settings-tab">
-						  <Tab eventKey="intro" title="Indroduction">
+						  <Tab eventKey="intro" title="Welcome">
+						    <h4 style = {{marginTop: "10px"}}>Welcome!</h4>
 							<p>
 								{`This year has been a bit crap for everyone. So we thought we could spread some
 								cheer with a virtual advent calendar. `}
 							</p>
 						  </Tab>
-						  <Tab eventKey="settings" title="Settings">
+						  <Tab eventKey="reset" title="Reset Doors">
+							<h4 style = {{marginTop: "10px"}}>Reset Doors</h4>
 							<p>
-								{`This is where the settings part will go`}
+								{`Do you want to reset the doors so you can have the magic of reopening them all at a later date?`}
 							</p>
-							<Button onClick = {() => {this.props.resetDoors()}} >Reset Doors</Button>
+							<div>
+								<Button onClick = {() => {this.setState({resetDoorsCheck: true, doorsReset: false})}} >Reset Doors</Button>
+								<div className = {`inline ${this.state.resetDoorsCheck ? "" : "hidden"}`}>
+									<span style={{marginLeft: "20px", marginRight: "20px", fontWeight: "bold"}}>Are you sure?</span>
+									<img src = {checkmark} alt="" style = {{height: "38px", cursor: "pointer"}} onClick = {() => {this.resetDoors()}} />
+									<img src = {crossmark} alt="" style = {{height: "38px", cursor: "pointer"}} onClick = {() => {this.setState({resetDoorsCheck: false})}} />
+								</div>
+								<div className = {`inline ${this.state.doorsReset ? "" : "hidden"}`}>
+									<span style={{marginLeft: "20px", marginRight: "20px", fontWeight: "bold"}}>Doors have been reset.</span>
+								</div>
+							</div>								
 						  </Tab>
 						  <Tab eventKey="unlock" title="Unlock Doors">
+							<h4 style = {{marginTop: "10px"}}>Unlock Doors</h4>
 							<p>
-								{`This is where the unlock part will go`}
+								{`Sometimes things go wrong and content doesn't work. Mainly because this code has been rushed.
+								Other times people just want to forge ahead with their Advent Calendars in the hope that 
+								opening all the doors brings Christmas Day that one step closer. Either way, here are some buttons to bypass
+								the locks on the doors and get the contents directly. `}
 							</p>
+							<Button onClick = {() => {this.setState({unlockDoorsCheck: true})}} >Unlock Doors</Button>
+							<div className = {`inline ${this.state.unlockDoorsCheck ? "" : "hidden"}`}>
+									<span style={{marginLeft: "20px", marginRight: "20px", fontWeight: "bold"}}>Are you sure?</span>
+									<img src = {checkmark} alt="" style = {{height: "38px", cursor: "pointer"}} onClick = {() => {this.setState({unlockDoorsCheck: false, unlockDoors: true})}} />
+									<img src = {crossmark} alt="" style = {{height: "38px", cursor: "pointer"}} onClick = {() => {this.setState({unlockDoorsCheck: false})}} />
+							</div>
+							<div className = {`inline ${this.state.unlockDoors ? "" : "hidden"}`}>
+								<span style={{marginLeft: "20px", marginRight: "20px", fontWeight: "bold"}}>Doors unlocked!</span>
+							</div>
+							<div style={{textAlign: "center"}}>
+							<Button onClick = {() => {this.showContents(0)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>1</Button>
+							<Button onClick = {() => {this.showContents(1)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>2</Button>
+							<Button onClick = {() => {this.showContents(2)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>3</Button>
+							<Button onClick = {() => {this.showContents(3)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>4</Button>
+							<Button onClick = {() => {this.showContents(4)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>5</Button>
+							</div>
+							<div style={{textAlign: "center"}}>
+							<Button onClick = {() => {this.showContents(5)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>6</Button>
+							<Button onClick = {() => {this.showContents(6)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>7</Button>
+							<Button onClick = {() => {this.showContents(7)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>8</Button>
+							<Button onClick = {() => {this.showContents(8)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>9</Button>
+							<Button onClick = {() => {this.showContents(9)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>10</Button>
+							</div>
+							<div style={{textAlign: "center"}}>
+							<Button onClick = {() => {this.showContents(10)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>11</Button>
+							<Button onClick = {() => {this.showContents(11)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>12</Button>
+							<Button onClick = {() => {this.showContents(12)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>13</Button>
+							<Button onClick = {() => {this.showContents(13)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>14</Button>
+							<Button onClick = {() => {this.showContents(14)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>15</Button>
+							</div>
+							<div style={{textAlign: "center"}}>
+							<Button onClick = {() => {this.showContents(15)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>16</Button>
+							<Button onClick = {() => {this.showContents(16)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>17</Button>
+							<Button onClick = {() => {this.showContents(17)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>18</Button>
+							<Button onClick = {() => {this.showContents(18)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>19</Button>
+							<Button onClick = {() => {this.showContents(19)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>20</Button>
+							</div>
+							<div style={{textAlign: "center"}}>
+							<Button onClick = {() => {this.showContents(20)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>21</Button>
+							<Button onClick = {() => {this.showContents(21)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>22</Button>
+							<Button onClick = {() => {this.showContents(22)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>23</Button>
+							<Button onClick = {() => {this.showContents(23)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>24</Button>
+							<Button onClick = {() => {this.showContents(24)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>25</Button>
+							</div>
 						  </Tab>
 						</Tabs>
 						

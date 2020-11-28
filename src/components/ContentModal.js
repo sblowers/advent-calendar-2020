@@ -6,7 +6,8 @@ import Tab from 'react-bootstrap/Tab';
 
 import decor from "../images/modal_decor.png"
 
-import number_one from "../images/numbers/one.png"
+import titleContents from "./titleContents"
+import sideBContents from "./sideBContents"
 
 class ContentModal extends React.Component {
 	constructor(props) {
@@ -34,21 +35,7 @@ class ContentModal extends React.Component {
 	}
 	
 	titleGenerator() {
-		switch(this.state.door_id) {
-		
-			case 0: 
-				return(
-					<>
-						<img src={number_one} alt="" className = "content-number" style={{width: "10%"}}/>
-						<p>{"24 Days till Christmas!"}</p>
-					</>
-				)
-			
-			
-			default:
-				return(this.state.door_id + 1)
-		}
-			
+		return titleContents(this.state.door_id)
 	}
 	
 	contentGeneratorASide() {
@@ -77,34 +64,7 @@ class ContentModal extends React.Component {
 	}
 	
 	contentGeneratorBSide() {
-		switch(this.state.door_id) {
-		
-			case 0: 
-				return(
-					<div style={{maxHeight: "50vw"}}>
-						<p>
-							This is the B-Side!!!!
-						</p>
-						<div style = {{width: "100%", textAlign: "center"}}>
-							<iframe 
-								title= "All I Need" 
-								src="https://www.youtube.com/embed/MJpiozQUJvE" 
-								frameBorder="0" 
-								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-								allowFullScreen />
-						</div>
-					</div>
-				)
-			
-			default:
-				return(
-					<div style={{maxHeight: "50vw"}}>
-						<p>
-							Normal B-Side
-						</p>
-					</div>
-				)
-		}
+		return sideBContents(this.state.door_id)
 	}
 	
 	

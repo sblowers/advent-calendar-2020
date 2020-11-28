@@ -5,6 +5,7 @@ import React from 'react';
 import Calendar3D from './components/Calendar3D'
 import SettingsModal from './components/SettingsModal'
 import ContentModal from  './components/ContentModal'
+import BadDoorModal from './components/BadDoorModal'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap-slider/dist/css/bootstrap-slider.css"
@@ -80,6 +81,10 @@ class App extends React.Component {
 		
 	}
 	
+	showBadDoor= (days) => {
+		this.badDoorModal.showModal(days)
+	}
+	
   
   render() {
 	  return (
@@ -90,6 +95,7 @@ class App extends React.Component {
 			showContents = {this.showContents}
 			readCookie = {this.readCookie}
 			updateCookie = {this.updateCookie}
+			showBadDoor = {this.showBadDoor}
 			ref={ref => (this.Calendar3D = ref)}
 		  />
 		  
@@ -104,9 +110,16 @@ class App extends React.Component {
 			pauseAnimation={this.pauseAnimation} 
 			playAnimation={this.playAnimation} 
 			resetDoors={this.resetDoors}
+			showContents = {this.showContents}
 		  />
 		  <ContentModal 
 			ref={ref => (this.contentsModal = ref)}
+			pauseAnimation={this.pauseAnimation} 
+			playAnimation={this.playAnimation}
+		  />
+		  
+		  <BadDoorModal
+			ref={ref => (this.badDoorModal = ref)}
 			pauseAnimation={this.pauseAnimation} 
 			playAnimation={this.playAnimation}
 		  />

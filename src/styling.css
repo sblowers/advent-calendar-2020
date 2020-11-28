@@ -82,6 +82,16 @@ iframe {
 	max-width: 900px;
 }
 
+.inline {
+	display: inline;
+}
+
+.hidden {
+	display: none;
+}
+
+
+
 .settings-button {
 	position: absolute;
 	bottom: 5%;
