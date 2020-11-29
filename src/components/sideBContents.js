@@ -130,7 +130,7 @@ const sideBContents = (door_id) => {
 						<h5 style = {{marginTop: "10px"}}>Nonsense - Madeon (ft. Mark Foster)</h5>
 						<p>
 							{`It's a Madeon weekend! I couldn't choose between this song and the previous one to recommend so I 
-							chosse both. This track features Mark Foster from Foster the People (which is another band you should certainly look up if
+							chose both. This track features Mark Foster from Foster the People (which is another band you should certainly look up if
 							you haven't yet).`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
@@ -177,12 +177,12 @@ const sideBContents = (door_id) => {
 						<span><b>BONUS</b></span>
 						<p>
 							{`This is Jacob Collier's award winning rendition of Moon River. It is more telling of the style that he usually does and 
-							this arrangement won him one a Grammy!`}
+							this arrangement won him a Grammy!`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
 								title= "Moon River" 
-								src="https://youtu.be/VPLCk-FTVvw" 
+								src="https://www.youtube.com/embed/VPLCk-FTVvw" 
 								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
@@ -421,7 +421,7 @@ const sideBContents = (door_id) => {
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
 								title= "True Survivor" 
-								src="https://youtu.be/ZTidn2dBYbY" 
+								src="https://www.youtube.com/embed/ZTidn2dBYbY" 
 								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
@@ -453,7 +453,7 @@ const sideBContents = (door_id) => {
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
 								title= "Electric Feel" 
-								src="https://youtu.be/MmZexg8sxyk" 
+								src="https://www.youtube.com/embed/MmZexg8sxyk" 
 								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
@@ -487,7 +487,7 @@ const sideBContents = (door_id) => {
 						<h5 style = {{marginTop: "10px"}}>Lone Digger - Caravan Palace</h5>
 						<p>
 							{`Another niche genre that I frequently get recommendations for is 'Electric Swing'. It's like the 1920s
-							but updated for today. Since we're bringing back plague and economic recession from those times, might as well
+							but updated for today. Since we're bringing back plague and economic recession from then, might as well
 							bring the music back too.`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
