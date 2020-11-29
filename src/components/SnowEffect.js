@@ -7,43 +7,6 @@ const snowflake_texture = new THREE.TextureLoader().load(snowflake)
 const particleNum = 5000;
 const maxRange = 1000;
 const minRange = maxRange / 2;
-const textureSize = 8.0;
-
-const drawRadialGradation = (ctx, canvasRadius, canvasW, canvasH) => {
-    ctx.save();
-    const gradient = ctx.createRadialGradient(canvasRadius,canvasRadius,0,canvasRadius,canvasRadius,canvasRadius);
-    gradient.addColorStop(0, 'rgba(255,255,255,1.0)');
-    gradient.addColorStop(0.5, 'rgba(255,255,255,0.5)');
-    gradient.addColorStop(1, 'rgba(255,255,255,0)');
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0,0,canvasW,canvasH);
-    ctx.restore();
-}
-
-const getTexture = () => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-
-    const diameter = textureSize;
-    canvas.width = diameter;
-    canvas.height = diameter;
-    const canvasRadius = diameter / 2;
-
-    /* gradation circle
-    ------------------------ */
-    drawRadialGradation(ctx, canvasRadius, canvas.width, canvas.height);
-    
-    /* snow crystal
-    ------------------------ */
-    // drawSnowCrystal(ctx, canvasRadius);
-
-    const texture = new THREE.Texture(canvas);
-    //texture.minFilter = THREE.NearestFilter;
-    // texture.type = THREE.FloatType;
-	texture.type = THREE.RGBAFormat
-    texture.needsUpdate = true;
-    return texture;
-}
 
 const pointGeometry = new THREE.Geometry();
 for (let i = 0; i < particleNum; i++) {

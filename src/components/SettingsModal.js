@@ -140,7 +140,7 @@ class SettingsModal extends React.Component {
 								</p>
 								<h4 style = {{marginTop: "10px"}}>Other Things</h4>
 								<p>
-									{`If you want to see some of the other things I built over lockdown, you can find them `} <a href="https://sblowers.github.io/" target="_blank">here</a>{`.`}
+									{`If you want to see some of the other things I built over lockdown, you can find them `} <a href="https://sblowers.github.io/" target="_blank" rel="noreferrer">here</a>{`.`}
 								</p>
 						  </Tab>
 						  <Tab eventKey="reset" title="Reset Doors">
