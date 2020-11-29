@@ -105,8 +105,7 @@ class Calendar3D extends React.Component {
 		var door_initial = this.props.readCookie()
 		// console.log(door_initial)
 		
-		this.open_year = 2019
-		
+		this.open_year = 2020		
 		
 		this.doorStates = []
 		for (var k = 0; k < 25; k++) {
@@ -541,6 +540,7 @@ class Calendar3D extends React.Component {
 			
 			var mouse = new THREE.Vector2();
 			if (event.type === "mousemove") {
+				if (event.buttons === 0) {endOpenDoor(); return}
 				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
 				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
 			} else if (event.type === "touchmove") {
@@ -693,8 +693,12 @@ class Calendar3D extends React.Component {
 		this.isCameraPosMoving = false
 		this.isCameraRotMoving = false
 		
-		const isDragging = () => {
-			this.isMouseDragging = true
+		const isDragging = (e) => {
+			if (e.buttons === 0) {
+				stopDragCheck()
+			} else {
+				this.isMouseDragging = true
+			}
 		}
 		const stopDragCheck = () => {
 			this.canvas.removeEventListener( 'mousemove', isDragging, true );

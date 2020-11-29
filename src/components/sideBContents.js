@@ -3,7 +3,7 @@ const sideBContents = (door_id) => {
 	switch(door_id+1) {
 		case 1: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -21,7 +21,7 @@ const sideBContents = (door_id) => {
 			
 		case 2: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -38,7 +38,7 @@ const sideBContents = (door_id) => {
 			
 		case 3: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -55,7 +55,7 @@ const sideBContents = (door_id) => {
 			
 		case 4: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -72,7 +72,7 @@ const sideBContents = (door_id) => {
 			
 		case 5: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -89,7 +89,7 @@ const sideBContents = (door_id) => {
 			
 		case 6: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -106,7 +106,7 @@ const sideBContents = (door_id) => {
 			
 		case 7: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -123,7 +123,7 @@ const sideBContents = (door_id) => {
 			
 		case 8: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -141,7 +141,7 @@ const sideBContents = (door_id) => {
 			
 		case 9: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -158,7 +158,7 @@ const sideBContents = (door_id) => {
 			
 		case 10: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -175,7 +175,7 @@ const sideBContents = (door_id) => {
 			
 		case 11: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -192,7 +192,7 @@ const sideBContents = (door_id) => {
 			
 		case 12: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -209,7 +209,7 @@ const sideBContents = (door_id) => {
 			
 		case 13: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -226,13 +226,13 @@ const sideBContents = (door_id) => {
 			
 		case 14: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
-								title= "World Order " 
+								title= "World Order" 
 								src="https://www.youtube.com/embed/NGdyaDnnrLM" 
 								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -242,7 +242,7 @@ const sideBContents = (door_id) => {
 				)
 		case 15: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -260,7 +260,7 @@ const sideBContents = (door_id) => {
 			
 		case 16: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -277,7 +277,7 @@ const sideBContents = (door_id) => {
 			
 		case 17: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -294,7 +294,7 @@ const sideBContents = (door_id) => {
 			
 		case 18: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -311,7 +311,7 @@ const sideBContents = (door_id) => {
 			
 		case 19: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -328,7 +328,7 @@ const sideBContents = (door_id) => {
 			
 		case 20: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -345,7 +345,7 @@ const sideBContents = (door_id) => {
 			
 		case 21: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -361,7 +361,7 @@ const sideBContents = (door_id) => {
 				)
 		case 22: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -379,7 +379,7 @@ const sideBContents = (door_id) => {
 			
 		case 23: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -396,7 +396,7 @@ const sideBContents = (door_id) => {
 			
 		case 24: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>
@@ -413,7 +413,7 @@ const sideBContents = (door_id) => {
 			
 		case 25: 
 			return(
-					<div style={{maxHeight: "50vw"}}>
+					<div>
 						<p>
 							This is the B-Side!!!!
 						</p>

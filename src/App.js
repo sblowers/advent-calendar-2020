@@ -21,7 +21,7 @@ function createCookie(name, value, days) {
     else {
         expires = "";
     }
-    document.cookie = name + "=" + value + expires + "; path=/";
+    document.cookie = name + "=" + value + expires + "; path=/; SameSite=Strict";
 }
 
 function getCookie(c_name) {
@@ -82,7 +82,9 @@ class App extends React.Component {
 	}
 	
 	showBadDoor= (days) => {
-		this.badDoorModal.showModal(days)
+		if (days > 0) {
+			this.badDoorModal.showModal(days)
+		}
 	}
 	
   

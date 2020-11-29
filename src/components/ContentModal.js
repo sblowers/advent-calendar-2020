@@ -7,6 +7,7 @@ import Tab from 'react-bootstrap/Tab';
 import decor from "../images/modal_decor.png"
 
 import titleContents from "./titleContents"
+import sideAContents from "./sideAContents"
 import sideBContents from "./sideBContents"
 
 class ContentModal extends React.Component {
@@ -39,28 +40,7 @@ class ContentModal extends React.Component {
 	}
 	
 	contentGeneratorASide() {
-		switch(this.state.door_id) {
-		
-			case 0: 
-				return(
-					<p>
-						This is a test
-					</p>
-				)
-			
-			default:
-				return(
-					<p>
-						Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
-						commodi aspernatur enim, consectetur. Cumque deleniti temporibus
-						ipsam atque a dolores quisquam quisquam adipisci possimus
-						laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
-						accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
-						reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
-						deleniti rem!
-					</p>
-				)
-		}
+		return sideAContents(this.state.door_id)
 	}
 	
 	contentGeneratorBSide() {
@@ -88,7 +68,7 @@ class ContentModal extends React.Component {
 						  <Tab eventKey="aside" title="A-Side">
 							{this.contentGeneratorASide()}
 						  </Tab>
-						  <Tab eventKey="bside" title="B-Side" style={{overflowY: "scroll"}}>
+						  <Tab eventKey="bside" title="B-Side">
 							{this.contentGeneratorBSide()}
 						  </Tab>
 						</Tabs>

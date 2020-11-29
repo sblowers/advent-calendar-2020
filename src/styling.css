@@ -63,6 +63,11 @@ iframe {
 	top: 20vh;
 }
 
+.modal-body {
+	overflow-y: scroll;
+    max-height: 60vh;
+}
+
 .modal {
 	/* backdrop-filter: blur(6px); */
 }
@@ -78,7 +83,7 @@ iframe {
 }
 
 .modal-dialog {
-	width: 90vw;
+	width: 95vw;
 	max-width: 900px;
 }
 
@@ -112,9 +117,32 @@ iframe {
 	bottom: 100%;
 }
 
+@media all and (min-width: 701px) {
+	.instructions-div {
+		display: inline;
+	}
+	
+	.instructions-img {
+		width: 32%;
+	}
+	
+	.instructions-img.left {
+		width: 32%;
+		margin-right: 2%;
+	}
+	
+	.instructions-img.right {
+		width: 32%;
+		margin-left: 2%;
+	}
+}
 
-#test_slider {
-	position: absolute;
-	top: 55%;
-	left: 3%;
-}	
+@media all and (max-width: 700px) {
+	.instructions-div {
+		display: block;
+	}
+	
+	.instructions-img {
+		width: 90%;
+	}
+}
