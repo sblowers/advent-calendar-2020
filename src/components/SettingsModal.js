@@ -113,15 +113,17 @@ class SettingsModal extends React.Component {
 						  <Tab eventKey="intro" title="Welcome">
 								<h4 style = {{marginTop: "10px"}}>Welcome!</h4>
 								<p>
-									{`This year has been a bit crap for everyone. So we thought we could spread some
-									cheer with a virtual advent calendar. `}
+									{`2020 has been a year and a half and then more. 
+									But Christmas, in the words of Cliff Richard, is a time for forgetting, 
+									and so we have put together this virtual calendar as a way to spread some cheer. 
+									Merry Christmas everyone!`}
 								</p>
 								<p>
 									{`Each door will contain: `}
 								</p>
 								<ul>
-									<li><b>{`A-Side: `}</b>{`A Christmas song to get you into the festive mood.`}</li>
-									<li><b>{`B-Side: `}</b>{`A non-Christmassy song recommendation to perk up your day.`}</li>
+									<li><b>{`A-Side: `}</b>{`A Christmas song to get you into the festive mood (chosen by Helen).`}</li>
+									<li><b>{`B-Side: `}</b>{`A non-Christmassy song recommendation to perk up your day (selected by Stephen).`}</li>
 								</ul>
 								<h4 style = {{marginTop: "10px"}}>Instructions</h4>
 								<div className = "instructions-div">

@@ -45,8 +45,9 @@ class BadDoorModal extends React.Component {
 				</Modal.Header>
 				
 				<Modal.Body>
-					<p>{`It's not time to open this door yet. You have to wait `}<b>{`${this.state.days}`}</b>{` days before you can open this door.`}</p>
-					<p>{`If you think you should be able to open this door or you just want to open the door now, you can unlock the contents in the main menu (cog button).`}</p>
+					<p>{`It's not time to open this door yet. You have to wait `}<b>{`${this.state.days}`}</b>{` days before you can open it.`}</p>
+					<p>{`Remain calm.`}</p>
+					<p>{`If you think something has gone wrong and you should be able to open this door, or you just want to it now because you are naughty, then you can unlock the contents of this door in the main menu.`}</p>
 				</Modal.Body>
 				
 			</Modal>
