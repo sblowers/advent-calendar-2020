@@ -115,8 +115,8 @@ class SettingsModal extends React.Component {
 								<p>
 									{`2020 has been a year and a half and then more. 
 									But Christmas, in the words of Cliff Richard, is a time for forgetting, 
-									and so we have put together this virtual calendar as a way to spread some cheer. 
-									Merry Christmas everyone!`}
+									and so we have put together this virtual calendar as a way to spread some cheer. `}
+									<b>{`Merry Christmas everyone!`}</b>
 								</p>
 								<p>
 									{`Each door will contain: `}
@@ -136,7 +136,7 @@ class SettingsModal extends React.Component {
 									panning with the right mouse button (or two finger drag) and zooming with the scroll wheel (or two finger pinch).`}
 								</p>
 								<p>
-									{`To zoom in on another door you may need to zoom out first.`}
+									{`To zoom in on another door, you may need to zoom out first.`}
 								</p>
 								<h4 style = {{marginTop: "10px"}}>Other Things</h4>
 								<p>
@@ -163,7 +163,7 @@ class SettingsModal extends React.Component {
 						  <Tab eventKey="unlock" title="Unlock Doors">
 								<h4 style = {{marginTop: "10px"}}>Unlock Doors</h4>
 								<p>
-									{`Sometimes things go wrong and content doesn't work. Mainly because this code has been rushed.
+									{`Sometimes things go wrong and content doesn't work. Mainly because this code has been rushed and not thoroughly tested.
 									Other times people just want to forge ahead with their Advent Calendars in the hope that 
 									opening all the doors brings Christmas Day that one step closer. Either way, here are some buttons to bypass
 									the locks on the doors and get the contents directly. `}

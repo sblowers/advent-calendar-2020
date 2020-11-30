@@ -105,7 +105,7 @@ class Calendar3D extends React.Component {
 		var door_initial = this.props.readCookie()
 		// console.log(door_initial)
 		
-		this.open_year = 2020		
+		this.open_year = 2019		
 		
 		this.doorStates = []
 		for (var k = 0; k < 25; k++) {
@@ -562,7 +562,7 @@ class Calendar3D extends React.Component {
 						adjustDoorAngle(door, masterValue)
 						this.doorStates[door].masterValue = masterValue
 					} else {
-						if (masterValue > 0.5) {
+						if (masterValue > 0.1) {
 							var day_diff =  Math.ceil(( new Date(this.doorStates[door].open_date).getTime() - new Date().getTime() ) / 86400000);
 							this.props.showBadDoor(day_diff)
 							endOpenDoor(null)

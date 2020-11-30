@@ -23,7 +23,7 @@ const sideBContents = (door_id) => {
 						</div>
 						<span><b>BONUS</b></span>
 						<p>
-							{`For those of you that are musically inclined, he also releases videos going into how he
+							{`For those of you that are more musically inclined, he also releases videos going into how he
 							produces his songs. It's really interesting to see how detailed orientated he is when mixing songs.
 							This is his breakdown for the song above: `}
 						</p>
@@ -46,7 +46,7 @@ const sideBContents = (door_id) => {
 						<h5 style = {{marginTop: "10px"}}>BOY - Charlie Puth</h5>
 						<p>
 							{`If you watched the bonus video yesterday you would have heard this song described
-							as a 'mid-tempo banger'. Wbicb is exactly what it is. Also contains a nifty jazz solo 
+							as a 'mid-tempo banger'. Which is exactly what it is. Also contains a nifty jazz solo 
 							in the middle.`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
@@ -86,8 +86,8 @@ const sideBContents = (door_id) => {
 						<p>
 							{`While a little less upbeat than the previous tracks, I love this song because it references the `}
 							<a href ="https://en.wikipedia.org/wiki/False_memory" target="_blank" rel="noreferrer">Mandela Effect</a>{`. This 
-							is the phenomena where many people share the same false memory, named after a widespread incorrect recollection that
-							Nelson Mandela died in prison in the 1980s. This song refers to another similar phenomena where many people remember the
+							is the phenomenon where many people share the same false memory, named after a widespread incorrect recollection that
+							Nelson Mandela died in prison in the 1980s. This song refers to another similar phenomenon where many people remember the
 							children's books 'The Berenstain Bears' as 'The Berenstein Bears'. No one knows what causes it necessarily but it is a 
 							neat thing to write a song about.`}
 						</p>
@@ -130,8 +130,8 @@ const sideBContents = (door_id) => {
 						<h5 style = {{marginTop: "10px"}}>Nonsense - Madeon (ft. Mark Foster)</h5>
 						<p>
 							{`It's a Madeon weekend! I couldn't choose between this song and the previous one to recommend so I 
-							chose both. This track features Mark Foster from Foster the People (which is another band you should certainly look up if
-							you haven't yet).`}
+							chose both. This track features Mark Foster from Foster the People. Hope you all are enjoying the calendar
+							so far!`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
@@ -163,8 +163,8 @@ const sideBContents = (door_id) => {
 					<div>
 						<h5 style = {{marginTop: "10px"}}>Sleeping On My Dreams - Jacob Collier</h5>
 						<p>
-							{`Another entry by Jacob Collier. Unfortunately this probably the only other song I like that I've found from him. 
-							Everything else is a bit too jazzy for me. But when he does a more of a pop song, he does it well!`}
+							{`Another entry by Jacob Collier. Unfortunately, this is probably the only other song I like from him. 
+							Everything else is a bit too jazzy for me. But when he does produce more of a pop song, he does it well!`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
@@ -176,7 +176,7 @@ const sideBContents = (door_id) => {
 						</div>
 						<span><b>BONUS</b></span>
 						<p>
-							{`This is Jacob Collier's award winning rendition of Moon River. It is more telling of the style that he usually does and 
+							{`This is Jacob Collier's award winning rendition of Moon River. It is more telling of the style that he usually does, and 
 							this arrangement won him a Grammy!`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
@@ -196,7 +196,7 @@ const sideBContents = (door_id) => {
 						<h5 style = {{marginTop: "10px"}}>We Come Together - GoldFish</h5>
 						<p>
 							{`GoldFish are an electronic jazz band from South Africa. They have a few catchy tunes worth looking up
-							but this one is my favourite. If only for the music video paying homage to various video games.`}
+							but this one is my favourite, if only for the music video paying homage to various video games.`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
@@ -218,7 +218,7 @@ const sideBContents = (door_id) => {
 							{`This one is a little left-field. It was something that was served up to me by the Spotify 
 							algorithms but it stuck. I find all the songs from this artist to be both soothing and energising
 							at the same time. But I think most of the vocals aren't actually words (unless they're in a language 
-							I can't recognise). Anyway see if you like it yourself!`}
+							I can't recognise). Anyway, see if you like it yourself!`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
@@ -237,8 +237,8 @@ const sideBContents = (door_id) => {
 						<h5 style = {{marginTop: "10px"}}>Money - Mystery Skulls</h5>
 						<p>
 							{`Another Mystery Skulls entry. This was the first song I heard from them and it got me hooked. The 
-							bass is absolutely hypnotic and it makes a great gym track. Unfortunately, the beat is slightly off to
-							get a good running pace with but it suits well for other exercises!`}
+							bass is absolutely hypnotic and it makes a great gym track. Unfortunately, the beat is slightly too slow for
+							a good running pace, but it suits really well for other exercises!`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
@@ -257,7 +257,7 @@ const sideBContents = (door_id) => {
 						<h5 style = {{marginTop: "10px"}}>Milk & Cereal - G. Love & Special Sauce</h5>
 						<p>
 							{`I can't remember where I first heard this song but I feel I've always known it. I think it became 
-							a meme in the early 2000s which made it popular but it is a genuinely wholesome tribute to the most important 
+							a meme in the early 2000s which made it popular but it is just a genuinely wholesome tribute to the most important 
 							meal of the day, breakfast.`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
@@ -315,14 +315,14 @@ const sideBContents = (door_id) => {
 					<div>
 						<h5 style = {{marginTop: "10px"}}>World Order - World Order</h5>
 						<p>
-							{`While we're looking at Japanese music, I thought it would be show the band World Order. They are the 
+							{`While we're looking at Japanese music, I thought it would be good to include the band World Order. They are the 
 							'Japanese Dancing Businessmen' meme, but they also produce nice upbeat music. Definitely fun to watch and
 							to listen to.`}
 						</p>
 						<p>
-							<b>Did you know?: </b>{`Before becoming the lead singer/dancer of World Order, Genki Sudo had a 
-							successful career as a MMA fighter, utilizing his strange dance moves to create memorable walk-outs and
-							to confuse his opponents.`}
+							<b>Did you know? </b>{`Before becoming the lead singer/dancer of World Order, Genki Sudo had a 
+							successful career as a MMA fighter, utilizing his strange dance moves to both create memorable walk-outs and
+							confuse his opponents in the ring.`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center", marginBottom: "10px"}}>
 							<img src={haveaniceday} alt="" style={{width: "95%", maxWidth: "445px"}} />
@@ -400,8 +400,8 @@ const sideBContents = (door_id) => {
 						<h5 style = {{marginTop: "10px"}}>Frantic Aerobics - Mitch Murder</h5>
 						<p>
 							{`Although this song is perky and upbeat, it's more of a segway to recommend the soundtrack
-							to the hit B-movie, 'Kung Fury' where Mitch Murder provided 6 of the 13 songs (also featuring David Hasselhoff). If you are a fan of 80s
-							action movies and the accompanying over the top music then it's the perfect film for you.`}
+							to the hit B-movie, 'Kung Fury' where Mitch Murder provided 6 of the 13 songs in the album (which also features Baywatch icon, David Hasselhoff). If you are a fan of over-the-top 80s
+							action movies and the accompanying over-the-top 80s music then it's the perfect film for you.`}
 						</p>
 						<p>
 							{`If not, then enjoy this nice little tune to the footage of US National Aerobic Championships.`}
@@ -434,9 +434,9 @@ const sideBContents = (door_id) => {
 					<div>
 						<h5 style = {{marginTop: "10px"}}>I'd Rather Dance With You - Kings of Convenience</h5>
 						<p>
-							{`This is a little slower than a lot of the other songs here but I think it is one of the
-							most wholesome song on the list. This is one of two songs I have ever had as a ringtone for my
-							phone before turning it permanently to vibrate about 4 years ago. `}
+							{`This is a little slower than a lot of the other songs here but it certainly has the
+							most wholesome lyrics of all the songs in the list. Also as an aside, this is one of only two songs I have ever had as a ringtone for my
+							phone before pretty much permanently turning it to vibrate about 4 years ago.`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
@@ -448,7 +448,7 @@ const sideBContents = (door_id) => {
 						</div>
 						<span><b>BONUS</b></span>
 						<p>
-							{`The only other song I have ever had as a ringtone on my phone: `}
+							{`The only other song I have ever had as a ringtone on my phone (Electric Feel, MGMT): `}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
@@ -545,7 +545,7 @@ const sideBContents = (door_id) => {
 						<h5 style = {{marginTop: "10px"}}>Christmas Comes to Our Place - fox capture plan</h5>
 						<p>
 							{`As Christmas is round the corner, I feel I should at least start getting Christmassy. This track
-							is from the same album as above but it's got such a nice Christmassy vibe that I thought I had to add it as well.
+							is from the same album as the previous entry by fox capture plan, Butterfly, but it's got such a nice Christmassy vibe that I thought I had to add it as well.
 							`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
@@ -570,7 +570,7 @@ const sideBContents = (door_id) => {
 							full of gems outside of the one everyone knows. You should buy it for yourself for Christmas.`}
 						</p>
 						<p>
-							{`Anyway, I hope you enjoyed this advent calendar as much as I did making it! Merry Christmas!`}
+							{`I hope you enjoyed this advent calendar as much as we did making it! `}<b>{`Merry Christmas!`}</b>
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
