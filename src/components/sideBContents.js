@@ -88,7 +88,7 @@ const sideBContents = (door_id) => {
 							<a href ="https://en.wikipedia.org/wiki/False_memory" target="_blank" rel="noreferrer">Mandela Effect</a>{`. This 
 							is the phenomenon where many people share the same false memory, named after a widespread incorrect recollection that
 							Nelson Mandela died in prison in the 1980s. This song refers to another similar phenomenon where many people remember the
-							children's books 'The Berenstain Bears' as 'The Berenstein Bears'. No one knows what causes it necessarily but it is a 
+							children's books 'The Berenstain Bears' as 'The Berenstein Bears'. No one knows what causes it necessarily, but it is a 
 							neat thing to write a song about.`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
@@ -216,7 +216,7 @@ const sideBContents = (door_id) => {
 						<h5 style = {{marginTop: "10px"}}>Last 7 letters - oneohkay</h5>
 						<p>
 							{`This one is a little left-field. It was something that was served up to me by the Spotify 
-							algorithms but it stuck. I find all the songs from this artist to be both soothing and energising
+							algorithms, but it stuck. I find all the songs from this artist to be both soothing and energising
 							at the same time. But I think most of the vocals aren't actually words (unless they're in a language 
 							I can't recognise). Anyway, see if you like it yourself!`}
 						</p>
