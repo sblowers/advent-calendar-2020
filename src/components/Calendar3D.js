@@ -105,7 +105,7 @@ class Calendar3D extends React.Component {
 		var door_initial = this.props.readCookie()
 		// console.log(door_initial)
 		
-		this.open_year = 2019		
+		this.open_year = 2020		
 		
 		this.doorStates = []
 		for (var k = 0; k < 25; k++) {
