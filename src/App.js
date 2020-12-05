@@ -8,7 +8,6 @@ import ContentModal from  './components/ContentModal'
 import BadDoorModal from './components/BadDoorModal'
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-import "bootstrap-slider/dist/css/bootstrap-slider.css"
 import './styling.css'
 
 function createCookie(name, value, days) {
