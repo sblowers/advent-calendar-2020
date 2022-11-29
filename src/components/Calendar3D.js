@@ -413,7 +413,7 @@ class Calendar3D extends React.Component {
 		const checkMouseIntersection = (event) => {
 			
 			if (camera.position.z > 5.5) {return}
-			console.log(event)
+			// console.log(event)
 			var mouse = new THREE.Vector2();
 			if (event.type === "mousedown") {
 				
@@ -438,11 +438,11 @@ class Calendar3D extends React.Component {
 			// calculate objects intersecting the picking ray
 			if (this.doorArrayFront) {
 				intersects = raycaster.intersectObjects( this.doorArrays, true );
-				console.log(intersects)
+				// console.log(intersects)
 				for (var i = 0; i < intersects.length; i++) {
 					// if (getTabFaceIndexArray().includes(intersects[i].faceIndex)) {
-						console.log(intersects)
-						console.log(intersects[0].object.door_id)
+						// console.log(intersects)
+						// console.log(intersects[0].object.door_id)
 						var door_id = intersects[i].object.door_id
 						if (!this.anyDoorMoving) {
 						

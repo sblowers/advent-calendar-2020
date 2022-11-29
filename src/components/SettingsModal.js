@@ -105,7 +105,7 @@ class SettingsModal extends React.Component {
 					<img src={decor} style={{width: '100%'}} alt=""/>
 					<Modal.Header closeButton>
 						<Modal.Title id="example-custom-modal-styling-title">
-							{"Welcome to Our 2020 Advent Calendar!!!"}
+							{"Welcome to Our 2022 Advent Calendar!!!"}
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
@@ -113,17 +113,17 @@ class SettingsModal extends React.Component {
 						  <Tab eventKey="intro" title="Welcome">
 								<h4 style = {{marginTop: "10px"}}>Welcome!</h4>
 								<p>
-									{`2020 has been a year and a half and then more. 
-									But Christmas, in the words of Cliff Richard, is a time for forgetting, 
-									and so we have put together this virtual calendar as a way to spread some cheer. `}
-									<b>{`Merry Christmas everyone!`}</b>
+									{`It's getting colder and the days are getting shorter so we (`}
+                                    <a href="https://www.intelligentgrowthsolutions.com/crew/allan-corbett-2" target="_blank" rel="noreferrer">Allan</a> {` & `} <a href="https://www.intelligentgrowthsolutions.com/crew/stephen-blowers" target="_blank" rel="noreferrer">Stephen</a>
+									{`) thought it would be nice to spread some cheer in the form of this virtual Advent Calender as we countdown towards Christmas (or the mandatory company bank holiday on the 25th if Christmas isn't your thing). `}
+									<b>{`Hope you enjoy everyone!`}</b>
 								</p>
 								<p>
 									{`Each door will contain: `}
 								</p>
 								<ul>
-									<li><b>{`A-Side: `}</b>{`A Christmas song to get you into the festive mood (chosen by Helen).`}</li>
-									<li><b>{`B-Side: `}</b>{`A non-Christmassy song recommendation to perk up your day (selected by Stephen).`}</li>
+									<li><b>{`A-Side: `}</b>{`A Christmas song to get you into the festive mood (or not as we have also found some truly terrible ones).`}</li>
+									<li><b>{`B-Side: `}</b>{`A non-Christmassy song recommendation to perk up your day.`}</li>
 								</ul>
 								<h4 style = {{marginTop: "10px"}}>Instructions</h4>
 								<div className = "instructions-div">
