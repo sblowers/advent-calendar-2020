@@ -114,7 +114,7 @@ class SettingsModal extends React.Component {
 								<h4 style = {{marginTop: "10px"}}>Welcome!</h4>
 								<p>
 									{`It's getting colder and the days are getting shorter so we (`}
-                                    <a href="https://www.intelligentgrowthsolutions.com/crew/allan-corbett-2" target="_blank" rel="noreferrer">Allan</a> {` & `} <a href="https://www.intelligentgrowthsolutions.com/crew/stephen-blowers" target="_blank" rel="noreferrer">Stephen</a>
+                                    <a href="https://www.intelligentgrowthsolutions.com/crew/stephen-blowers" target="_blank" rel="noreferrer">Stephen</a>{` & my helper elf `} <a href="https://www.intelligentgrowthsolutions.com/crew/allan-corbett-2" target="_blank" rel="noreferrer">Allan</a>
 									{`) thought it would be nice to spread some cheer in the form of this virtual Advent Calender as we countdown towards Christmas (or the mandatory company bank holiday on the 25th if Christmas isn't your thing). `}
 									<b>{`Hope you enjoy everyone!`}</b>
 								</p>
