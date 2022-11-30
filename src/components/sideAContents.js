@@ -29,15 +29,15 @@ const sideAContents = (door_id) => {
 		case 2: 
 			return(
 					<div>
-						<h5 style = {{marginTop: "10px"}}>It's Beginning to Look a Lot Like Christmas - Michael Buble</h5>
+						<h5 style = {{marginTop: "10px"}}>It's Beginning to Look a Lot Like Christmas - Michael Bublé</h5>
 						<p>
-							{`Hopefully people aren't feeling too rough from the Christmas party! Here is a nice soothing 
-                            Buble number to hopefully take the edge off.`}
+							{`Hopefully people aren't feeling too rough from the Christmas party! Here is a nice soothing `}<del>bubbly</del> 
+                            {` Bublé number to hopefully take the edge off.`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
 								title= "Its beginning to look a lot like christmas"
-								src="https://www.youtube.com/watch?v=mOl2eoMrvq8" 
+								src="https://www.youtube.com/embed/mOl2eoMrvq8" 
 								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
@@ -48,27 +48,40 @@ const sideAContents = (door_id) => {
 		case 3: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>The Christmas Song - Günther</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        {`The first of many 'alternative' Christmas songs that haven't quite (yet) become mainstream. Günther topped the charts 
+                        in Sweden with his 2004 debut single 'Ding Dong Song', and his Christmas song the following year hits many of the same notes. 
+                        Mixing 70s pornstar vibes with aggressively suggestive lyrics, it's hard to see why this isn't a more widespread seasonal classic.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Gunther"
+                            src="https://www.youtube.com/embed/j2v9G36G5hQ" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
+                
             )
 			
 		case 4: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Santa Claus is Coming to Town - Jackson 5</h5>
+                    <p>{`A fun upbeat classic Christmas tune! I couldn't find the original video for this song (if one exists) but this version contains Santa as a puppet.
+                    Everything is better with puppets!`}</p>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        <b>Did you know? </b>{`'Santa Claus is Coming to Town' was written in 1933 during the Great Depression and used to contain verses about charitable giving.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Santa Claus is Coming to Town" 
+                            src="https://www.youtube.com/embed/HhiUOCo8LYQ" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )
@@ -76,13 +89,18 @@ const sideAContents = (door_id) => {
 		case 5: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>What's This? - Danny Elfman</h5>
+                    <p>{`The ever raging debate: Is 'The Nightmare Before Christmas' a Halloween movie? Or a Christmas movie? Or is it both?`}</p>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        <b>Did you know? </b>{`One minute of 'The Nightmare Before Christmas' took a week to shoot. This song took over a month!`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Whats This" 
+                            src="https://www.youtube.com/embed/QLvvkTbHjHI" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )
@@ -90,26 +108,39 @@ const sideAContents = (door_id) => {
 		case 6: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Rudolph The Red-Nosed Reindeer - William Shatner </h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        {`In his spare time, when not filming or living the real Star Trek dream and going to actual space, William Shatner produces music. His style is predominantly speaking the lyrics of songs with his
+                        iconic Captain Kirk cadence. Unique? Yes. Good? You decide...`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Shatner" 
+                            src="https://www.youtube.com/embed/wF2rjriHphg" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )
 		case 7: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Stay Another Day - East 17</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        {`It's almost a legal requirement for boybands to release a Christmas single. 
+                        Most are forgettable, but some like this one persisted and wormed its way into our collective Christmas hearts.`}
+                    </p>
+                    <p>
+                        <b>Did you know? </b>{`'Stay Another Day' beat Mariah Carey’s 'All I Want for Christmas' to number 1 in 1994. It kept the slot for 5 weeks.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Stay Another Day" 
+                            src="https://www.youtube.com/embed/-wNhdjoF-6M" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )
@@ -117,13 +148,19 @@ const sideAContents = (door_id) => {
 		case 8: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Rudolph The Red-Nosed Reindeer - DMX</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        {`A true philosopher of our generation, posing such questions as "Where The Hood At?" and "Who Let the Dogs Out?". DMX 
+                        released a full version of his rendition of Rudolph the Red-Nosed Reindeer after a clip went viral of him putting his spin
+                        on this classic for a local radio station.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "DMX" 
+                            src="https://www.youtube.com/embed/fbPyB_UxI8M" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )
@@ -132,29 +169,41 @@ const sideAContents = (door_id) => {
 		case 9: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Christmas in Hollis - Run DMC</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        {`A fun wholesome video that includes a star cameo from DMC's actual adoptive mother, Bannah McDaniels. This video won
+                        Rolling Stones 'Best Video of the Year' 1987, beating out Michael Jackson's 'Bad' which was directed by Martin Scorcese.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Run DMC" 
+                            src="https://www.youtube.com/embed/OR07r0ZMFb8" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
+                
             )
 			
 		case 10: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Merry Christmas - Ed Sheeran & Elton John</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        {`Released only last year, this song was the UK Christmas #1 single (or at least the sausage rolls version they released with LadBaby 2 weeks later did).
+                        Regardless whether you think Ed Sheeran is overplayed on the radio, it is hard to argue this isn't a good, wholesome Christmassy song.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Ed Sheeran Merry Christmas" 
+                            src="https://www.youtube.com/embed/Q_yuO8UNGmY" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
+                
             )
 		case 11: 
             return(
