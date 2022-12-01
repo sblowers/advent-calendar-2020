@@ -31,13 +31,13 @@ const sideAContents = (door_id) => {
 					<div>
 						<h5 style = {{marginTop: "10px"}}>It's Beginning to Look a Lot Like Christmas - Michael Bublé</h5>
 						<p>
-							{`Hopefully people aren't feeling too rough from the Christmas party! Here is a nice soothing `}<del>bubbly</del> 
-                            {` Bublé number to hopefully take the edge off.`}
+							{`Hopefully people aren't feeling too rough after the Christmas party! Here is a nice soothing `}<del>bubbly</del> 
+                            {` Bublé number to maybe take the edge off.`}
 						</p>
 						<div style = {{width: "100%", textAlign: "center"}}>
 							<iframe 
 								title= "Its beginning to look a lot like christmas"
-								src="https://www.youtube.com/embed/mOl2eoMrvq8" 
+								src="https://www.youtube.com/embed/0bhsXykXxfg" 
 								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
@@ -85,8 +85,25 @@ const sideAContents = (door_id) => {
                     </div>
                 </div>
             )
+
+        case 5: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>You're a Mean One, Mr. Grinch - The Suicide Machines</h5>
+                    <p>{`Our first guest submission! This one is from `}<a href="https://www.intelligentgrowthsolutions.com/crew/sam-cochrane-2" target="_blank" rel="noreferrer">Sam</a>
+                    {` with a punk rendition of the classic Dr.Seuss film "How the Grinch Stole Christmas".`}</p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Mr Grinch" 
+                            src="https://www.youtube.com/embed/I4-8GwY1bvs" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
 			
-		case 5: 
+		case 6: 
             return(
                 <div>
                     <h5 style = {{marginTop: "10px"}}>What's This? - Danny Elfman</h5>
@@ -105,7 +122,30 @@ const sideAContents = (door_id) => {
                 </div>
             )
 			
-		case 6: 
+		case 7: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>That'll be Christmas - Thea Gilmore</h5>
+                    <p>
+                        {`This submission comes from `}<a href="https://www.intelligentgrowthsolutions.com/crew/dr-vinca-russell" target="_blank" rel="noreferrer">Vinca</a>{` and in her words:`}
+                    </p>
+                    <p>
+                        {`"Thea Gilmore has a great voice and I think her Christmas song is a very British perspective on the holiday season - 
+                        it's not all cuteness and light, but about putting up with family after a few too many drinks, 
+                        all the people queueing in traffic and the fact that The Sound of Music is once again the best offering on TV. 
+                        It all feels quite relatable!"`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Thea Gilmore" 
+                            src="https://www.youtube.com/embed/7qQAE794uvo" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+        case 8: 
             return(
                 <div>
                     <h5 style = {{marginTop: "10px"}}>Rudolph The Red-Nosed Reindeer - William Shatner </h5>
@@ -123,48 +163,6 @@ const sideAContents = (door_id) => {
                     </div>
                 </div>
             )
-		case 7: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>Stay Another Day - East 17</h5>
-                    <p>
-                        {`It's almost a legal requirement for boybands to release a Christmas single. 
-                        Most are forgettable, but some like this one persisted and wormed its way into our collective Christmas hearts.`}
-                    </p>
-                    <p>
-                        <b>Did you know? </b>{`'Stay Another Day' beat Mariah Carey’s 'All I Want for Christmas' to number 1 in 1994. It kept the slot for 5 weeks.`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "Stay Another Day" 
-                            src="https://www.youtube.com/embed/-wNhdjoF-6M" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
-			
-		case 8: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>Rudolph The Red-Nosed Reindeer - DMX</h5>
-                    <p>
-                        {`A true philosopher of our generation, posing such questions as "Where The Hood At?" and "Who Let the Dogs Out?". DMX 
-                        released a full version of his rendition of Rudolph the Red-Nosed Reindeer after a clip went viral of him putting his spin
-                        on this classic for a local radio station.`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "DMX" 
-                            src="https://www.youtube.com/embed/fbPyB_UxI8M" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
-			
 			
 		case 9: 
             return(
@@ -191,7 +189,7 @@ const sideAContents = (door_id) => {
                 <div>
                     <h5 style = {{marginTop: "10px"}}>Merry Christmas - Ed Sheeran & Elton John</h5>
                     <p>
-                        {`Released only last year, this song was the UK Christmas #1 single (or at least the sausage rolls version they released with LadBaby 2 weeks later did).
+                        {`Released only last year, this song was the UK Christmas #1 single (or at least the sausage rolls version they released with LadBaby two weeks later did).
                         Regardless whether you think Ed Sheeran is overplayed on the radio, it is hard to argue this isn't a good, wholesome Christmassy song.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
@@ -208,13 +206,21 @@ const sideAContents = (door_id) => {
 		case 11: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Stay Another Day - East 17</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        {`It's almost a legal requirement for boybands to release a Christmas single. 
+                        Most are forgettable, but some like this one persisted and wormed its way into our collective Christmas hearts.`}
+                    </p>
+                    <p>
+                        <b>Did you know? </b>{`'Stay Another Day' beat Mariah Carey’s 'All I Want for Christmas' to number 1 in 1994. It kept the slot for 5 weeks.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Stay Another Day" 
+                            src="https://www.youtube.com/embed/-wNhdjoF-6M" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )
@@ -222,13 +228,19 @@ const sideAContents = (door_id) => {
 		case 12: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Rudolph The Red-Nosed Reindeer - DMX</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        {`A true philosopher of our generation, posing such questions as "Where The Hood At?" and "Who Let the Dogs Out?". DMX 
+                        released a full version of his rendition of Rudolph the Red-Nosed Reindeer after a clip went viral of him putting his spin
+                        on this classic for a local radio station.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "DMX" 
+                            src="https://www.youtube.com/embed/fbPyB_UxI8M" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )

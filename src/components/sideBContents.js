@@ -1,5 +1,3 @@
-import haveaniceday from "../images/haveaniceday.gif"
-
 
 const sideBContents = (door_id) => {
 	switch(door_id+1) {
@@ -43,7 +41,7 @@ const sideBContents = (door_id) => {
                     <h5 style = {{marginTop: "10px"}}>Welcome To My Parents' House - NSP</h5>
                     <p>
                         {`It's this time of year where we should all be thankful for family and remember how parents can be 
-                        the best but also the most frustrating people to live with. Summed up neatly with this song: `}
+                        the best, but also the most frustrating people to live with. Summed up neatly with this song: `}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
@@ -114,8 +112,26 @@ const sideBContents = (door_id) => {
                     
                 </div>
             )
+        case 5: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>Snoopy's Christmas - Smash Mouth</h5>
+                    <p>
+                        {`Hitting us with a double Christmas whammy, `}<a href="https://www.intelligentgrowthsolutions.com/crew/sam-cochrane-2" target="_blank" rel="noreferrer">Sam</a>
+                        {`'s giving us another punk-rock take, this one on Snoopy's Christmas fight with the Red Baron.`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Snoopys Christmas" 
+                            src="https://www.youtube.com/embed/bxyXId5mc1Q" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
                 
-		case 5: 
+		case 6: 
             return(
                 <div>
                     <h5 style = {{marginTop: "10px"}}>A Professional Pirate - Tim Curry Muppet Treasure Island</h5>
@@ -134,7 +150,91 @@ const sideBContents = (door_id) => {
                 </div>
             )
 			
-		case 6: 
+		case 7: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>Vinca's B-side</h5>
+                    <p>
+                        <a href="https://www.intelligentgrowthsolutions.com/crew/dr-vinca-russell" target="_blank" rel="noreferrer">Vinca</a>{` says:`}
+                    </p>
+                    <p>
+                        {`"I love the Trans-Siberian Orchestra. Their music often starts out feeling quite classical and traditional, 
+                        but then you get an explosion of guitars and drums that takes you by surprise. 
+                        It's a really joyful and unexpected celebration of festive music! 
+                        Plus - trivia time... - their main producer/conductor had the same name as my husband `}&#128516;{`"`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Thea Gilmore"
+                            src="https://www.youtube.com/embed/MHioIlbnS_A" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+			
+		case 8: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>Ghost - Mystery Skulls</h5>
+                    <p>
+                        {`One of my favourite bands with probably their best track. The video also has a neat Scooby-Doo style
+                        story arc which is continued in other songs by the artist. Here you can find `}<a href="https://youtu.be/tUYM5WNdNGc" target="_blank" rel="noreferrer">Part 2</a>{`, `}<a href="https://youtu.be/NN_Kbltsqx4" target="_blank" rel="noreferrer">Part 3</a>{`, and  `}<a href="https://youtu.be/wy1bXhEczGM" target="_blank" rel="noreferrer">Part 4</a>{`.`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Ghost" 
+                            src="https://www.youtube.com/embed/YlEb3L1PIco" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+	
+		case 9: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>True Survivor - David Hasselhoff</h5>
+                    <p>
+                        {`If you're a fan of cheesy 80's style B-movies and you haven't had the pleasure of sitting through 'Kung Fury' 
+                        then you're in for a treat! Clear your plans for Friday, buckle up, grab a beer, and go watch David Sandberg's 
+                        ridiculous homage to police action films. David Hasselhoff's here singing the title track and giving a small taste of
+                        what's in store.`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "True Survivor" 
+                            src="https://www.youtube.com/embed/ZTidn2dBYbY"  
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+			
+		case 10: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>I'd Rather Dance With You - Kings of Convenience</h5>
+                    <p>
+                        {`This might be a little slower than the rest of the other songs in I include in here, but it certainly has the
+                        most wholesome lyrics. As an aside, this is one of only two songs I have ever had as a ringtone for my
+                        phone before pretty much permanently turning it to vibrate sometime in 2016.`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Id Rather Dance With You" 
+                            src="https://www.youtube.com/embed/OczRpuGKTfY" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+			
+		case 11: 
             return(
                 <div>
                     <h5 style = {{marginTop: "10px"}}>We Come Together - GoldFish</h5>
@@ -153,26 +253,7 @@ const sideBContents = (door_id) => {
                 </div>
             )
 			
-		case 7: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>Ghost - Mystery Skulls</h5>
-                    <p>
-                        {`One of my favourite bands with probably their best track. The video also has a neat Scooby-Doo style
-                        story arc which is continued in other songs by the artist. Here you can find `}<a href="https://youtu.be/tUYM5WNdNGc" target="_blank" rel="noreferrer">Part 2</a>{`, `}<a href="https://youtu.be/NN_Kbltsqx4" target="_blank" rel="noreferrer">Part 3</a>{`, and  `}<a href="https://youtu.be/wy1bXhEczGM" target="_blank" rel="noreferrer">Part 4</a>{`.`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "Ghost" 
-                            src="https://www.youtube.com/embed/YlEb3L1PIco" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
-			
-		case 8: 
+		case 12: 
             return(
                 <div>
                     <h5 style = {{marginTop: "10px"}}>Fighting Trousers - Professor Elemental & Nicknackatory - Mr.B The Gentleman Rhymer</h5>
@@ -200,85 +281,7 @@ const sideBContents = (door_id) => {
                             allowFullScreen />
                     </div>
                 </div>
-            )
-			
-			
-		case 9: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>True Survivor - David Hasselhoff</h5>
-                    <p>
-                        {`If you're a fan of cheesy 80's style B-movies and you haven't had the pleasure of sitting through 'Kung Fury' 
-                        then you're in for a treat! Clear your plans for Friday, buckle up, grab a beer, and go watch David Sandberg's 
-                        ridiculous homage to police action films. David Hasselhoff's here singing the title track and giving a small taste of
-                        what's in store.`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "True Survivor" 
-                            src="https://www.youtube.com/embed/ZTidn2dBYbY"  
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
-			
-		case 10: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>I'd Rather Dance With You - Kings of Convenience</h5>
-                    <p>
-                        {`This might be a little slower than the rest of the other songs in here but it certainly has the
-                        most wholesome lyrics of all the songs in the list. Also as an aside, this is one of only two songs I have ever had as a ringtone for my
-                        phone before pretty much permanently turning it to vibrate sometime in 2016.`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "Id Rather Dance With You" 
-                            src="https://www.youtube.com/embed/OczRpuGKTfY" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
-			
-		case 11: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
-                    <p>
-                        {`Still working on this. Come back later.`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
-			
-		case 12: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
-                    <p>
-                        {`Still working on this. Come back later.`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
+        )
 			
 		case 13: 
             return(
