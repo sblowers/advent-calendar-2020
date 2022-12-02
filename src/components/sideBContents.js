@@ -118,7 +118,7 @@ const sideBContents = (door_id) => {
                     <h5 style = {{marginTop: "10px"}}>Snoopy's Christmas - Smash Mouth</h5>
                     <p>
                         {`Hitting us with a double Christmas whammy, `}<a href="https://www.intelligentgrowthsolutions.com/crew/sam-cochrane-2" target="_blank" rel="noreferrer">Sam</a>
-                        {`'s giving us another punk-rock take, this one on Snoopy's Christmas fight with the Red Baron.`}
+                        {`'s giving us another punk-rock take, this one on Snoopy's Christmas fight with the Red Baron, because "well we love Snoopy and the Peanuts gang!"`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 

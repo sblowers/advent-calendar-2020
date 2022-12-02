@@ -91,7 +91,10 @@ const sideAContents = (door_id) => {
                 <div>
                     <h5 style = {{marginTop: "10px"}}>You're a Mean One, Mr. Grinch - The Suicide Machines</h5>
                     <p>{`Our first guest submission! This one is from `}<a href="https://www.intelligentgrowthsolutions.com/crew/sam-cochrane-2" target="_blank" rel="noreferrer">Sam</a>
-                    {` with a punk rendition of the classic Dr.Seuss film "How the Grinch Stole Christmas".`}</p>
+                    {`, with a punk rendition of the classic Dr.Seuss film "How the Grinch Stole Christmas". He says: `}</p>
+                    <p>{`"These songs have become part of our houses Christmas song list. 
+                    My son Jack, loves How the Grinch Stole Christmas. As part of educating my son on why punk was awesome over last Christmas, 
+                    You're a Mean One , Mr. Grinch  by the Suicide Machines quickly became his favorite."`} </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
                             title= "Mr Grinch" 
