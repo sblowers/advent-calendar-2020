@@ -106,31 +106,13 @@ const sideAContents = (door_id) => {
                 </div>
             )
 			
-		case 6: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>What's This? - Danny Elfman</h5>
-                    <p>{`The ever raging debate: Is 'The Nightmare Before Christmas' a Halloween movie? Or a Christmas movie? Or is it both?`}</p>
-                    <p>
-                        <b>Did you know? </b>{`One minute of 'The Nightmare Before Christmas' took a week to shoot. This song took over a month!`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "Whats This" 
-                            src="https://www.youtube.com/embed/QLvvkTbHjHI" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
-			
-		case 7: 
+		
+        case 6: 
             return(
                 <div>
                     <h5 style = {{marginTop: "10px"}}>That'll be Christmas - Thea Gilmore</h5>
                     <p>
-                        {`This submission comes from `}<a href="https://www.intelligentgrowthsolutions.com/crew/dr-vinca-russell" target="_blank" rel="noreferrer">Vinca</a>{` and in her words:`}
+                        {`This submission comes from `}<a href="https://www.intelligentgrowthsolutions.com/crew/dr-vinca-russell" target="_blank" rel="noreferrer">Vinca</a>{`! And in her words:`}
                     </p>
                     <p>
                         {`"Thea Gilmore has a great voice and I think her Christmas song is a very British perspective on the holiday season - 
@@ -148,12 +130,34 @@ const sideAContents = (door_id) => {
                     </div>
                 </div>
             )
+			
+		case 7: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>Christmas Wrapping - The Waitresses</h5>
+                    <p>
+                        {`This next guest submission comes from `}<a href="https://www.intelligentgrowthsolutions.com/crew/calum-robertson" target="_blank" rel="noreferrer">Calum</a>{`!`}
+                    </p>
+                    <p>
+                        {`"I never gave this song much attention but my partner really loves it. She suggested it as a song for my son's school band 
+                        to play one year at the Christmas concert and it went down really well, so I am now very fond of it."`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Thea Gilmore" 
+                            src="https://www.youtube.com/embed/ZYE7UJSA7k0" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
         case 8: 
             return(
                 <div>
                     <h5 style = {{marginTop: "10px"}}>Rudolph The Red-Nosed Reindeer - William Shatner </h5>
                     <p>
-                        {`In his spare time, when not filming or living the real Star Trek dream and going to actual space, William Shatner produces music. His style is predominantly speaking the lyrics of songs with his
+                        {`In his spare time, when not filming or living the real Star Trek dream and going into actual space, William Shatner produces music. His style is predominantly speaking the lyrics of songs with his
                         iconic Captain Kirk cadence. Unique? Yes. Good? You decide...`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
@@ -212,7 +216,7 @@ const sideAContents = (door_id) => {
                     <h5 style = {{marginTop: "10px"}}>Stay Another Day - East 17</h5>
                     <p>
                         {`It's almost a legal requirement for boybands to release a Christmas single. 
-                        Most are forgettable, but some like this one persisted and wormed its way into our collective Christmas hearts.`}
+                        Most are forgettable, but some like this one persisted, and wormed its way into our collective Christmas hearts.`}
                     </p>
                     <p>
                         <b>Did you know? </b>{`'Stay Another Day' beat Mariah Carey’s 'All I Want for Christmas' to number 1 in 1994. It kept the slot for 5 weeks.`}
@@ -251,13 +255,18 @@ const sideAContents = (door_id) => {
 		case 13: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>What's This? - Danny Elfman</h5>
+                    <p>{`The ever raging debate: Is 'The Nightmare Before Christmas' a Halloween movie? Or a Christmas movie? Or is it both?`}</p>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        <b>Did you know? </b>{`One minute of 'The Nightmare Before Christmas' took a week to shoot. This song took over a month!`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Whats This" 
+                            src="https://www.youtube.com/embed/QLvvkTbHjHI" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )

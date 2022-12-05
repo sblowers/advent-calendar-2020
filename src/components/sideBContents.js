@@ -130,30 +130,11 @@ const sideBContents = (door_id) => {
                     </div>
                 </div>
             )
-                
+            
 		case 6: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>A Professional Pirate - Tim Curry Muppet Treasure Island</h5>
-                    <p>
-                        {`Tis the season for Christmas movies and my favourite is the Muppets one. Funnily enough, not the Christmas Carol one 
-                        but the much superior 1996 Treasure Island one. I watch it every year!`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "Muppets" 
-                            src="https://www.youtube.com/embed/j1l7N-WLa3Q" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
-			
-		case 7: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>Vinca's B-side</h5>
+                    <h5 style = {{marginTop: "10px"}}>Christmas Eve / Sarajevo - Trans-Siberian Orchestra</h5>
                     <p>
                         <a href="https://www.intelligentgrowthsolutions.com/crew/dr-vinca-russell" target="_blank" rel="noreferrer">Vinca</a>{` says:`}
                     </p>
@@ -167,6 +148,27 @@ const sideBContents = (door_id) => {
                         <iframe 
                             title= "Thea Gilmore"
                             src="https://www.youtube.com/embed/MHioIlbnS_A" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+
+        case 7:
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>Merry Christmas Everyone - Shakin' Stevens</h5>
+                    <p>
+                        <a href="https://www.intelligentgrowthsolutions.com/crew/calum-robertson" target="_blank" rel="noreferrer">Calum</a>{` says:`}
+                    </p>
+                    <p>
+                        {`"Chosen not because it is Shaky but there is a local connection here: the song was written by a guy from Craigmillar in Edinburgh!"`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Shakin Stevens"
+                            src="https://www.youtube.com/embed/N-PyWfVkjZc" 
                             frameBorder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen />
@@ -286,14 +288,15 @@ const sideBContents = (door_id) => {
 		case 13: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
+                    <h5 style = {{marginTop: "10px"}}>A Professional Pirate - Tim Curry Muppet Treasure Island</h5>
                     <p>
-                        {`Still working on this. Come back later.`}
+                        {`Tis the season for Christmas movies and my favourite is the Muppets one. Funnily enough, not the Christmas Carol one 
+                        but the much superior 1996 Treasure Island one. I watch it every year!`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
+                            title= "Muppets" 
+                            src="https://www.youtube.com/embed/j1l7N-WLa3Q" 
                             frameBorder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen />
