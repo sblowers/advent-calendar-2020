@@ -231,20 +231,18 @@ const sideAContents = (door_id) => {
                     </div>
                 </div>
             )
-			
-		case 12: 
+
+        case 12: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>Rudolph The Red-Nosed Reindeer - DMX</h5>
+                    <h5 style = {{marginTop: "10px"}}>The Christmas Song - Brian Lexus</h5>
                     <p>
-                        {`A true philosopher of our generation, posing such questions as "Where The Hood At?" and "Who Let the Dogs Out?". DMX 
-                        released a full version of his rendition of Rudolph the Red-Nosed Reindeer after a clip went viral of him putting his spin
-                        on this classic for a local radio station.`}
+                        {`A special guest entry from Marek! This song is by his stepfather who took up singing a few years ago!`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
-                            title= "DMX" 
-                            src="https://www.youtube.com/embed/fbPyB_UxI8M" 
+                            title= "Marek stepdad" 
+                            src="https://www.youtube.com/embed/BS2ZnUhmHj4" 
                             frameBorder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen />
@@ -271,19 +269,26 @@ const sideAContents = (door_id) => {
                 </div>
             )
 			
-		case 14: 
+        case 14: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Rudolph The Red-Nosed Reindeer - DMX</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        {`A true philosopher of our generation, posing such questions as "Where The Hood At?" and "Who Let the Dogs Out?". DMX 
+                        released a full version of his rendition of Rudolph the Red-Nosed Reindeer after a clip went viral of him putting his spin
+                        on this classic for a local radio station.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "DMX" 
+                            src="https://www.youtube.com/embed/fbPyB_UxI8M" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )
+
 		case 15: 
             return(
                 <div>

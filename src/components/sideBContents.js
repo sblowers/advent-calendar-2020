@@ -258,32 +258,23 @@ const sideBContents = (door_id) => {
 		case 12: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>Fighting Trousers - Professor Elemental & Nicknackatory - Mr.B The Gentleman Rhymer</h5>
+                    <h5 style = {{marginTop: "10px"}}>Animal Spirits - Vulfpeck</h5>
                     <p>
-                        {`I recently came across this genre of music that I filed under incredibly 'Incredibly Posh British Rap' but I think
-                        it is officially called 'Chap Hop'. I think these are both dis tracks aimed at the other artist. Which of these two do you think wins 
-                        this rap battle?`}
+                        {`Vulfpeck is an American funk band who gained infamy for funding an entire tour by relasing an album called 'Sleepify' which were
+                        10 tracks each of 30 seconds of silence. They encouraged their fans to play it on loop on Spotify every night while they slept. This
+                        way they were able to generate $20,000 in royalties from Spotify which paid for their subsequent 'Sleepify Tour'. Spotify promptly
+                        updated their terms and conditions.`}
                     </p>
-                    <p><b>Fighting Trousers - Professor Elemental</b></p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
-                            title= "Fighting Trousers" 
-                            src="https://www.youtube.com/embed/RhpHbr19GWA" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                    <p><b>Nicknackatory - Mr.B The Gentleman Rhymer</b></p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "Fighting Trousers" 
-                            src="https://www.youtube.com/embed/GwJesApzMzc" 
+                            title= "Vulfpeck" 
+                            src="https://www.youtube.com/embed/qTUnDV3MgVQ" 
                             frameBorder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen />
                     </div>
                 </div>
-        )
+            )
 			
 		case 13: 
             return(
@@ -307,20 +298,33 @@ const sideBContents = (door_id) => {
 		case 14: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
+                    <h5 style = {{marginTop: "10px"}}>Fighting Trousers - Professor Elemental & Nicknackatory - Mr.B The Gentleman Rhymer</h5>
                     <p>
-                        {`Still working on this. Come back later.`}
+                        {`I recently came across this genre of music that I filed under incredibly 'Incredibly Posh British Rap' but I think
+                        it is officially called 'Chap Hop'. I believe these are both diss tracks aimed at the other artist. Which of these two do you think wins 
+                        this rap battle?`}
                     </p>
+                    <p><b>Fighting Trousers - Professor Elemental</b></p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
+                            title= "Fighting Trousers" 
+                            src="https://www.youtube.com/embed/RhpHbr19GWA" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                    <p><b>Nicknackatory - Mr.B The Gentleman Rhymer</b></p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Fighting Trousers" 
+                            src="https://www.youtube.com/embed/GwJesApzMzc" 
                             frameBorder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen />
                     </div>
                 </div>
             )
+
 		case 15: 
             return(
                 <div>
