@@ -328,18 +328,35 @@ const sideBContents = (door_id) => {
 		case 15: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
+                    <h5 style = {{marginTop: "10px"}}>Butterfly Effect - Fox Capture Plan</h5>
                     <p>
-                        {`Still working on this. Come back later.`}
+                        {`Japanese Jazz is not a genre I would ever have thought about before until the Spotify algorithms played an absolute blinder and served
+                        this up in my Discover playlist. I find it really uplifting and invigorating. It's been a permanent addition to my running playlist ever since!`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
+                            title= "Butterfly Effect" 
+                            src="https://www.youtube.com/embed/8cMhQ_teEoY" 
                             frameBorder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen />
                     </div>
+                    <span><b>BONUS</b></span>
+                        <p>
+                            <b>Curtain Call feat.Yosh</b>
+                        </p>
+						<p>
+							{`Another song of theirs, but this time with lyrics.`}
+						</p>
+						<div style = {{width: "100%", textAlign: "center"}}>
+							<iframe 
+								title= "Curtain Call" 
+								src="https://www.youtube.com/embed/cByZ4AP3uZ8" 
+								frameBorder="0" 
+								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+								allowFullScreen />
+						</div>
+
                 </div>
             )
 			
@@ -347,14 +364,19 @@ const sideBContents = (door_id) => {
 		case 16: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
+                    <h5 style = {{marginTop: "10px"}}>Just One Day - 2winz² (Brian David Gilbert)</h5>
                     <p>
-                        {`Still working on this. Come back later.`}
+                        {`Brian David Gilbert is a writer, video producer, and general internet funny person with a Youtube channel that has a
+                        bizarre range from `}
+                        <a href="https://www.youtube.com/playlist?list=PLrzMhRx_AuP0DT2k6TtwNEdB5G_bqxkvR" target="_blank" rel="noreferrer">short horror films</a>
+                        {`, `}
+                        <a href="https://www.youtube.com/playlist?list=PLaDrN74SfdT7Ueqtwn_bXo1MuSWT0ji2w" target="_blank" rel="noreferrer">manic over-analysis of video game lore</a>
+                        {`, and music videos like this.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
+                            title= "Just One Day" 
+                            src="https://www.youtube.com/embed/AdVgPCM5wEk" 
                             frameBorder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen />
@@ -365,14 +387,16 @@ const sideBContents = (door_id) => {
 		case 17: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
+                    <h5 style = {{marginTop: "10px"}}>Milk & Cereal - G. Love & Special Sauce</h5>
                     <p>
-                        {`Still working on this. Come back later.`}
+                        {`I can't remember where I first heard this song but I feel I've always known it. I think it became 
+                        a meme in the early 2000s which made it popular but it is just a genuinely wholesome tribute to the most important 
+                        meal of the day, breakfast.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
+                            title= "Milk and Cereal" 
+                            src="https://www.youtube.com/embed/6fOO-N4J6bE" 
                             frameBorder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen />

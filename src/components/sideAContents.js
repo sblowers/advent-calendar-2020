@@ -292,13 +292,18 @@ const sideAContents = (door_id) => {
 		case 15: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Last Christmas - Wham!</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        <b>Did you know? </b>{`This song was released in 1984 but only reached number one in the UK on New Year's Day 2021. It has also
+                        reached number one in Denmark, Germany, Slovenia, and Sweden.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Last Christmas" 
+                            src="https://www.youtube.com/embed/E8gmARGvPlI" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )
@@ -307,13 +312,18 @@ const sideAContents = (door_id) => {
 		case 16: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Mistletoe - Justin Bieber</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        {`A big throwback to 2011 when Justin Bieber was at the ripe old age of 17. One of the few Christmas tunes to include
+                        the lyric 'shawty'.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Mistletoe" 
+                            src="https://www.youtube.com/embed/LUjn3RpkcKY" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )
@@ -321,14 +331,24 @@ const sideAContents = (door_id) => {
 		case 17: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Christmas in my Pants - Mr. Weebl</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        <b>Warning: Slightly NSFW via heavily implied innuendo. (But you shouldn't be at work on a Saturday anyway...)</b>
+                    </p>
+                    <p>
+                        {`If you ever visited the Newgrounds portal website in the early 2000s you will probably have a handful of this man's songs 
+                        ingrained into your brain. Highlights include 'Magical Trevor', 'Badgers', facts about 'Narwhals' or how amazing his horse is.
+                        This song is an extract from a Youtube Advent Calender of his own he did in 2013.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Mr Weebl" 
+                            src="https://www.youtube.com/embed/1jU3RIchbjE" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
+                    
                 </div>
             )
 			
