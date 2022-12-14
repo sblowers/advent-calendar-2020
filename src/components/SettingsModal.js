@@ -212,6 +212,9 @@ class SettingsModal extends React.Component {
 								<Button onClick = {() => {this.showContents(23)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>24</Button>
 								<Button onClick = {() => {this.showContents(24)}} style={{width: "50px", marginLeft: "5px", marginTop: "5px"}} disabled={!this.state.unlockDoors}>25</Button>
 								</div>
+                                <div>
+                                <Button onClick = {() => {this.showContents(-1)}}  style={{width: "50px", marginLeft: "5px", marginTop: "5px", background: "transparent", border: "none", fontSize: 0}} disabled={!this.state.unlockDoors} /> 
+                                </div>
 						  </Tab>
 						</Tabs>
 						

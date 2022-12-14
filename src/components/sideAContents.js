@@ -337,8 +337,15 @@ const sideAContents = (door_id) => {
                     </p>
                     <p>
                         {`If you ever visited the Newgrounds portal website in the early 2000s you will probably have a handful of this man's songs 
-                        ingrained into your brain. Highlights include 'Magical Trevor', 'Badgers', facts about 'Narwhals' or how amazing his horse is.
-                        This song is an extract from a Youtube Advent Calender of his own he did in 2013.`}
+                        ingrained into your brain. Highlights include '`}
+                        <a href="https://www.youtube.com/watch?v=au3-hk-pXsM" target="_blank" rel="noreferrer">Magical Trevor</a>
+                        {`', '`}
+                        <a href="https://www.youtube.com/watch?v=EIyixC9NsLI" target="_blank" rel="noreferrer">Badgers</a>
+                        {`', facts about '`}
+                        <a href="https://www.youtube.com/watch?v=ykwqXuMPsoc" target="_blank" rel="noreferrer">Narwhals</a>
+                        {`', or `} 
+                        <a href="https://www.youtube.com/watch?v=GUl9_5kK9ts" target="_blank" rel="noreferrer">how amazing his horse is</a>
+                        {`. This song is an extract from a Youtube Advent Calender of his own he did in 2013.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
@@ -355,13 +362,18 @@ const sideAContents = (door_id) => {
 		case 18: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Santa Claus Is Watching You - Ray Stevens</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        {`A jaunty tongue-in-cheek tribute to the fact that Santa Claus is performing Orwellian, ever-present surveillance on
+                        the population at large. You better watch out...`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Santa Claus Is Watching You" 
+                            src="https://www.youtube.com/embed/mER2fGuSqF8" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )
@@ -369,18 +381,136 @@ const sideAContents = (door_id) => {
 		case 19: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
+                    <h5 style = {{marginTop: "10px"}}>Carol of the Bells - Lindsey Stirling</h5>
                     <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
+                        {`TODO`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
+                        <iframe 
+                            title= "Carol of the Bells" 
+                            src="https://www.youtube.com/embed/EKkzbbLYPuI" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
                     </div>
                 </div>
             )
 			
 		case 20: 
+			return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>I Wish It Could Be Christmas Everyday - Wizzard</h5>
+                    <p>
+                        <b>Did you know? </b>{`On release this track got pipped to number one by Slade so they decided to re-release it in 1981. Unfortunately,
+                        they had lost all the original recordings to the song so they had to re-record it. The version in this video is the
+                        original 1973 version.`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Wizzard" 
+                            src="https://www.youtube.com/embed/IJPc7esgvsA" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+			
+		case 21: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>Joel, the Lump of Coal - The Killers</h5>
+                    <p>
+                        {`The Killers released a Christmas song every year from 2006 to 2016 with all the proceeds donated to charity.
+                        They're a little... strange... but I guess it's all for charity!`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Joel the Lump of Coal" 
+                            src="https://www.youtube.com/embed/6xZ3Ezl5-Lk?start=315" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+		case 22: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>The Santa Claus Boogie - The Tractors</h5>
+                    <p>
+                        {`TODO`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Santa Claus Boogie" 
+                            src="https://www.youtube.com/embed/aUrWFBfz3SM" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+				
+		case 23: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>Christmas Time (Don't Let the Bells End) - The Darkness</h5>
+                    <p>
+                        {`TODO`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "The Darkness" 
+                            src="https://www.youtube.com/embed/lrVg1toMzuo" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+			
+		case 24: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>One More Sleep - Leona Lewis</h5>
+                    <p>
+                        {`Only one more sleep until Christmas Day! Hope everyone has been good they get the presents they want this year!`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "One More Sleep" 
+                            src="https://www.youtube.com/embed/j-_1-uJ6Ml4" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+			
+		case 25: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>Merry Xmas Everybody - Slade</h5>
+                    <p>
+                        {`It's not Christmas until Noddy Holder says it is! Merry Christmas everyone! Hope you enjoyed the Calendar!`}
+                    </p>
+                    <p>
+                        {`See you all next year!`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Merry Xmas Everybody" 
+                            src="https://www.youtube.com/embed/PTslBTBl1X8" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+			
+					
+		default:
 			return(
                 <div>
                     <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
@@ -393,79 +523,6 @@ const sideAContents = (door_id) => {
                     </div>
                 </div>
             )
-			
-		case 21: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
-                    <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
-                    </div>
-                </div>
-            )
-		case 22: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
-                    <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
-                    </div>
-                </div>
-            )
-				
-		case 23: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
-                    <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
-                    </div>
-                </div>
-            )
-			
-		case 24: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
-                    <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
-                    </div>
-                </div>
-            )
-			
-		case 25: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>This section is still under construction!</h5>
-                    <p>
-                        {`We are still finalising the playlist and maybe including some additional songs. By the time this
-                        day rolls around there will be something here. Don't fret!`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <img src={under_construction} alt="" style={{width: "95%", maxWidth: "200px"}} />
-                    </div>
-                </div>
-            )
-			
-					
-		default:
-			return
 	}
 
 

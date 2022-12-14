@@ -371,7 +371,9 @@ const sideBContents = (door_id) => {
                         <a href="https://www.youtube.com/playlist?list=PLrzMhRx_AuP0DT2k6TtwNEdB5G_bqxkvR" target="_blank" rel="noreferrer">short horror films</a>
                         {`, `}
                         <a href="https://www.youtube.com/playlist?list=PLaDrN74SfdT7Ueqtwn_bXo1MuSWT0ji2w" target="_blank" rel="noreferrer">manic over-analysis of video game lore</a>
-                        {`, and music videos like this.`}
+                        {`, `}
+                        <a href="https://www.youtube.com/watch?v=fhmeYoJZeOw" target="_blank" rel="noreferrer">brief puns about Edinburgh Street names</a>
+                        {` and comedic music videos like this.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
@@ -391,7 +393,7 @@ const sideBContents = (door_id) => {
                     <p>
                         {`I can't remember where I first heard this song but I feel I've always known it. I think it became 
                         a meme in the early 2000s which made it popular but it is just a genuinely wholesome tribute to the most important 
-                        meal of the day, breakfast.`}
+                        meal of the day: breakfast.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
@@ -407,14 +409,15 @@ const sideBContents = (door_id) => {
 		case 18: 
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
+                    <h5 style = {{marginTop: "10px"}}>Insert Coins - Sky Sanctuary</h5>
                     <p>
-                        {`Still working on this. Come back later.`}
+                        {`This artist fuses retro-style video game effects with technical electric guitar riffs to capture the classic 1980s/1990s era of gaming in a fresh and modern metal setting.
+                        If you enjoy this track, then the full album rocks just as hard!`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
+                            title= "Insert Coins" 
+                            src="https://www.youtube.com/embed/5K-KEsL8gTg" 
                             frameBorder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen />
@@ -425,14 +428,14 @@ const sideBContents = (door_id) => {
         case 19:
             return(
                 <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
+                    <h5 style = {{marginTop: "10px"}}>Shatter Me - Lindsey Stirling</h5>
                     <p>
                         {`Still working on this. Come back later.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
+                            title= "Shatter Me" 
+                            src="https://www.youtube.com/embed/49tpIMDy9BE" 
                             frameBorder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                             allowFullScreen />
@@ -441,6 +444,122 @@ const sideBContents = (door_id) => {
 			)
 			
 		case 20: 
+			return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>Cool Cat in Town - Tape Five</h5>
+                    <p>
+                        {`It's the roaring '20s again! We've had the pandemic and currently going through the economic recession so might as well
+                        bring back the music too! This band, Tape Five, create Electro Swing music that is sure to get you moving in your seat.`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Cool Cat in Town" 
+                            src="https://www.youtube.com/embed/qCRO964l_nE" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+			)
+			
+		case 21: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>Jezebel - The Rasmus</h5>
+                    <p>
+                        {`Earlier this year the UK came runner up at Eurovision with "Space Man" by Sam Ryder which was pretty decent entry. Although I tend
+                        to find most Eurovision songs highly forgettable, this year the Finnish entry from The Rasmus, "Jezebel", stuck with me immediately. A good
+                        solid dose of goth-rock!`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Jezebel" 
+                            src="https://www.youtube.com/embed/IwHijzdNN2A" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+		case 22: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>When You Grow Up Your Heart Dies - Gunship</h5>
+                    <p>
+                        {`Anemoia: a longing for a time you've never known. I feel I get this about the 80s and all
+                        the synth that was everywhere. Lots of nostalgia seeping though this music video which is a tribute to that era of culture.`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Gunship" 
+                            src="https://www.youtube.com/embed/ri9IefTuNzc" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+			
+			
+		case 23: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>Friday Night - The Darkness</h5>
+                    <p>
+                        {`For this Friday, here is a surprisingly wholesome track from The Darkness' first album about going dancing on a Friday Night. 
+                        It harkens back to the days of awkward teenage romance before we all grew up.
+                        I just really gel with the line "God, the way she moves moves me to write bad poetry".`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Friday Night" 
+                            src="https://www.youtube.com/embed/XFYXZhuXQak" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+			
+		case 24: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>All Of The People - Panama Wedding</h5>
+                    <p>
+                        {`I really like this band, but I think they have only relased a total of 10 songs since 2014. Good news is that they're all great! 
+						If you like this song then definitely look up the rest.`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "All of the People" 
+                            src="https://www.youtube.com/embed/XG5tHmF3txc" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+			
+		case 25: 
+            return(
+                <div>
+                    <h5 style = {{marginTop: "10px"}}>Frosty the Snowman - Ella Fitzgerald</h5>
+                    <p>
+                        {`By far my favourite Christmas tune. I've loved this since I was a kid! Merry Christmas!`}
+                    </p>
+                    <div style = {{width: "100%", textAlign: "center"}}>
+                        <iframe 
+                            title= "Frosty the Snowman" 
+                            src="https://www.youtube.com/embed/Hmw4Fu4XupE" 
+                            frameBorder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowFullScreen />
+                    </div>
+                </div>
+            )
+			
+					
+		default:
 			return(
                 <div>
                     <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
@@ -456,101 +575,7 @@ const sideBContents = (door_id) => {
                             allowFullScreen />
                     </div>
                 </div>
-			)
-			
-		case 21: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
-                    <p>
-                        {`Still working on this. Come back later.`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
             )
-		case 22: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
-                    <p>
-                        {`Still working on this. Come back later.`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
-			
-			
-		case 23: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
-                    <p>
-                        {`Still working on this. Come back later.`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
-			
-		case 24: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
-                    <p>
-                        {`Still working on this. Come back later.`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
-			
-		case 25: 
-            return(
-                <div>
-                    <h5 style = {{marginTop: "10px"}}>Secret Area</h5>
-                    <p>
-                        {`Still working on this. Come back later.`}
-                    </p>
-                    <div style = {{width: "100%", textAlign: "center"}}>
-                        <iframe 
-                            title= "It's a secret" 
-                            src="https://www.youtube.com/embed/T37eZ55Hcmc" 
-                            frameBorder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowFullScreen />
-                    </div>
-                </div>
-            )
-			
-					
-		default:
-			return
 	}
 
 
