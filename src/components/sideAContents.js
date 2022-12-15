@@ -383,7 +383,8 @@ const sideAContents = (door_id) => {
                 <div>
                     <h5 style = {{marginTop: "10px"}}>Carol of the Bells - Lindsey Stirling</h5>
                     <p>
-                        {`TODO`}
+                        {`This artist simultaneously combines dance choreography and violin performances to make hypnotic, stylised music videos. 
+                        Fun to listen to but also fun to watch too!`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
@@ -439,7 +440,8 @@ const sideAContents = (door_id) => {
                 <div>
                     <h5 style = {{marginTop: "10px"}}>The Santa Claus Boogie - The Tractors</h5>
                     <p>
-                        {`TODO`}
+                        {`There is a lot of country/western Christmas music that doesn’t really seem to penetrate the charts in the UK. 
+                        But if you’re looking for something new to jazz up your Christmas playlist then this might be an entry.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
@@ -457,7 +459,9 @@ const sideAContents = (door_id) => {
                 <div>
                     <h5 style = {{marginTop: "10px"}}>Christmas Time (Don't Let the Bells End) - The Darkness</h5>
                     <p>
-                        {`TODO`}
+                        {`Apparently, the entire premise of this song is to include a blatant double-entendre in a song without getting it banned. 
+                        When interviewed about the writing the lyrics of this song, lead singer Justin Hawkins said, "The thing that was important to me was 'bells end' and 'ring in piece'… they're nearly rude. 
+                        But what we had the children's choir sing was 'bellend' and 'ringpiece'."`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 

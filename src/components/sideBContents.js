@@ -430,7 +430,8 @@ const sideBContents = (door_id) => {
                 <div>
                     <h5 style = {{marginTop: "10px"}}>Shatter Me - Lindsey Stirling</h5>
                     <p>
-                        {`Still working on this. Come back later.`}
+                        {`Here’s one with lyrics. As this artist is predominantly a instrumentalist, here she teams up with 
+                        Lzzy Hale from the band Haelstrom to produce one of her most popular songs.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
@@ -487,7 +488,7 @@ const sideBContents = (door_id) => {
                     <h5 style = {{marginTop: "10px"}}>When You Grow Up Your Heart Dies - Gunship</h5>
                     <p>
                         {`Anemoia: a longing for a time you've never known. I feel I get this about the 80s and all
-                        the synth that was everywhere. Lots of nostalgia seeping though this music video which is a tribute to that era of culture.`}
+                        the synth that was everywhere. Lots of nostalgia seeping though this music video which is a tribute to that cultural era.`}
                     </p>
                     <div style = {{width: "100%", textAlign: "center"}}>
                         <iframe 
