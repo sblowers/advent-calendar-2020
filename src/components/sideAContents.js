@@ -13,7 +13,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "All I Want for Christmas is You"
 								src="https://www.youtube.com/embed/aAkMkVFwAoo" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -32,7 +31,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Rockin Around the Christmas Tree" 
 								src="https://www.youtube.com/embed/Idl-K8s1GYo" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -50,7 +48,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Whats This" 
 								src="https://www.youtube.com/embed/QLvvkTbHjHI" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -68,7 +65,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Its beginning to look a lot like Christmas" 
 								src="https://www.youtube.com/embed/mOl2eoMrvq8" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -86,7 +82,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Santa Claus is Coming to Town" 
 								src="https://www.youtube.com/embed/UIrZ57Om6j4" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -104,7 +99,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Deck the Halls" 
 								src="https://www.youtube.com/embed/gMYDeQso0sA" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -122,7 +116,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Sleigh Ride" 
 								src="https://www.youtube.com/embed/k8DNV8Bou4o" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -140,7 +133,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Fairytale of New York" 
 								src="https://www.youtube.com/embed/j9jbdgZidu8" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -159,7 +151,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Stay Another Day" 
 								src="https://www.youtube.com/embed/-wNhdjoF-6M" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -178,7 +169,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Run Run Rudolph" 
 								src="https://www.youtube.com/embed/LGv-stdn6ho" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -196,7 +186,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Merry Christmas Everyone" 
 								src="https://www.youtube.com/embed/N-PyWfVkjZc" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -215,7 +204,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Step into Christmas" 
 								src="https://www.youtube.com/embed/IbRtGMm96F8" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -233,7 +221,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Baby Its Cold Outside" 
 								src="https://www.youtube.com/embed/DlMP7FGYJmk" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -251,7 +238,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Mistletoe and Wine" 
 								src="https://www.youtube.com/embed/rZCEBibnRM8" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -269,7 +255,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Let it Snow" 
 								src="https://www.youtube.com/embed/mN7LW0Y00kE" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -289,7 +274,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Joy to the World" 
 								src="https://www.youtube.com/embed/ccte_N1mO3s" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -307,7 +291,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Merry Xmas Everybody" 
 								src="https://www.youtube.com/embed/BpfHSqLXePI" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -326,7 +309,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Do you Hear what I Hear" 
 								src="https://www.youtube.com/embed/7cSq8zlzwdU" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -345,7 +327,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "When a Child is Born" 
 								src="https://www.youtube.com/embed/ZCqhX89WV_0" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -364,7 +345,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Cuddle Up Cozy Christmas" 
 								src="https://www.youtube.com/embed/ClqKogp7cCk" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -383,7 +363,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Winter Wonderland" 
 								src="https://www.youtube.com/embed/Oe_K_h7dGV8" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -400,7 +379,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "First Noel" 
 								src="https://www.youtube.com/embed/igUCRRmlhE4" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -419,7 +397,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "White Christmas" 
 								src="https://www.youtube.com/embed/7S-IidmcSN8" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -437,7 +414,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "Thank God Its Christmas" 
 								src="https://www.youtube.com/embed/qw2TD91Nytg" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -456,7 +432,6 @@ const sideAContents = (door_id) => {
 							<iframe 
 								title= "I Wish it Could be Christmas Everyday" 
 								src="https://www.youtube.com/embed/IJPc7esgvsA" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>

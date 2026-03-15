@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import Delaunator from 'delaunator'; 
+import Delaunator from 'delaunator';
 
 const CALENDAR_WIDTH = 13
 const CALENDAR_HEIGHT = 22
@@ -28,9 +28,58 @@ const fold_width = BASE_WIDTH / number_of_folds
 
 const stagger_val = -0.7
 
+// ---------------------------------------------------------------------------
+// Polyfills for removed THREE.Geometry / THREE.Face3 (removed in r133)
+// ---------------------------------------------------------------------------
+
+class LegacyGeometry {
+	constructor() {
+		this.vertices = [];
+		this.faces = [];
+		this.faceVertexUvs = [[]];
+	}
+}
+
+class Face3 {
+	constructor(a, b, c) {
+		this.a = a; this.b = b; this.c = c;
+	}
+}
+
+// Convert a LegacyGeometry to a non-indexed THREE.BufferGeometry.
+// Each face becomes 3 independent vertices so per-face UVs are preserved.
+function legacyToBuffer(geom) {
+	const positions = [];
+	const uvs = [];
+	const hasFaceUvs = geom.faceVertexUvs[0].length > 0;
+
+	for (let i = 0; i < geom.faces.length; i++) {
+		const f = geom.faces[i];
+		const verts = [geom.vertices[f.a], geom.vertices[f.b], geom.vertices[f.c]];
+		for (const v of verts) {
+			positions.push(v.x, v.y, v.z);
+		}
+		if (hasFaceUvs && geom.faceVertexUvs[0][i]) {
+			for (const uv of geom.faceVertexUvs[0][i]) {
+				uvs.push(uv.x, uv.y);
+			}
+		}
+	}
+
+	const buf = new THREE.BufferGeometry();
+	buf.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+	if (uvs.length > 0) {
+		buf.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+	}
+	buf.computeVertexNormals();
+	return buf;
+}
+
+// ---------------------------------------------------------------------------
+
 function createDoorMesh() {
 
-	var geom = new THREE.Geometry();
+	var geom = new LegacyGeometry();
 	var i
 	// base folds
 	for (i = 0; i < number_of_folds; i++) {
@@ -40,153 +89,153 @@ function createDoorMesh() {
 		}
 		geom.vertices.push(new THREE.Vector3( (i+1)*fold_width, 0, 0 ))
 		geom.vertices.push(new THREE.Vector3( (i+1)*fold_width, BASE_HEIGHT, 0 ))
-		
-		geom.faces.push(new THREE.Face3( 2*i, 2*i + 1, 2*i + 3 ))
-		geom.faces.push(new THREE.Face3( 2*i, 2*i + 3, 2*i + 2 ))
+
+		geom.faces.push(new Face3( 2*i, 2*i + 1, 2*i + 3 ))
+		geom.faces.push(new Face3( 2*i, 2*i + 3, 2*i + 2 ))
 	}
-	
+
 	// number of points previously created
 	var fp = 2 + 2*number_of_folds
-	
+
 	// tab mesh
-	
+
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH, BASE_HEIGHT/2 - tab_height_fraction*BASE_HEIGHT/2, 0 ))
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH, BASE_HEIGHT/2 + tab_height_fraction*BASE_HEIGHT/2, 0 ))
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH + tab_width_fraction*BASE_WIDTH, BASE_HEIGHT/2 - tab_height_fraction*BASE_HEIGHT/2, 0 ))
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH + tab_width_fraction*BASE_WIDTH, BASE_HEIGHT/2 + tab_height_fraction*BASE_HEIGHT/2, 0 ))
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH, BASE_HEIGHT/2 - (tab_height_fraction*BASE_HEIGHT/2 + tab_triangle_fraction*BASE_HEIGHT), 0 ))
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH, BASE_HEIGHT/2 + (tab_height_fraction*BASE_HEIGHT/2 + tab_triangle_fraction*BASE_HEIGHT), 0 ))
-	
-	geom.faces.push(new THREE.Face3( fp, fp + 1, fp + 3 ))
-	geom.faces.push(new THREE.Face3( fp, fp + 3, fp + 2 ))
-	geom.faces.push(new THREE.Face3( fp + 1, fp + 5, fp + 3 ))
-	geom.faces.push(new THREE.Face3( fp, fp + 2, fp + 4 ))
-	
+
+	geom.faces.push(new Face3( fp, fp + 1, fp + 3 ))
+	geom.faces.push(new Face3( fp, fp + 3, fp + 2 ))
+	geom.faces.push(new Face3( fp + 1, fp + 5, fp + 3 ))
+	geom.faces.push(new Face3( fp, fp + 2, fp + 4 ))
+
 	// update number of points created
 	fp = 2 + 2*number_of_folds + 6
-	
+
 	// fold detail (spillover)
 	for (i = 0; i < number_of_folds; i++) {
 		geom.vertices.push(new THREE.Vector3( i*fold_width, BASE_HEIGHT+(fold_height_fraction*BASE_HEIGHT), 0 ))
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width) - (fold_triangle_width_fraction*fold_width), BASE_HEIGHT+(fold_height_fraction*BASE_HEIGHT), 0 ))
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width) - (fold_triangle_width_fraction*fold_width), BASE_HEIGHT, 0 ))
-		
-		geom.faces.push(new THREE.Face3( 2*i+1, fp+6*i, fp+6*i+2 ))
-		geom.faces.push(new THREE.Face3( fp+6*i, fp+6*i+1, fp+6*i+2 ))
-		geom.faces.push(new THREE.Face3( fp+6*i+1, 2*i+3, fp+6*i+2 ))
-		
+
+		geom.faces.push(new Face3( 2*i+1, fp+6*i, fp+6*i+2 ))
+		geom.faces.push(new Face3( fp+6*i, fp+6*i+1, fp+6*i+2 ))
+		geom.faces.push(new Face3( fp+6*i+1, 2*i+3, fp+6*i+2 ))
+
 		geom.vertices.push(new THREE.Vector3( i*fold_width, 0-(fold_height_fraction*BASE_HEIGHT), 0 ))
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width) - (fold_triangle_width_fraction*fold_width), 0-(fold_height_fraction*BASE_HEIGHT), 0 ))
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width) - (fold_triangle_width_fraction*fold_width), 0, 0 ))
-		
-		geom.faces.push(new THREE.Face3( 2*i+1, fp+6*i+5, fp+6*i+3 ))
-		geom.faces.push(new THREE.Face3( fp+6*i+5, fp+6*i+4, fp+6*i+3 ))
-		geom.faces.push(new THREE.Face3( fp+6*i+5, 2*i+2, fp+6*i+4 ))
+
+		geom.faces.push(new Face3( 2*i+1, fp+6*i+5, fp+6*i+3 ))
+		geom.faces.push(new Face3( fp+6*i+5, fp+6*i+4, fp+6*i+3 ))
+		geom.faces.push(new Face3( fp+6*i+5, 2*i+2, fp+6*i+4 ))
 	}
-	
+
 	return(geom)
 }
 
 function createDoorOutline(row, col, texture) {
-	var geom = new THREE.Geometry();
+	var geom = new LegacyGeometry();
 	var doorOutlinePointsTop = []
 	var doorOutlinePointsBottom = []
-	
+
 	geom.vertices.push(new THREE.Vector3( 0-OUTLINE_L_MARGIN, 0-OUTLINE_B_MARGIN, 0 ))
 	geom.vertices.push(new THREE.Vector3( 0-OUTLINE_L_MARGIN, BASE_HEIGHT+OUTLINE_T_MARGIN, 0 ))
 	geom.vertices.push(new THREE.Vector3( 0, 0-OUTLINE_B_MARGIN, 0 ))
 	geom.vertices.push(new THREE.Vector3( 0, BASE_HEIGHT+OUTLINE_T_MARGIN, 0 ))
-	
-	geom.faces.push(new THREE.Face3( 0, 1, 3 ))
-	geom.faces.push(new THREE.Face3( 0, 3, 2 ))
-	
+
+	geom.faces.push(new Face3( 0, 1, 3 ))
+	geom.faces.push(new Face3( 0, 3, 2 ))
+
 	geom.vertices.push(new THREE.Vector3( 0, 0-(fold_height_fraction*BASE_HEIGHT), 0 ))
 	geom.vertices.push(new THREE.Vector3( 0, BASE_HEIGHT+(fold_height_fraction*BASE_HEIGHT), 0 ))
 	var fp = 6
-	
+
 	doorOutlinePointsBottom.push(new THREE.Vector3( 0, 0-(fold_height_fraction*BASE_HEIGHT), 0 ))
 	doorOutlinePointsTop.push(new THREE.Vector3( 0, BASE_HEIGHT+(fold_height_fraction*BASE_HEIGHT), 0 ))
-	
+
 
 	for (var i = 0; i < number_of_folds; i++) {
-		
+
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width) - (fold_triangle_width_fraction*fold_width), 0-OUTLINE_B_MARGIN, 0 ))
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width) - (fold_triangle_width_fraction*fold_width), 0-(fold_height_fraction*BASE_HEIGHT), 0 ))
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width), 0, 0 ))
-		
+
 		doorOutlinePointsBottom.push(new THREE.Vector3( ((i+1)*fold_width) - (fold_triangle_width_fraction*fold_width), 0-(fold_height_fraction*BASE_HEIGHT), 0 ))
 		doorOutlinePointsBottom.push(new THREE.Vector3( ((i+1)*fold_width), 0, 0 ))
-		
+
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width) - (fold_triangle_width_fraction*fold_width), BASE_HEIGHT+OUTLINE_T_MARGIN, 0 ))
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width) - (fold_triangle_width_fraction*fold_width), BASE_HEIGHT+(fold_height_fraction*BASE_HEIGHT), 0 ))
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width), BASE_HEIGHT, 0 ))
-		
+
 		doorOutlinePointsTop.push(new THREE.Vector3( ((i+1)*fold_width) - (fold_triangle_width_fraction*fold_width), BASE_HEIGHT+(fold_height_fraction*BASE_HEIGHT), 0 ))
 		doorOutlinePointsTop.push(new THREE.Vector3( ((i+1)*fold_width), BASE_HEIGHT, 0 ))
 
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width), 0-OUTLINE_B_MARGIN, 0 ))
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width), BASE_HEIGHT+OUTLINE_T_MARGIN, 0 ))
-		
+
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width), 0-(fold_height_fraction*BASE_HEIGHT), 0 ))
 		geom.vertices.push(new THREE.Vector3( ((i+1)*fold_width), BASE_HEIGHT+(fold_height_fraction*BASE_HEIGHT), 0 ))
-		
+
 		if (i < number_of_folds-1) {
 			doorOutlinePointsBottom.push(new THREE.Vector3( ((i+1)*fold_width), 0-(fold_height_fraction*BASE_HEIGHT), 0 ))
 			doorOutlinePointsTop.push(new THREE.Vector3( ((i+1)*fold_width), BASE_HEIGHT+(fold_height_fraction*BASE_HEIGHT), 0 ))
 		}
-		
+
 		var l = fp+10*i
-		
-		geom.faces.push(new THREE.Face3( l-2, l+1, l ))
-		geom.faces.push(new THREE.Face3( l-4, l-2, l ))
-		geom.faces.push(new THREE.Face3( l+1, l+8, l+6 ))
-		geom.faces.push(new THREE.Face3( l, l+1, l+6 ))
-		geom.faces.push(new THREE.Face3( l+1, l+2, l+8 ))
-		
-		geom.faces.push(new THREE.Face3( l-3, l+3, l+4 ))
-		geom.faces.push(new THREE.Face3( l-1, l-3, l+4 ))
-		geom.faces.push(new THREE.Face3( l+4, l+3, l+9 ))
-		geom.faces.push(new THREE.Face3( l+9, l+3, l+7 ))
-		geom.faces.push(new THREE.Face3( l+4, l+9, l+5 ))
-		
+
+		geom.faces.push(new Face3( l-2, l+1, l ))
+		geom.faces.push(new Face3( l-4, l-2, l ))
+		geom.faces.push(new Face3( l+1, l+8, l+6 ))
+		geom.faces.push(new Face3( l, l+1, l+6 ))
+		geom.faces.push(new Face3( l+1, l+2, l+8 ))
+
+		geom.faces.push(new Face3( l-3, l+3, l+4 ))
+		geom.faces.push(new Face3( l-1, l-3, l+4 ))
+		geom.faces.push(new Face3( l+4, l+3, l+9 ))
+		geom.faces.push(new Face3( l+9, l+3, l+7 ))
+		geom.faces.push(new Face3( l+4, l+9, l+5 ))
+
 	}
-	
+
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH, BASE_HEIGHT/2 - (tab_height_fraction*BASE_HEIGHT/2 + tab_triangle_fraction*BASE_HEIGHT), 0 ))
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH + tab_width_fraction*BASE_WIDTH, BASE_HEIGHT/2 - tab_height_fraction*BASE_HEIGHT/2, 0 ))
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH + tab_width_fraction*BASE_WIDTH, BASE_HEIGHT/2 - (tab_height_fraction*BASE_HEIGHT/2 + tab_triangle_fraction*BASE_HEIGHT), 0 ))
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH + tab_width_fraction*BASE_WIDTH, 0-OUTLINE_B_MARGIN, 0 ))
-	
+
 	doorOutlinePointsBottom.push(new THREE.Vector3( BASE_WIDTH, BASE_HEIGHT/2 - (tab_height_fraction*BASE_HEIGHT/2 + tab_triangle_fraction*BASE_HEIGHT), 0 ))
 	doorOutlinePointsBottom.push(new THREE.Vector3( BASE_WIDTH + tab_width_fraction*BASE_WIDTH, BASE_HEIGHT/2 - tab_height_fraction*BASE_HEIGHT/2, 0 ))
-	
+
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH, BASE_HEIGHT/2 + (tab_height_fraction*BASE_HEIGHT/2 + tab_triangle_fraction*BASE_HEIGHT), 0 ))
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH + tab_width_fraction*BASE_WIDTH, BASE_HEIGHT/2 + tab_height_fraction*BASE_HEIGHT/2, 0 ))
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH + tab_width_fraction*BASE_WIDTH, BASE_HEIGHT/2 + (tab_height_fraction*BASE_HEIGHT/2 + tab_triangle_fraction*BASE_HEIGHT), 0 ))
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH + tab_width_fraction*BASE_WIDTH, BASE_HEIGHT+OUTLINE_T_MARGIN, 0 ))
-	
+
 	doorOutlinePointsTop.push(new THREE.Vector3( BASE_WIDTH, BASE_HEIGHT/2 + (tab_height_fraction*BASE_HEIGHT/2 + tab_triangle_fraction*BASE_HEIGHT), 0 ))
 	doorOutlinePointsTop.push(new THREE.Vector3( BASE_WIDTH + tab_width_fraction*BASE_WIDTH, BASE_HEIGHT/2 + tab_height_fraction*BASE_HEIGHT/2, 0 ))
-	
+
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH + OUTLINE_R_MARGIN, 0-OUTLINE_B_MARGIN, 0 ))
 	geom.vertices.push(new THREE.Vector3( BASE_WIDTH + OUTLINE_R_MARGIN, BASE_HEIGHT+OUTLINE_T_MARGIN, 0 ))
 
 	l = fp+10*number_of_folds
-	
-	geom.faces.push(new THREE.Face3( l, l+1, l+2 ))
-	geom.faces.push(new THREE.Face3( l, l+3, l-4 ))
-	geom.faces.push(new THREE.Face3( l, l+2, l+3 ))
-	
-	geom.faces.push(new THREE.Face3( l+4, l+6, l+5 ))
-	geom.faces.push(new THREE.Face3( l-3, l+6, l+4 ))
-	geom.faces.push(new THREE.Face3( l-3, l+7, l+6 ))
-	
-	geom.faces.push(new THREE.Face3( l+3, l+7, l+8 ))
-	geom.faces.push(new THREE.Face3( l+8, l+7, l+9 ))
-	
+
+	geom.faces.push(new Face3( l, l+1, l+2 ))
+	geom.faces.push(new Face3( l, l+3, l-4 ))
+	geom.faces.push(new Face3( l, l+2, l+3 ))
+
+	geom.faces.push(new Face3( l+4, l+6, l+5 ))
+	geom.faces.push(new Face3( l-3, l+6, l+4 ))
+	geom.faces.push(new Face3( l-3, l+7, l+6 ))
+
+	geom.faces.push(new Face3( l+3, l+7, l+8 ))
+	geom.faces.push(new Face3( l+8, l+7, l+9 ))
+
 	var stagger = stagger_val*(col%2)
 	var offset_position_x = -CALENDAR_WIDTH/2+1+(col*3)+OUTLINE_L_MARGIN
 	var offset_position_y = CALENDAR_HEIGHT/2-((row+1)*3)+OUTLINE_B_MARGIN + stagger
-	
+
 	var uv_array
 	var uv_x
 	var uv_y
@@ -195,7 +244,6 @@ function createDoorOutline(row, col, texture) {
 	for ( let face_id = 0; face_id < geom.faces.length; face_id ++ ) {
 		face = geom.faces[face_id]
 		uv_array = []
-		// console.log(face)
 		vertex_id = face.a
 		uv_x = (CALENDAR_WIDTH/2 + (geom.vertices[vertex_id].x + offset_position_x)) / CALENDAR_WIDTH
 		uv_y = ((CALENDAR_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
@@ -209,66 +257,60 @@ function createDoorOutline(row, col, texture) {
 		uv_y = ((CALENDAR_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
 		uv_array.push(new THREE.Vector2(uv_x, uv_y))
 
-		// console.log(uv_array)
 		geom.faceVertexUvs[0].push(uv_array)
 	}
-	
-	const material_outline = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
 
-	// const material_outline = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: false, side: THREE.DoubleSide } );
-	const mesh_outline = new THREE.Mesh( geom, material_outline );
-	
-	// var stagger = stagger_val*(col%2)
+	const material_outline = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
+	const mesh_outline = new THREE.Mesh( legacyToBuffer(geom), material_outline );
+
 	mesh_outline.position.set(-CALENDAR_WIDTH/2+1+(col*3)+OUTLINE_L_MARGIN, CALENDAR_HEIGHT/2-((row+1)*3)+OUTLINE_B_MARGIN + stagger, 0)
 
 	var doorOutlinePoints = doorOutlinePointsTop.concat(doorOutlinePointsBottom.reverse())
-	
+
 	const doorOutlineGeom = new THREE.BufferGeometry().setFromPoints( doorOutlinePoints );
 	const doorOutlineMaterial = new THREE.LineBasicMaterial( { color: 0x000000 } );
 	const line = new THREE.Line( doorOutlineGeom, doorOutlineMaterial );
-	
+
 	line.position.set(-CALENDAR_WIDTH/2+1+(col*3)+OUTLINE_L_MARGIN, CALENDAR_HEIGHT/2-((row+1)*3)+OUTLINE_B_MARGIN + stagger, 0.001)
 
 	return([mesh_outline, line])
 }
 
 function createDoorSkeleton() {
-	
+
 	var bones = []
 	var bone = new THREE.Bone()
-	bone.position.x = 0 
+	bone.position.x = 0
 	bone.position.y = 0.5
 	bones.push(bone)
-	
+
 	var prevBone = bone
 	for (var i = 0; i < number_of_folds; i++) {
 		bone = new THREE.Bone()
-		bone.position.x = fold_width 
-		//bone.position.y = 0.5
+		bone.position.x = fold_width
 		bones.push(bone)
 		prevBone.add( bone )
 		prevBone = bone
-		
+
 	}
-	
+
 	bone = new THREE.Bone()
-	bone.position.x = tab_width_fraction*BASE_WIDTH 
-	//bone.position.y = 0.5
+	bone.position.x = tab_width_fraction*BASE_WIDTH
 	bones.push(bone)
 	prevBone.add( bone )
-	
+
 	const skeleton = new THREE.Skeleton( bones );
-	
+
 	return(skeleton)
 }
 
 function createDoor(row, col, texture_front, texture_back) {
 	const geometry = new createDoorMesh();
-	
+
 	var stagger = stagger_val*(col%2)
 	var offset_position_x = -CALENDAR_WIDTH/2+1+(col*3)+OUTLINE_L_MARGIN
 	var offset_position_y = CALENDAR_HEIGHT/2-((row+1)*3)+OUTLINE_B_MARGIN + stagger
-	
+
 	var uv_array
 	var uv_x
 	var uv_y
@@ -277,7 +319,6 @@ function createDoor(row, col, texture_front, texture_back) {
 	for ( let face_id = 0; face_id < geometry.faces.length; face_id ++ ) {
 		face = geometry.faces[face_id]
 		uv_array = []
-		// console.log(face)
 		vertex_id = face.a
 		uv_x = (CALENDAR_WIDTH/2 + (geometry.vertices[vertex_id].x + offset_position_x)) / CALENDAR_WIDTH
 		uv_y = ((CALENDAR_HEIGHT/2 + (geometry.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
@@ -291,16 +332,11 @@ function createDoor(row, col, texture_front, texture_back) {
 		uv_y = ((CALENDAR_HEIGHT/2 + (geometry.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
 		uv_array.push(new THREE.Vector2(uv_x, uv_y))
 
-		// console.log(uv_array)
 		geometry.faceVertexUvs[0].push(uv_array)
 	}
-	
-	geometry.computeFaceNormals();	
-	geometry.computeVertexNormals();
-	geometry.uvsNeedUpdate = true
-	
-	var bufferGeometry = new THREE.BufferGeometry().fromGeometry( geometry );
-	
+
+	var bufferGeometry = legacyToBuffer(geometry);
+
 	const position = bufferGeometry.attributes.position;
 
 	const vertex = new THREE.Vector3();
@@ -324,37 +360,23 @@ function createDoor(row, col, texture_front, texture_back) {
 
 	bufferGeometry.setAttribute( 'skinIndex', new THREE.Uint16BufferAttribute( skinIndices, 4 ) );
 	bufferGeometry.setAttribute( 'skinWeight', new THREE.Float32BufferAttribute( skinWeights, 4 ) );
-	
-	
-	const material_front = new THREE.MeshBasicMaterial( { map: texture_front, wireframe: false, side: THREE.BackSide, skinning: true } );
-	// const material_front = new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe: false, side: THREE.BackSide, skinning: true } );
-	
-	const material_back = new THREE.MeshBasicMaterial( { map: texture_back, wireframe: false, side: THREE.FrontSide, skinning: true } );
-	// const material_back = new THREE.MeshBasicMaterial( { color: 0x333333, wireframe: false, side: THREE.FrontSide, skinning: true } );
+
+
+	const material_front = new THREE.MeshBasicMaterial( { map: texture_front, wireframe: false, side: THREE.BackSide } );
+	const material_back = new THREE.MeshBasicMaterial( { map: texture_back, wireframe: false, side: THREE.FrontSide } );
 	var meshFront = new THREE.SkinnedMesh( bufferGeometry, material_front)
 	var meshBack = new THREE.SkinnedMesh( bufferGeometry, material_back)
-	
+
 	const skeleton = createDoorSkeleton();
 	const rootBone = skeleton.bones[ 0 ];
 	meshFront.add( rootBone );
 	meshFront.bind( skeleton );
 	meshBack.add( rootBone );
 	meshBack.bind( skeleton );
-	
-	// skeleton.bones[0].rotation.y = -0.8;
-	// skeleton.bones[1].rotation.y = -0.8;
-	// skeleton.bones[2].rotation.y = -0.8;
-	// skeleton.bones[3].rotation.y = -0.8;
-	// skeleton.bones[4].rotation.y = -0.8;
-	
-	
-	
+
 	meshFront.position.set(offset_position_x, offset_position_y, 0)
 	meshBack.position.set(offset_position_x, offset_position_y, 0)
-	
-	// console.log(meshFront)
-	
-	
+
 	var meshPosition = [offset_position_x + BASE_WIDTH/2, offset_position_y + BASE_HEIGHT/2]
 	return([meshFront, meshBack, meshPosition])
 }
@@ -363,61 +385,57 @@ function createDoor(row, col, texture_front, texture_back) {
 function createAdventFrontPanel(texture) {
 	const WIDTH = CALENDAR_WIDTH
 	const HEIGHT = CALENDAR_HEIGHT
-	
-	var geom = new THREE.Geometry();
-	
+
+	var geom = new LegacyGeometry();
+
 	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0-HEIGHT/2, 0 ))
 	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0+HEIGHT/2, 0 ))
 	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0-HEIGHT/2, 0 ))
 	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0+HEIGHT/2, 0 ))
-	
-	
+
+
 	var door_points_lists = []
 	var fp = 4
 	var i
 	var j
 	for (i = 0; i < 6; i++) {
 		for (j = 0; j < 4; j++) {
-			
+
 			var stagger = stagger_val*(j%2)
-			
+
 			geom.vertices.push(new THREE.Vector3(-WIDTH/2 + 1 + 3*j, HEIGHT/2 - 1 - 3*i + stagger, 0 ))
 			geom.vertices.push(new THREE.Vector3(-WIDTH/2 + 1 + 3*j, HEIGHT/2 - 1 - 3*i - 2 + stagger, 0 ))
 			geom.vertices.push(new THREE.Vector3(-WIDTH/2 + 1 + 3*j + 2, HEIGHT/2 - 1 - 3*i + stagger, 0 ))
 			geom.vertices.push(new THREE.Vector3(-WIDTH/2 + 1 + 3*j + 2, HEIGHT/2 - 1 - 3*i - 2 + stagger, 0 ))
-			
+
 			door_points_lists.push([fp, fp+1, fp+2, fp+3])
-			// geom.faces.push(new THREE.Face3( fp, fp+1, fp+2))
-			// geom.faces.push(new THREE.Face3( fp+1, fp+3, fp+2))
 			fp += 4
-			
-			
+
+
 		}
 	}
-	
+
 	i = 6
 	j = 2
 	stagger = stagger_val*(j%2)
-	
+
 	geom.vertices.push(new THREE.Vector3(-WIDTH/2 + 1 + 3*j, HEIGHT/2 - 1 - 3*i + stagger, 0 ))
 	geom.vertices.push(new THREE.Vector3(-WIDTH/2 + 1 + 3*j, HEIGHT/2 - 1 - 3*i - 2 + stagger, 0 ))
 	geom.vertices.push(new THREE.Vector3(-WIDTH/2 + 1 + 3*j + 2, HEIGHT/2 - 1 - 3*i + stagger, 0 ))
 	geom.vertices.push(new THREE.Vector3(-WIDTH/2 + 1 + 3*j + 2, HEIGHT/2 - 1 - 3*i - 2 + stagger, 0 ))
-	
+
 	door_points_lists.push([fp, fp+1, fp+2, fp+3])
-	// geom.faces.push(new THREE.Face3( fp, fp+1, fp+2))
-	// geom.faces.push(new THREE.Face3( fp+1, fp+3, fp+2))
 	fp += 4
-	
+
 	// get array of vertices
 	var positions = geom.vertices
 	var positions_array = []
 	for (i = 0; i < positions.length; i++) {
 		var v = positions[i]
-		positions_array.push([v.x, v.y]) 
+		positions_array.push([v.x, v.y])
 	}
-	
-	
+
+
 	var triangles = Delaunator.from(positions_array).triangles
 	for (i = 0; i < triangles.length; i+=3) {
 		var triangle = [triangles[i], triangles[i+1], triangles[i+2]]
@@ -429,10 +447,10 @@ function createAdventFrontPanel(texture) {
 			}
 		}
 		if (add_face) {
-			geom.faces.push(new THREE.Face3( triangle[0], triangle[1], triangle[2]))
+			geom.faces.push(new Face3( triangle[0], triangle[1], triangle[2]))
 		}
 	}
-	
+
 	var offset_position_x = 0
 	var offset_position_y = 0
 	var uv_array
@@ -443,7 +461,6 @@ function createAdventFrontPanel(texture) {
 	for ( let face_id = 0; face_id < geom.faces.length; face_id ++ ) {
 		face = geom.faces[face_id]
 		uv_array = []
-		// console.log(face)
 		vertex_id = face.a
 		uv_x = (CALENDAR_WIDTH/2 + (geom.vertices[vertex_id].x + offset_position_x)) / CALENDAR_WIDTH
 		uv_y = ((CALENDAR_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
@@ -457,29 +474,26 @@ function createAdventFrontPanel(texture) {
 		uv_y = ((CALENDAR_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / CALENDAR_HEIGHT)
 		uv_array.push(new THREE.Vector2(uv_x, uv_y))
 
-		// console.log(uv_array)
 		geom.faceVertexUvs[0].push(uv_array)
 	}
-	geom.faceVertexUvs[1] = geom.faceVertexUvs[0] 
 
 	const material = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
-	// const material = new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: false, side: THREE.DoubleSide } );
-	const mesh = new THREE.Mesh( geom, material );
-	
+	const mesh = new THREE.Mesh( legacyToBuffer(geom), material );
+
 	return(mesh)
-	
+
 }
 
 function getTabFaceIndexArray() {
 	let fp = 2*number_of_folds
 	return [fp, fp+1, fp+2, fp+3]
-	
+
 }
 
 function createSidePanelLeft(texture) {
 	const WIDTH = CALENDAR_WIDTH
 	const HEIGHT = CALENDAR_HEIGHT
-	
+
 	var offset = 0
 	var material
 	if (!texture) {
@@ -488,28 +502,28 @@ function createSidePanelLeft(texture) {
 	} else {
 		material = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
 	}
-	
-	var geom = new THREE.Geometry();
+
+	var geom = new LegacyGeometry();
 	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2+offset, 0-HEIGHT/2, -CALENDAR_DEPTH ))
 	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2+offset, 0+HEIGHT/2, -CALENDAR_DEPTH ))
 	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2+offset, 0-HEIGHT/2, 0 ))
 	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2+offset, 0+HEIGHT/2, 0 ))
-	
+
 	geom.faceVertexUvs[0].push([new THREE.Vector2(0,0), new THREE.Vector2(0,1), new THREE.Vector2(1,0)])
 	geom.faceVertexUvs[0].push([new THREE.Vector2(1,0), new THREE.Vector2(0,1), new THREE.Vector2(1,1)])
-	
-	geom.faces.push(new THREE.Face3( 0, 1, 2 ))
-	geom.faces.push(new THREE.Face3( 2, 1, 3 ))
-		
-	var sideMesh = new THREE.Mesh(geom, material)
-		
+
+	geom.faces.push(new Face3( 0, 1, 2 ))
+	geom.faces.push(new Face3( 2, 1, 3 ))
+
+	var sideMesh = new THREE.Mesh(legacyToBuffer(geom), material)
+
 	return sideMesh
 }
 
 function createSidePanelRight(texture) {
 	const WIDTH = CALENDAR_WIDTH
 	const HEIGHT = CALENDAR_HEIGHT
-	
+
 	var offset = 0
 	var material
 	if (!texture) {
@@ -518,28 +532,28 @@ function createSidePanelRight(texture) {
 	} else {
 		material = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
 	}
-	
-	var geom = new THREE.Geometry();
+
+	var geom = new LegacyGeometry();
 	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2-offset, 0-HEIGHT/2, -CALENDAR_DEPTH ))
 	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2-offset, 0+HEIGHT/2, -CALENDAR_DEPTH ))
 	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2-offset, 0-HEIGHT/2, 0))
 	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2-offset, 0+HEIGHT/2, 0 ))
-	
+
 	geom.faceVertexUvs[0].push([new THREE.Vector2(0,0), new THREE.Vector2(0,1), new THREE.Vector2(1,0)])
 	geom.faceVertexUvs[0].push([new THREE.Vector2(1,0), new THREE.Vector2(0,1), new THREE.Vector2(1,1)])
-	
-	geom.faces.push(new THREE.Face3( 0, 1, 2 ))
-	geom.faces.push(new THREE.Face3( 2, 1, 3 ))
-		
-	var sideMesh = new THREE.Mesh(geom, material)
-		
+
+	geom.faces.push(new Face3( 0, 1, 2 ))
+	geom.faces.push(new Face3( 2, 1, 3 ))
+
+	var sideMesh = new THREE.Mesh(legacyToBuffer(geom), material)
+
 	return sideMesh
 }
 
 function createSidePanelTop(texture) {
 	const WIDTH = CALENDAR_WIDTH
 	const HEIGHT = CALENDAR_HEIGHT
-	
+
 	var offset = 0
 	var material
 	if (!texture) {
@@ -548,28 +562,28 @@ function createSidePanelTop(texture) {
 	} else {
 		material = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
 	}
-	
-	var geom = new THREE.Geometry();
+
+	var geom = new LegacyGeometry();
 	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0+HEIGHT/2-offset, -CALENDAR_DEPTH ))
 	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0+HEIGHT/2-offset, 0 ))
 	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0+HEIGHT/2-offset, -CALENDAR_DEPTH ))
 	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0+HEIGHT/2-offset, 0 ))
-	
+
 	geom.faceVertexUvs[0].push([new THREE.Vector2(0,0), new THREE.Vector2(0,1), new THREE.Vector2(1,0)])
 	geom.faceVertexUvs[0].push([new THREE.Vector2(1,0), new THREE.Vector2(0,1), new THREE.Vector2(1,1)])
-	
-	geom.faces.push(new THREE.Face3( 0, 1, 2 ))
-	geom.faces.push(new THREE.Face3( 2, 1, 3 ))
-		
-	var sideMesh = new THREE.Mesh(geom, material)
-		
+
+	geom.faces.push(new Face3( 0, 1, 2 ))
+	geom.faces.push(new Face3( 2, 1, 3 ))
+
+	var sideMesh = new THREE.Mesh(legacyToBuffer(geom), material)
+
 	return sideMesh
 }
 
 function createSidePanelBottom(texture) {
 	const WIDTH = CALENDAR_WIDTH
 	const HEIGHT = CALENDAR_HEIGHT
-	
+
 	var offset = 0
 	var material
 	if (!texture) {
@@ -578,45 +592,45 @@ function createSidePanelBottom(texture) {
 	} else {
 		material = new THREE.MeshBasicMaterial( { map: texture, wireframe: false, side: THREE.DoubleSide } );
 	}
-	
-	var geom = new THREE.Geometry();
+
+	var geom = new LegacyGeometry();
 	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0-HEIGHT/2+offset, -CALENDAR_DEPTH ))
 	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0-HEIGHT/2+offset, 0 ))
 	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0-HEIGHT/2+offset, -CALENDAR_DEPTH ))
 	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0-HEIGHT/2+offset, 0 ))
-	
+
 	geom.faceVertexUvs[0].push([new THREE.Vector2(0,0), new THREE.Vector2(0,1), new THREE.Vector2(1,0)])
 	geom.faceVertexUvs[0].push([new THREE.Vector2(1,0), new THREE.Vector2(0,1), new THREE.Vector2(1,1)])
-	
-	geom.faces.push(new THREE.Face3( 0, 1, 2 ))
-	geom.faces.push(new THREE.Face3( 2, 1, 3 ))
-		
-	var sideMesh = new THREE.Mesh(geom, material)
-		
+
+	geom.faces.push(new Face3( 0, 1, 2 ))
+	geom.faces.push(new Face3( 2, 1, 3 ))
+
+	var sideMesh = new THREE.Mesh(legacyToBuffer(geom), material)
+
 	return sideMesh
 }
 
 function createBackPanel(texture) {
 	const WIDTH = CALENDAR_WIDTH
 	const HEIGHT = CALENDAR_HEIGHT
-	var geom = new THREE.Geometry();
+	var geom = new LegacyGeometry();
 	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0-HEIGHT/2, 0	))
 	geom.vertices.push(new THREE.Vector3( 0-WIDTH/2, 0+HEIGHT/2, 0 ))
 	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0-HEIGHT/2, 0 ))
 	geom.vertices.push(new THREE.Vector3( 0+WIDTH/2, 0+HEIGHT/2, 0 ))
-	
-	geom.faces.push(new THREE.Face3( 0, 1, 2 ))
-	geom.faces.push(new THREE.Face3( 2, 1, 3 ))
-	
+
+	geom.faces.push(new Face3( 0, 1, 2 ))
+	geom.faces.push(new Face3( 2, 1, 3 ))
+
 	geom.faceVertexUvs[0].push([new THREE.Vector2(0,0), new THREE.Vector2(0,1), new THREE.Vector2(1,0)])
 	geom.faceVertexUvs[0].push([new THREE.Vector2(1,0), new THREE.Vector2(0,1), new THREE.Vector2(1,1)])
-	
+
 	const material = new THREE.MeshBasicMaterial( {map: texture, color: CALENDAR_INSIDE_COLOUR, wireframe: false, side: THREE.DoubleSide } );
-	
-	var backMesh = new THREE.Mesh(geom, material)
-	
+
+	var backMesh = new THREE.Mesh(legacyToBuffer(geom), material)
+
 	backMesh.position.set(0,0,-CALENDAR_DEPTH)
-	
+
 	return backMesh
 }
 
@@ -627,91 +641,91 @@ function createInsideToken(pos_x, pox_y, texture) {
 	const TOKEN_RADIUS = 0.2
 	const TOKEN_RADIUS_DIVISIONS = 10
 	const TOKEN_THICKNESS = 0.07
-	
-	var geom = new THREE.Geometry();
-	
+
+	var geom = new LegacyGeometry();
+
 	var x1 = -TOKEN_WIDTH/2+TOKEN_RADIUS
 	var x2 = TOKEN_WIDTH/2-TOKEN_RADIUS
 	var y1 = -TOKEN_HEIGHT/2+TOKEN_RADIUS
 	var y2 = TOKEN_HEIGHT/2-TOKEN_RADIUS
-	
+
 	geom.vertices.push(new THREE.Vector3(x1, y1, 0))
 	geom.vertices.push(new THREE.Vector3(x1, y2, 0))
 	geom.vertices.push(new THREE.Vector3(x2, y2, 0))
 	geom.vertices.push(new THREE.Vector3(x2, y1, 0))
-	
-	geom.faces.push(new THREE.Face3( 0, 1, 2 ))
-	geom.faces.push(new THREE.Face3( 0, 2, 3 ))
-	
+
+	geom.faces.push(new Face3( 0, 1, 2 ))
+	geom.faces.push(new Face3( 0, 2, 3 ))
+
 	var fp = 4
-	
+
 	var i
 	var x_radius
 	var y_radius
-	for ( i = 0; i < TOKEN_RADIUS_DIVISIONS+1; i ++ ) { 
+	for ( i = 0; i < TOKEN_RADIUS_DIVISIONS+1; i ++ ) {
 		x_radius = TOKEN_RADIUS*Math.sin(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
 		y_radius = TOKEN_RADIUS*Math.cos(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
-		
+
 		geom.vertices.push(new THREE.Vector3(x1-x_radius, y1-y_radius, 0))
-		
+
 		if (i >= 1) {
-			geom.faces.push(new THREE.Face3( fp+i-1, fp+i, 0 ))
+			geom.faces.push(new Face3( fp+i-1, fp+i, 0 ))
 		}
 	}
-	
+
 	fp = fp + TOKEN_RADIUS_DIVISIONS+1
-	
-	geom.faces.push(new THREE.Face3( 0, fp-1, fp ))
-	geom.faces.push(new THREE.Face3( 0, fp, 1 ))
-	
-	for ( i = 0; i < TOKEN_RADIUS_DIVISIONS+1; i ++ ) { 
+
+	geom.faces.push(new Face3( 0, fp-1, fp ))
+	geom.faces.push(new Face3( 0, fp, 1 ))
+
+	for ( i = 0; i < TOKEN_RADIUS_DIVISIONS+1; i ++ ) {
 		x_radius = TOKEN_RADIUS*Math.cos(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
 		y_radius = TOKEN_RADIUS*Math.sin(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
-		
+
 		geom.vertices.push(new THREE.Vector3(x1-x_radius, y2+y_radius, 0))
-		
+
 		if (i >= 1) {
-			geom.faces.push(new THREE.Face3( fp+i-1, fp+i, 1 ))
+			geom.faces.push(new Face3( fp+i-1, fp+i, 1 ))
 		}
 	}
-	
+
 	fp = fp + TOKEN_RADIUS_DIVISIONS+1
-	
-	geom.faces.push(new THREE.Face3( 1, fp-1, fp ))
-	geom.faces.push(new THREE.Face3( 1, fp, 2 ))
-	
-	for ( i = 0; i < TOKEN_RADIUS_DIVISIONS+1; i ++ ) { 
+
+	geom.faces.push(new Face3( 1, fp-1, fp ))
+	geom.faces.push(new Face3( 1, fp, 2 ))
+
+	for ( i = 0; i < TOKEN_RADIUS_DIVISIONS+1; i ++ ) {
 		x_radius = TOKEN_RADIUS*Math.sin(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
 		y_radius = TOKEN_RADIUS*Math.cos(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
-		
+
 		geom.vertices.push(new THREE.Vector3(x2+x_radius, y2+y_radius, 0))
-		
+
 		if (i >= 1) {
-			geom.faces.push(new THREE.Face3( fp+i-1, fp+i, 2 ))
+			geom.faces.push(new Face3( fp+i-1, fp+i, 2 ))
 		}
 	}
-	
+
 	fp = fp + TOKEN_RADIUS_DIVISIONS+1
-	
-	geom.faces.push(new THREE.Face3( 2, fp-1, fp ))
-	geom.faces.push(new THREE.Face3( 2, fp, 3 ))
-	
-	for ( i = 0; i < TOKEN_RADIUS_DIVISIONS+1; i ++ ) { 
+
+	geom.faces.push(new Face3( 2, fp-1, fp ))
+	geom.faces.push(new Face3( 2, fp, 3 ))
+
+	for ( i = 0; i < TOKEN_RADIUS_DIVISIONS+1; i ++ ) {
 		x_radius = TOKEN_RADIUS*Math.cos(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
 		y_radius = TOKEN_RADIUS*Math.sin(Math.PI/2*i/TOKEN_RADIUS_DIVISIONS)
-		
+
 		geom.vertices.push(new THREE.Vector3(x2+x_radius, y1-y_radius, 0))
-		
+
 		if (i >= 1) {
-			geom.faces.push(new THREE.Face3( fp+i-1, fp+i, 3 ))
+			geom.faces.push(new Face3( fp+i-1, fp+i, 3 ))
 		}
 	}
-	
+
 	fp = fp + TOKEN_RADIUS_DIVISIONS+1
-	
-	geom.faces.push(new THREE.Face3( 3, fp-1, 4 ))
-	geom.faces.push(new THREE.Face3( 3, 4, 0 ))
-	
+
+	geom.faces.push(new Face3( 3, fp-1, 4 ))
+	geom.faces.push(new Face3( 3, 4, 0 ))
+
 	var old_point
 	for (i = 0; i < fp; i ++ ) {
 		old_point = geom.vertices[i]
@@ -720,19 +734,19 @@ function createInsideToken(pos_x, pox_y, texture) {
 
 	var no_faces = geom.faces.length
 	var old_face
-	for ( i = 0; i < no_faces; i ++ ) { 
+	for ( i = 0; i < no_faces; i ++ ) {
 		old_face = geom.faces[i]
-		geom.faces.push(new THREE.Face3(old_face.a+fp, old_face.b+fp, old_face.c+fp))
+		geom.faces.push(new Face3(old_face.a+fp, old_face.b+fp, old_face.c+fp))
 	}
-	
+
 	for (i = 5; i < fp; i ++ ) {
-		geom.faces.push(new THREE.Face3(i, i-1, i-1+fp))
-		geom.faces.push(new THREE.Face3(i, i-1+fp, i+fp))
+		geom.faces.push(new Face3(i, i-1, i-1+fp))
+		geom.faces.push(new Face3(i, i-1+fp, i+fp))
 	}
-	
-	geom.faces.push(new THREE.Face3( fp, 2*fp-1, 4 ))
-	geom.faces.push(new THREE.Face3( 2*fp-1, 4+fp, 4 ))
-	
+
+	geom.faces.push(new Face3( fp, 2*fp-1, 4 ))
+	geom.faces.push(new Face3( 2*fp-1, 4+fp, 4 ))
+
 	var offset_position_x = 0
 	var offset_position_y = 0
 	var uv_array
@@ -743,7 +757,6 @@ function createInsideToken(pos_x, pox_y, texture) {
 	for ( let face_id = 0; face_id < geom.faces.length; face_id ++ ) {
 		face = geom.faces[face_id]
 		uv_array = []
-		// console.log(face)
 		vertex_id = face.a
 		uv_x = (TOKEN_WIDTH/2 + (geom.vertices[vertex_id].x + offset_position_x)) / TOKEN_WIDTH
 		uv_y = ((TOKEN_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / TOKEN_HEIGHT)
@@ -757,20 +770,19 @@ function createInsideToken(pos_x, pox_y, texture) {
 		uv_y = ((TOKEN_HEIGHT/2 + (geom.vertices[vertex_id].y + offset_position_y)) / TOKEN_HEIGHT)
 		uv_array.push(new THREE.Vector2(uv_x, uv_y))
 
-		// console.log(uv_array)
 		geom.faceVertexUvs[0].push(uv_array)
 	}
-	
+
 
 	const material = new THREE.MeshBasicMaterial( {map: texture, wireframe: false, side: THREE.DoubleSide } );
-	
-	var tokenMesh = new THREE.Mesh(geom, material)
-	
+
+	var tokenMesh = new THREE.Mesh(legacyToBuffer(geom), material)
+
 	tokenMesh.position.set(pos_x,pox_y,-0.2)
-	
+
 	return tokenMesh
-	
-	
+
+
 }
 
 
