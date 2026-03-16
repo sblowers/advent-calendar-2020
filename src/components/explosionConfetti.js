@@ -1,182 +1,118 @@
-// explosion confetti from https://github.com/mrgoonie/three.confetti.explosion.js/blob/master/src/three.confetti.explode.js
-import * as THREE from 'three'; 
+import * as THREE from 'three';
 
+const DEFAULTS = {
+	amount: 150,
+	size: 0.02,
+	radius: 300,
+	fallingHeight: 3,
+	fallingSpeed: 0.01,
+	colors: [0xCE1713, 0xD5B534, 0x0F7833],
+};
 
-Math.Drandom = function(number) {
-	return number * Math.random();
-}
+// Single shared geometry; each particle's size is controlled via scale
+const _sharedGeometry = new THREE.PlaneGeometry(1, 1);
 
-Math.DrandomFromTo = function(from, to) {
-	return from + (Math.random() * (to - from))
-}
+class ExplosionConfetti extends THREE.Object3D {
+	constructor(options, position, rotation) {
+		super();
 
-Math.DrandomPlusMinus = function(val) {
-	// return val*(Math.random() < 0.5 ? -1 : 1)
-	// return val*2*(Math.random()-0.5)
-	return val * (Math.random() - Math.random());
-}
+		this._opts = Object.assign({}, DEFAULTS, options);
+		this._particles = [];
 
-const getRandom = function(array) {
-	return array[Math.floor( Math.random() * array.length)]
-}
+		this.position.copy(position);
+		this.rotation.set(rotation.x, rotation.y, rotation.z);
 
-const objectMerge = function(object, toObject){
-        var obj = JSON.parse(JSON.stringify(toObject))
-        for(var key in object){
-            var val = object[key];
-            obj[key] = val;
-        }
-        return obj;
-    }
-	
-const DArrayRemove = function(item, array) {
-        var arr = array.slice(); // clone
-        var index = arr.indexOf(item);
-        if (index > -1) {
-            arr.splice(index, 1);
-        }
-        return arr;
-    }
+		this._build();
+	}
 
-function ExplosionConfetti(options){
-	// default
-	var _options = {
-		amount: 10,
-		rate: 2,
-		radius: 600,
-		areaWidth: 500,
-		areaHeight: 500,
-		fallingHeight: 500,
-		fallingSpeed: 1,
-		colors: [0xffffff, 0xff0000, 0xffff00]
-	};
-	if(options) _options = objectMerge(options, _options);
+	_build() {
+		const { amount, size, radius, colors } = this._opts;
 
-	var scope = this;
-	scope.options = _options;
-	scope.particles = [];
-	scope.booms = [];
-	scope.options.rate = scope.options.rate / 100;
-	if(scope.options.rate > 0.2) scope.options.rate = 0.2;
+		for (let i = 0; i < amount; i++) {
+			const color = colors[Math.floor(Math.random() * colors.length)];
+			const material = new THREE.MeshBasicMaterial({
+				color,
+				transparent: true,
+				depthWrite: false,
+				side: THREE.DoubleSide,
+			});
+			const mesh = new THREE.Mesh(_sharedGeometry, material);
 
-	this.object = new THREE.Object3D();
+			// Scale the shared 1×1 plane to match the original size × random factor
+			const s = size * (2 + Math.random() * 3); // 0.04 – 0.10 scene units
+			mesh.scale.set(s, s, 1);
 
-	var geometry = new THREE.PlaneBufferGeometry(1, 1);
-	var material = new THREE.MeshBasicMaterial( {color: 0xffffff, side: THREE.DoubleSide} );
+			mesh.rotation.set(
+				Math.random() * Math.PI * 2,
+				Math.random() * Math.PI * 2,
+				Math.random() * Math.PI * 2,
+			);
 
-	this.init = function(){
-		// setInterval(scope.explode, 1000);
-	};
+			this.add(mesh);
 
-	this.explode = function(){
-		// console.log("explode");
-		var boom = new THREE.Object3D();
-		boom.life = Math.DrandomFromTo(500, 500);
-		boom.position.x = -(scope.options.areaWidth/2) + scope.options.areaWidth * Math.random();
-		boom.position.y = scope.options.fallingHeight + Math.DrandomPlusMinus(100);
-		boom.position.z = -(scope.options.areaWidth/2) + scope.options.areaWidth * Math.random();
-		scope.object.add(boom);
+			this._particles.push({
+				mesh,
+				destination: {
+					x: (Math.random() - 0.5) * radius * 2 * Math.random(),
+					y: (Math.random() - 0.5) * radius * 2 * Math.random(),
+					z: (Math.random() - 0.5) * radius * 2 * Math.random(),
+				},
+				rotateSpeed: {
+					x: (Math.random() - Math.random()) * 0.4,
+					y: (Math.random() - Math.random()) * 0.4,
+					z: (Math.random() - Math.random()) * 0.4,
+				},
+			});
+		}
+	}
 
-		scope.booms.push(boom);
+	update() {
+		if (this._particles.length === 0) return;
 
-		for(var i=0; i<scope.options.amount; i++){
-			var material = new THREE.MeshBasicMaterial( {color: getRandom(scope.options.colors), transparent: true, side: THREE.DoubleSide} );
-			var particle = new THREE.Mesh( geometry, material );
-			boom.add( particle );
+		const { fallingSpeed, fallingHeight } = this._opts;
+		const dead = [];
 
-			particle.life = 1;
+		for (const p of this._particles) {
+			// Pull destination downward each frame to create gravity-like fall
+			p.destination.y -= 3 + Math.random() * 3;
 
-			particle.destination = {};
-			particle.destination.x = ( Math.random() - 0.5) * (scope.options.radius*2) * Math.random();
-			particle.destination.y = ( Math.random() - 0.5) * (scope.options.radius*2) * Math.random();
-			particle.destination.z = ( Math.random() - 0.5) * (scope.options.radius*2) * Math.random();
+			const pos = p.mesh.position;
+			pos.x += fallingSpeed * (p.destination.x - pos.x) / 80;
+			pos.y += 0.5 * fallingSpeed * (p.destination.y - pos.y) / 80;
+			pos.z += fallingSpeed * (p.destination.z - pos.z) / 80;
 
-			particle.rotation.x = Math.Drandom(360);
-			particle.rotation.y = Math.Drandom(360);
-			particle.rotation.z = Math.Drandom(360);
+			p.mesh.rotation.x += p.rotateSpeed.x;
+			p.mesh.rotation.y += p.rotateSpeed.y;
+			p.mesh.rotation.z += p.rotateSpeed.z;
 
-			var size = Math.DrandomFromTo(2, 5);
-			particle.scale.x = size;
-			particle.scale.y = size;
-
-			particle.rotateSpeedX = Math.DrandomPlusMinus(0.4);
-			particle.rotateSpeedY = Math.DrandomPlusMinus(0.4);
-			particle.rotateSpeedZ = Math.DrandomPlusMinus(0.4);
+			if (pos.y < -fallingHeight) {
+				dead.push(p);
+			}
 		}
 
-		boom.dispose = () => {
-			console.log(boom)
-			for(var i=0; i < boom.children.length; i++){
-				var particle = boom.children[i];
-				particle.material.dispose();
-				particle.geometry.dispose();
-				boom.remove( particle );
-				particle = null;
-			}
-			boom.parent.remove( boom );
-			boom = null;
-		};
-	};
-
-	this.update = function(){
-		if(Math.random() < scope.options.rate) scope.explode();
-
-		var particleAmount = 0;
-		for(var i=0; i < scope.booms.length; i++){
-			var boom = scope.booms[i];
-			
-			for(var k=0; k < boom.children.length; k++){
-				var particle = boom.children[k];
-
-				particle.destination.y -= Math.DrandomFromTo(3,6);
-				particle.life -= Math.DrandomFromTo(0.005, 0.01);
-
-				var speedX = (particle.destination.x - particle.position.x) / 80;
-				var speedY = (particle.destination.y - particle.position.y) / 80;
-				var speedZ = (particle.destination.z - particle.position.z) / 80;
-
-				particle.position.x += speedX;
-				particle.position.y += speedY;
-				particle.position.z += speedZ;
-
-				particle.rotation.y += particle.rotateSpeedY;
-				particle.rotation.x += particle.rotateSpeedX;
-				particle.rotation.z += particle.rotateSpeedZ;
-
-				// particle.material.opacity -= Math.DrandomFromTo(0.005, 0.01);
-
-				if(particle.position.y < -scope.options.fallingHeight){
-					particle.material.dispose();
-					particle.geometry.dispose();
-					boom.remove(particle);
-					particle = null;
-				}
-			}
-
-			if(boom.children.length <= 10){
-				boom.dispose();
-				scope.booms = DArrayRemove(boom, scope.booms);
-			}
-
-			particleAmount += boom.children.length;
+		// Remove dead particles without mutating the array while iterating
+		for (const p of dead) {
+			p.mesh.material.dispose();
+			this.remove(p.mesh);
 		}
+		this._particles = this._particles.filter(p => !dead.includes(p));
 
-		// document.getElementById("particleCount").innerHTML = particleAmount;
-	};
-
-	this.dispose = function(){
-		for(var i=0; i<scope.particles.length; i++){
-			var particle = scope.particles[i];
-			particle.material.dispose();
-			particle.geometry.dispose();
-			scope.object.remove( particle );
-			particle = null;
+		if (this._particles.length <= 10) {
+			this._cleanup();
 		}
-		scope.object.parent.remove( scope.object );
-		scope.object = null;
-		scope.update = function(){};
-	};
+	}
 
-	return this;
+	_cleanup() {
+		for (const p of this._particles) {
+			p.mesh.material.dispose();
+			this.remove(p.mesh);
+		}
+		this._particles = [];
+
+		if (this.parent) {
+			this.parent.remove(this);
+		}
+	}
 }
-export default ExplosionConfetti
+
+export default ExplosionConfetti;

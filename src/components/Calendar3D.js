@@ -1,393 +1,264 @@
-import React from 'react';
+import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import * as THREE from 'three';
-import * as TWEEN from 'tween.js'
+
+// Disable Three.js colour management to preserve the original rendering look.
+// In r152+ this defaults to true, which applies sRGB↔linear conversions that
+// make textures appear pale compared to the r122 behaviour.
+THREE.ColorManagement.enabled = false;
+import * as TWEEN from '@tweenjs/tween.js'
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {createDoor, createDoorOutline, createAdventFrontPanel, createSidePanelLeft, createSidePanelRight, createSidePanelTop, createSidePanelBottom, createBackPanel, createInsideToken} from './MeshCreation'
 import {snowEffectParticles, updateSnowEffectParticles} from './SnowEffect'
-import ExplosionConfetti from './explosionConfetti2'
+import ExplosionConfetti from './explosionConfetti'
 
-// import bodie_test from '../images/bodie_test.jpg'
-import advent_background from '../images/advent_background.png'
-import advent_background_rear from '../images/advent_background_rear.png'
-import cardboard_rear from '../images/cardboard_back.jpg'
-import advent_side_left from '../images/advent_side_left.png'
-import advent_side_right from '../images/advent_side_right.png'
-import advent_side_top from '../images/advent_side_top.png'
-import advent_side_bottom from '../images/advent_side_bottom.png'
-// import token_envelope from '../images/token_envelope.png'
+import advent_background from '../assets/images/advent_background.png'
+import advent_background_rear from '../assets/images/advent_background_rear.png'
+import cardboard_rear from '../assets/images/cardboard_back.jpg'
+import advent_side_left from '../assets/images/advent_side_left.png'
+import advent_side_right from '../assets/images/advent_side_right.png'
+import advent_side_top from '../assets/images/advent_side_top.png'
+import advent_side_bottom from '../assets/images/advent_side_bottom.png'
 
-import token_day1 from '../images/tokens/day1.png'
-import token_day2 from '../images/tokens/day2.png'
-import token_day3 from '../images/tokens/day3.png'
-import token_day4 from '../images/tokens/day4.png'
-import token_day5 from '../images/tokens/day5.png'
-import token_day6 from '../images/tokens/day6.png'
-import token_day7 from '../images/tokens/day7.png'
-import token_day8 from '../images/tokens/day8.png'
-import token_day9 from '../images/tokens/day9.png'
-import token_day10 from '../images/tokens/day10.png'
-import token_day11 from '../images/tokens/day11.png'
-import token_day12 from '../images/tokens/day12.png'
-import token_day13 from '../images/tokens/day13.png'
-import token_day14 from '../images/tokens/day14.png'
-import token_day15 from '../images/tokens/day15.png'
-import token_day16 from '../images/tokens/day16.png'
-import token_day17 from '../images/tokens/day17.png'
-import token_day18 from '../images/tokens/day18.png'
-import token_day19 from '../images/tokens/day19.png'
-import token_day20 from '../images/tokens/day20.png'
-import token_day21 from '../images/tokens/day21.png'
-import token_day22 from '../images/tokens/day22.png'
-import token_day23 from '../images/tokens/day23.png'
-import token_day24 from '../images/tokens/day24.png'
-import token_day25 from '../images/tokens/day25.png'
+import token_day1 from '../assets/images/tokens/day1.png'
+import token_day2 from '../assets/images/tokens/day2.png'
+import token_day3 from '../assets/images/tokens/day3.png'
+import token_day4 from '../assets/images/tokens/day4.png'
+import token_day5 from '../assets/images/tokens/day5.png'
+import token_day6 from '../assets/images/tokens/day6.png'
+import token_day7 from '../assets/images/tokens/day7.png'
+import token_day8 from '../assets/images/tokens/day8.png'
+import token_day9 from '../assets/images/tokens/day9.png'
+import token_day10 from '../assets/images/tokens/day10.png'
+import token_day11 from '../assets/images/tokens/day11.png'
+import token_day12 from '../assets/images/tokens/day12.png'
+import token_day13 from '../assets/images/tokens/day13.png'
+import token_day14 from '../assets/images/tokens/day14.png'
+import token_day15 from '../assets/images/tokens/day15.png'
+import token_day16 from '../assets/images/tokens/day16.png'
+import token_day17 from '../assets/images/tokens/day17.png'
+import token_day18 from '../assets/images/tokens/day18.png'
+import token_day19 from '../assets/images/tokens/day19.png'
+import token_day20 from '../assets/images/tokens/day20.png'
+import token_day21 from '../assets/images/tokens/day21.png'
+import token_day22 from '../assets/images/tokens/day22.png'
+import token_day23 from '../assets/images/tokens/day23.png'
+import token_day24 from '../assets/images/tokens/day24.png'
+import token_day25 from '../assets/images/tokens/day25.png'
 
+import sound1 from "../assets/sounds/test.mp3"
+import sound2 from "../assets/sounds/test2.mp3"
+import sound3 from "../assets/sounds/test3.mp3"
+import sound4 from "../assets/sounds/test2.mp3"
+import sound5 from "../assets/sounds/test.mp3"
+import sound_cheer from "../assets/sounds/cheering.mp3"
 
+const Calendar3D = forwardRef(function Calendar3D({ play, readCookie, updateCookie, showBadDoor, showContents }, ref) {
+	const canvasRef = useRef(null);
+	const playRef = useRef(play);
+	const frameIdRef = useRef(null);
+	const animateFnRef = useRef(null);
+	const resetDoorsRef = useRef(null);
 
-import sound1 from "../sounds/test.mp3"
-import sound2 from "../sounds/test2.mp3"
-import sound3 from "../sounds/test3.mp3"
-import sound4 from "../sounds/test2.mp3"
-import sound5 from "../sounds/test.mp3"
+	// Keep props accessible inside stable event handler closures
+	const showBadDoorRef = useRef(showBadDoor);
+	const showContentsRef = useRef(showContents);
+	const updateCookieRef = useRef(updateCookie);
+	useEffect(() => {
+		showBadDoorRef.current = showBadDoor;
+		showContentsRef.current = showContents;
+		updateCookieRef.current = updateCookie;
+	});
 
-import sound_cheer from "../sounds/cheering.mp3"
+	// Sync play state and restart animation loop if it stopped
+	useEffect(() => {
+		playRef.current = play;
+		if (play && animateFnRef.current && frameIdRef.current === null) {
+			frameIdRef.current = requestAnimationFrame(animateFnRef.current);
+		}
+	}, [play]);
 
-class Calendar3D extends React.Component {
-	constructor(props) {
-	  super(props);
-	  // Don't call this.setState() here!
-	  this.state = { play: this.props.play,
-					 update: false};
-	}
-	
-	componentDidMount() {
-		
-		// this.front_texture = new THREE.TextureLoader().load("https://i.imgur.com/5FTxFXe.jpg")
-		this.front_texture = new THREE.TextureLoader().load(advent_background)
-		this.back_texture = new THREE.TextureLoader().load(advent_background_rear)
-		this.side_texture_left = new THREE.TextureLoader().load(advent_side_left)
-		this.side_texture_right = new THREE.TextureLoader().load(advent_side_right)
-		this.side_texture_top = new THREE.TextureLoader().load(advent_side_top)
-		this.side_texture_bottom = new THREE.TextureLoader().load(advent_side_bottom)
-		this.rear_texture = new THREE.TextureLoader().load(cardboard_rear)
-		
-		this.token_textures = []
-		this.token_textures.push(new THREE.TextureLoader().load(token_day1))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day2))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day3))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day4))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day5))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day6))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day7))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day8))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day9))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day10))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day11))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day12))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day13))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day14))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day15))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day16))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day17))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day18))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day19))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day20))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day21))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day22))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day23))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day24))
-		this.token_textures.push(new THREE.TextureLoader().load(token_day25))
-		// this.token_texture = new THREE.TextureLoader().load(token_envelope)
-		// this.front_texture.needsUpdate = true;
-		
-		this.confetti_group = []
-		
-		var door_initial = this.props.readCookie()
-		// console.log(door_initial)
-		
-		this.open_year = 2020		
-		
-		this.doorStates = []
-		for (var k = 0; k < 25; k++) {
+	useImperativeHandle(ref, () => ({
+		resetDoors() {
+			if (resetDoorsRef.current) resetDoorsRef.current();
+		}
+	}));
+
+	useEffect(() => {
+		const canvas = canvasRef.current;
+
+		const front_texture = new THREE.TextureLoader().load(advent_background);
+		const back_texture = new THREE.TextureLoader().load(advent_background_rear);
+		const side_texture_left = new THREE.TextureLoader().load(advent_side_left);
+		const side_texture_right = new THREE.TextureLoader().load(advent_side_right);
+		const side_texture_top = new THREE.TextureLoader().load(advent_side_top);
+		const side_texture_bottom = new THREE.TextureLoader().load(advent_side_bottom);
+		const rear_texture = new THREE.TextureLoader().load(cardboard_rear);
+
+		const token_textures = [
+			token_day1, token_day2, token_day3, token_day4, token_day5,
+			token_day6, token_day7, token_day8, token_day9, token_day10,
+			token_day11, token_day12, token_day13, token_day14, token_day15,
+			token_day16, token_day17, token_day18, token_day19, token_day20,
+			token_day21, token_day22, token_day23, token_day24, token_day25,
+		].map(src => new THREE.TextureLoader().load(src));
+
+		const confetti_group = [];
+
+		const door_initial = readCookie();
+		const open_year = 2020;
+
+		const doorStates = [];
+		for (let k = 0; k < 25; k++) {
 			if (!door_initial[k]) {
-				this.doorStates.push(
-					{
-						open: false,
-						isMoving: false,
-						panelSound: [true, true, true, true, true],
-						masterValue: 0,
-						open_date: `${this.open_year}/12/${k+1}`
-					}
-				)
+				doorStates.push({
+					open: false,
+					isMoving: false,
+					panelSound: [true, true, true, true, true],
+					masterValue: 0,
+					open_date: `${open_year}/12/${k + 1}`
+				});
 			} else {
-				this.doorStates.push(
-					{
-						open: true,
-						isMoving: false,
-						panelSound: [false, false, false, false, false],
-						masterValue: 1,
-						open_date: `${this.open_year}/12/${k+1}`
-					}
-				)
+				doorStates.push({
+					open: true,
+					isMoving: false,
+					panelSound: [false, false, false, false, false],
+					masterValue: 1,
+					open_date: `${open_year}/12/${k + 1}`
+				});
 			}
 		}
-		
-		const updateCookie = () => {
-			var array = []
-			for (var k = 0; k < 25; k++) {
-				array.push(this.doorStates[k].open)
-			}
-			this.props.updateCookie(array)
-		}
-		
-		const loadSound = (src) => {
-			var sound = document.createElement("audio");
-			sound.src = src
-			sound.setAttribute("preload", "auto");
-			// sound.setAttribute("controls", "none");
-			sound.style.display = "none";
-			document.body.appendChild(sound);
-			return sound
-			
-			// var snd1  = new Audio();
-			// var src1  = document.createElement("source");
-			// src1.type = "audio/mpeg";
-			// src1.src  = src;
-			// snd1.appendChild(src1);
-			
-			// return snd1
-			
-			// var sound = new Howl({
-			  // src: [src]
-			// });
-			// return sound
-		}
-		
-		this.cardboardSound1 = loadSound(sound1)
-		this.cardboardSound2 = loadSound(sound2)
-		this.cardboardSound3 = loadSound(sound3)
-		this.cardboardSound4 = loadSound(sound4)
-		this.cardboardSound5 = loadSound(sound5)
-		
-		this.cheerSound = loadSound(sound_cheer)
-		
-		// console.log(this.cardboardSound1)
-		
-		
-		const canvas = this.canvas
-		// const renderer = new THREE.WebGLRenderer({canvas});
-		const renderer = new THREE.WebGLRenderer({canvas, alpha: true});
-		renderer.autoClearColor = false;
-		renderer.setSize( window.innerWidth, window.innerHeight );
-		document.body.appendChild( renderer.domElement );
 
+		const cookieUpdate = () => {
+			const array = doorStates.map(d => d.open);
+			updateCookieRef.current(array);
+		};
+
+		const loadSound = (src) => {
+			const sound = document.createElement("audio");
+			sound.src = src;
+			sound.setAttribute("preload", "auto");
+			sound.style.display = "none";
+			sound.volume = 0.1;
+			document.body.appendChild(sound);
+			return sound;
+		};
+
+		const cardboardSound1 = loadSound(sound1);
+		const cardboardSound2 = loadSound(sound2);
+		const cardboardSound3 = loadSound(sound3);
+		const cardboardSound4 = loadSound(sound4);
+		const cardboardSound5 = loadSound(sound5);
+		const cheerSound = loadSound(sound_cheer);
+
+		const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+		renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+		renderer.autoClearColor = false;
+		renderer.setSize(window.innerWidth, window.innerHeight);
 
 		const scene = new THREE.Scene();
-		const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
-		const controls = new OrbitControls( camera, renderer.domElement );
+		const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+		const controls = new OrbitControls(camera, renderer.domElement);
 		controls.minDistance = 1;
 		controls.maxDistance = 20;
 		controls.keys = {
-			  LEFT: 37, //left arrow
-			  UP: 38, // up arrow
-			  RIGHT: 39, // right arrow
-			  BOTTOM: 40 // down arrow
-			};
-		controls.minPolarAngle = Math.PI/4; // radians
-		controls.maxPolarAngle = 3*Math.PI/4; // radians
+			LEFT: 'ArrowLeft',
+			UP: 'ArrowUp',
+			RIGHT: 'ArrowRight',
+			BOTTOM: 'ArrowDown'
+		};
+		controls.minPolarAngle = Math.PI / 4;
+		controls.maxPolarAngle = 3 * Math.PI / 4;
+		controls.minAzimuthAngle = -Math.PI / 4;
+		controls.maxAzimuthAngle = Math.PI / 4;
 
-		controls.minAzimuthAngle = - Math.PI/4; // radians
-		controls.maxAzimuthAngle = Math.PI/4; // radians
-
-		var minPan = new THREE.Vector3( - 7, - 10, 0 );
-		var maxPan = new THREE.Vector3( 7, 10, 0 );
-
-		controls.addEventListener("change", function() {
-			var v = new THREE.Vector3().copy(controls.target);
+		const minPan = new THREE.Vector3(-7, -10, 0);
+		const maxPan = new THREE.Vector3(7, 10, 0);
+		controls.addEventListener("change", function () {
+			const v = new THREE.Vector3().copy(controls.target);
 			controls.target.clamp(minPan, maxPan);
 			v.sub(controls.target);
 			camera.position.sub(v);
-		})
+		});
 
+		const frontPanel = createAdventFrontPanel(front_texture);
+		scene.add(frontPanel);
 
+		scene.add(createSidePanelLeft(side_texture_left));
+		scene.add(createSidePanelLeft(false));
+		scene.add(createSidePanelRight(side_texture_right));
+		scene.add(createSidePanelRight(false));
+		scene.add(createSidePanelTop(side_texture_top));
+		scene.add(createSidePanelTop(false));
+		scene.add(createSidePanelBottom(side_texture_bottom));
+		scene.add(createSidePanelBottom(false));
+		scene.add(createBackPanel(rear_texture));
 
-		// const geometry = new THREE.PlaneGeometry( 13, 22, 1, 1 );
-		const frontPanel = createAdventFrontPanel(this.front_texture)
-		scene.add( frontPanel )
-		
-		const sidePanelLeft = createSidePanelLeft(this.side_texture_left)
-		const sidePanelLeft_inner = createSidePanelLeft(false)
-		scene.add( sidePanelLeft )
-		scene.add( sidePanelLeft_inner )
-		
-		const sidePanelRight = createSidePanelRight(this.side_texture_right)
-		const sidePanelRight_inner = createSidePanelRight(false)
-		scene.add( sidePanelRight )
-		scene.add( sidePanelRight_inner )
-		
-		const sidePanelTop = createSidePanelTop(this.side_texture_top)
-		const sidePanelTop_inner = createSidePanelTop(false)
-		scene.add( sidePanelTop )
-		scene.add( sidePanelTop_inner )
-		
-		const sidePanelBottom = createSidePanelBottom(this.side_texture_bottom)
-		const sidePanelBottom_inner = createSidePanelBottom(false)
-		scene.add( sidePanelBottom )
-		scene.add( sidePanelBottom_inner )
-		
-		const rearPanel = createBackPanel(this.rear_texture)
-		scene.add( rearPanel )
-		
-		this.doorArrays = []
-		this.doorsAndOutlineArray = []
-		this.doorArrayFront = []
-		this.doorArrayBack = []
-		this.doorPositions = []
-		this.doorTokens = []
-		this.tokenTweens = []
-		
-		for (var i = 0; i < 6; i++) {
-			for (var j = 0; j < 4; j++) {
-				var door = createDoor(i, j, this.front_texture, this.back_texture)
-				// console.log(door[0])
-				door[0].door_id = 4*i + j
-				door[1].door_id = 4*i + j
-				scene.add( door[0] )
-				this.doorArrayFront.push( scene.children[scene.children.length-1] )
-				this.doorArrays.push( scene.children[scene.children.length-1] )
-				this.doorsAndOutlineArray.push( scene.children[scene.children.length-1] )
-				const helper = new THREE.SkeletonHelper( door[0] );
-				scene.add( helper )
-				
-				scene.add( door[1] )
-				this.doorArrayBack.push( scene.children[scene.children.length-1] )
-				this.doorArrays.push( scene.children[scene.children.length-1] )
-				this.doorsAndOutlineArray.push( scene.children[scene.children.length-1] )
-				
-				this.doorPositions.push( door[2] )
-				
-				var door_outline = createDoorOutline(i, j, this.front_texture)
-				door_outline[0].door_id = 4*i + j
-				scene.add( door_outline[0] )
-				this.doorsAndOutlineArray.push( scene.children[scene.children.length-1] )
-				
-				scene.add( door_outline[1] )
-				
-				var token_mesh = createInsideToken(door[2][0], door[2][1], this.token_textures[4*i + j])
-				scene.add(token_mesh)
-				this.doorTokens.push( scene.children[scene.children.length-1] )
-				token_mesh.door_id = 4*i + j
-				
-				this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
-				  .to({ y: door[2][1]+0.05 }, 500)
-				  .easing(TWEEN.Easing.Back.In)
-				)
-				this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
-				  .to({ y: door[2][1]+0.13 }, 500)
-				  .easing(TWEEN.Easing.Cubic.Out)
-				)
-				this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
-				  .to({ y: door[2][1]-0.1 }, 2000)
-				  .easing(TWEEN.Easing.Elastic.Out)
-				)
-				
-				this.tokenTweens[this.tokenTweens.length-3].chain(this.tokenTweens[this.tokenTweens.length-2])
-				this.tokenTweens[this.tokenTweens.length-2].chain(this.tokenTweens[this.tokenTweens.length-1])
-				this.tokenTweens[this.tokenTweens.length-1].chain(this.tokenTweens[this.tokenTweens.length-3])
-				
-				this.tokenTweens[this.tokenTweens.length-3].start()
-				
+		const doorArrays = [];
+		const doorsAndOutlineArray = [];
+		const doorArrayFront = [];
+		const doorArrayBack = [];
+		const doorPositions = [];
+		const doorTokens = [];
+		const tokenTweens = [];
+
+		const addDoor = (i, j, door_id) => {
+			const door = createDoor(i, j, front_texture, back_texture);
+			door[0].door_id = door_id;
+			door[1].door_id = door_id;
+
+			scene.add(door[0]);
+			const frontMesh = scene.children[scene.children.length - 1];
+			doorArrayFront.push(frontMesh);
+			doorArrays.push(frontMesh);
+			doorsAndOutlineArray.push(frontMesh);
+			scene.add(new THREE.SkeletonHelper(door[0]));
+
+			scene.add(door[1]);
+			const backMesh = scene.children[scene.children.length - 1];
+			doorArrayBack.push(backMesh);
+			doorArrays.push(backMesh);
+			doorsAndOutlineArray.push(backMesh);
+
+			doorPositions.push(door[2]);
+
+			const door_outline = createDoorOutline(i, j, front_texture);
+			door_outline[0].door_id = door_id;
+			scene.add(door_outline[0]);
+			doorsAndOutlineArray.push(scene.children[scene.children.length - 1]);
+			scene.add(door_outline[1]);
+
+			const token_mesh = createInsideToken(door[2][0], door[2][1], token_textures[door_id]);
+			scene.add(token_mesh);
+			doorTokens.push(scene.children[scene.children.length - 1]);
+			token_mesh.door_id = door_id;
+
+			const t0 = new TWEEN.Tween(token_mesh.position).to({ y: door[2][1] + 0.05 }, 500).easing(TWEEN.Easing.Back.In);
+			const t1 = new TWEEN.Tween(token_mesh.position).to({ y: door[2][1] + 0.13 }, 500).easing(TWEEN.Easing.Cubic.Out);
+			const t2 = new TWEEN.Tween(token_mesh.position).to({ y: door[2][1] - 0.1 }, 2000).easing(TWEEN.Easing.Elastic.Out);
+			t0.chain(t1);
+			t1.chain(t2);
+			t2.chain(t0);
+			t0.start();
+			tokenTweens.push(t0, t1, t2);
+		};
+
+		for (let i = 0; i < 6; i++) {
+			for (let j = 0; j < 4; j++) {
+				addDoor(i, j, 4 * i + j);
 			}
 		}
-		
-		i = 6
-		j = 2
-		door = createDoor(i, j, this.front_texture, this.back_texture)
-		door[0].door_id = 24
-		door[1].door_id = 24
-		scene.add( door[0] )
-		this.doorArrayFront.push( scene.children[scene.children.length-1] )
-		this.doorArrays.push( scene.children[scene.children.length-1] )
-		this.doorsAndOutlineArray.push( scene.children[scene.children.length-1] )
-		const helper = new THREE.SkeletonHelper( door[0] );
-		scene.add( helper )
-		
-		scene.add( door[1] )
-		this.doorArrayBack.push( scene.children[scene.children.length-1] )
-		this.doorArrays.push( scene.children[scene.children.length-1] )
-		this.doorsAndOutlineArray.push( scene.children[scene.children.length-1] )
-		
-		this.doorPositions.push( door[2] )
-		
-		door_outline = createDoorOutline(i, j, this.front_texture)
-		door_outline[0].door_id = 24
-		scene.add( door_outline[0] )
-		this.doorsAndOutlineArray.push( scene.children[scene.children.length-1] )
-		
-		scene.add( door_outline[1] )
-		
-		token_mesh = createInsideToken(door[2][0], door[2][1], this.token_textures[24])
-		scene.add(token_mesh)
-		this.doorTokens.push( scene.children[scene.children.length-1] )
-		token_mesh.door_id = 24
-		
-		this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
-		  .to({ y: door[2][1]+0.05 }, 500)
-		  .easing(TWEEN.Easing.Back.In)
-		)
-		this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
-		  .to({ y: door[2][1]+0.13 }, 500)
-		  .easing(TWEEN.Easing.Cubic.Out)
-		)
-		this.tokenTweens.push(new TWEEN.Tween(token_mesh.position)
-		  .to({ y: door[2][1]-0.1 }, 2000)
-		  .easing(TWEEN.Easing.Elastic.Out)
-		)
-		
-		this.tokenTweens[this.tokenTweens.length-3].chain(this.tokenTweens[this.tokenTweens.length-2])
-		this.tokenTweens[this.tokenTweens.length-2].chain(this.tokenTweens[this.tokenTweens.length-1])
-		this.tokenTweens[this.tokenTweens.length-1].chain(this.tokenTweens[this.tokenTweens.length-3])
-		
-		this.tokenTweens[this.tokenTweens.length-3].start()
-		
-		
-		var testDragGeom = new THREE.Geometry();
-		testDragGeom.vertices.push(new THREE.Vector3(-100, -100, 0))
-		testDragGeom.vertices.push(new THREE.Vector3(100, -100, 0))
-		testDragGeom.vertices.push(new THREE.Vector3(100, 100, 0))
-		testDragGeom.vertices.push(new THREE.Vector3(-100, 100, 0))
-		
-		testDragGeom.faces.push(new THREE.Face3( 0, 3, 2 ))
-		testDragGeom.faces.push(new THREE.Face3( 0, 2, 1 ))
-		
-		const testDragMat = new THREE.MeshBasicMaterial( { color: 0xffffff, visible: false, wireframe: true, side: THREE.DoubleSide } );
-		
-		const testDragMesh = new THREE.Mesh( testDragGeom, testDragMat )
-		scene.add( testDragMesh )
-		this.testDragPanel = scene.children[scene.children.length-1]
-		
-		// var testDragGeomView = new THREE.Geometry();
-		// testDragGeomView.vertices.push(new THREE.Vector3(-0.65, 0, 0.01))
-		// testDragGeomView.vertices.push(new THREE.Vector3(2.4, 0, 0.01))
-		// testDragGeomView.vertices.push(new THREE.Vector3(2.4, 1, 0.01))
-		// testDragGeomView.vertices.push(new THREE.Vector3(-0.65, 1, 0.01))
-		
-		// testDragGeomView.faces.push(new THREE.Face3( 0, 3, 2 ))
-		// testDragGeomView.faces.push(new THREE.Face3( 0, 2, 1 ))
-		
-		// const testDragMatView = new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: true, side: THREE.DoubleSide } );
-		
-		// const testDragMeshView = new THREE.Mesh( testDragGeomView, testDragMatView )
-		// scene.add( testDragMeshView )
-		
-		// console.log(camera)
+		addDoor(6, 2, 24);
+
+		const testDragGeom = new THREE.PlaneGeometry(200, 200);
+		const testDragMat = new THREE.MeshBasicMaterial({ visible: false, side: THREE.DoubleSide });
+		const testDragMesh = new THREE.Mesh(testDragGeom, testDragMat);
+		scene.add(testDragMesh);
+		const testDragPanel = scene.children[scene.children.length - 1];
 
 		camera.position.z = 20;
 		controls.update();
 
-		// var snow = snowEffectParticles()
 		scene.add(snowEffectParticles);
-
 
 		const onResize = () => {
 			const width = window.innerWidth;
@@ -396,498 +267,351 @@ class Calendar3D extends React.Component {
 			renderer.setSize(width, height);
 			camera.aspect = width / height;
 			camera.updateProjectionMatrix();
-		}
+		};
 		window.addEventListener('resize', onResize);
-		
-		
+
 		const raycaster = new THREE.Raycaster();
 
-		const checkMouseIntersection = (event) => {
-			
-			if (camera.position.z > 5.5) {return}
-			// console.log(event)
-			var mouse = new THREE.Vector2();
-			if (event.type === "mousedown") {
-				
-				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-			} else if (event.type === "touchstart") {
-				mouse.x = ( event.touches[0].clientX / window.innerWidth ) * 2 - 1;
-				mouse.y = - ( event.touches[0].clientY  / window.innerHeight ) * 2 + 1;
-					
-			}
-			
-			// console.log(mouse)
-			
-			var intersects
-			this.currentDoor = null
-			this.currentDoor_initialx = null
-			this.currentDoor_initialMasterValue = null
-			this.anyDoorMoving = false
-			// update the picking ray with the camera and mouse position
-			raycaster.setFromCamera( mouse, camera );
-			// scene.add(new THREE.ArrowHelper(raycaster.ray.direction, raycaster.ray.origin, 300, 0x00ff00) );
-			// calculate objects intersecting the picking ray
-			if (this.doorArrayFront) {
-				intersects = raycaster.intersectObjects( this.doorArrays, true );
-				// console.log(intersects)
-				for (var i = 0; i < intersects.length; i++) {
-					// if (getTabFaceIndexArray().includes(intersects[i].faceIndex)) {
-						// console.log(intersects)
-						// console.log(intersects[0].object.door_id)
-						var door_id = intersects[i].object.door_id
-						if (!this.anyDoorMoving) {
-						
-						// console.log(this.doorState)
-							var initialDoorMasterValue = this.doorStates[door_id].masterValue
-							if (this.testDragPanel) {
-								var drag_intersect = raycaster.intersectObjects( [this.testDragPanel] )
-								if (drag_intersect.length > 0) {
-									
-									controls.enableRotate = false;
-									
-									// console.log('initial')
-									
-									// console.log(drag_intersect[0].point.x)
-									
-									this.currentDoor = door_id
-									this.currentDoor_initialx = drag_intersect[0].point.x
-									this.currentDoor_initialMasterValue = initialDoorMasterValue
-										
-								
-									if (event.type === "mousedown") {
-										this.canvas.addEventListener( 'mousemove', openDoor, false );
-										this.canvas.addEventListener( 'mouseup', endOpenDoor, false );
-									} else if (event.type === "touchstart") {
-										this.canvas.addEventListener( 'touchmove', openDoor, false );
-										this.canvas.addEventListener( 'touchend', endOpenDoor, false );
-									}
-								}
-							}
-							break
-						}
-					// }
-					
-				}
-			}
-			
-			// if (this.testDragPanel) {
-				// intersects = raycaster.intersectObjects( [this.testDragPanel] );
-				// if (intersects.length > 0) {
-					// console.log(intersects)
-					// controls.enableRotate = false;
-				// }
-			// }
+		let currentDoor = null;
+		let currentDoor_initialx = null;
+		let currentDoor_initialMasterValue = null;
+		let anyDoorMoving = false;
+		let isMouseDragging = false;
+		let isCameraPosMoving = false;
+		let isCameraRotMoving = false;
 
-		}
-		
-		const endOpenDoor = (event) => {
-			
-			var door = this.currentDoor
-			
-			if (this.doorStates[door].masterValue !== 1 && this.doorStates[door].masterValue !== 0) {
-				var target
-				var time
-				if (this.doorStates[door].masterValue > 0.5) {
-					target = 1
-					time = Math.abs(this.doorStates[door].masterValue - 1) * 2000
-				} else {
-					target = 0
-					time = Math.abs(this.doorStates[door].masterValue - 0) * 2000
-				}
-				
-				// console.log(target)
-				// console.log(time)
-			
-				this.anyDoorMoving = true
-				
-				new TWEEN.Tween( this.doorStates[door] )
-					.to({masterValue: target}, time)
-					.easing(TWEEN.Easing.Sinusoidal.Out)
-					.onUpdate(() => {
-						adjustDoorAngle(door, this.doorStates[door].masterValue)
-					 })
-					.onComplete(() => {
-						this.anyDoorMoving =false
-					})
-					.start()
-					
-			}
-			
-			
-			
-			
-			
-			this.canvas.removeEventListener( 'mousemove', openDoor, false );
-			this.canvas.removeEventListener( 'touchmove', openDoor, false );
-			this.canvas.removeEventListener( 'mouseup', endOpenDoor, false );
-			this.canvas.removeEventListener( 'touchend', endOpenDoor, false );
-		}
-		
-		const openDoor = (event) => {
-			
-			var door = this.currentDoor
-			var initial_x = this.currentDoor_initialx
-			var initial_door = this.currentDoor_initialMasterValue
-			
-			// console.log('here')
-			
-			const DOOR_OPEN_WIDTH = 3.05 // equivalent to door open fraction of 1
-			
-			const DOOR_OPEN_MAX = 1.2
-			
-			const DOOR_OPEN_MIN = 0
-			
-			var mouse = new THREE.Vector2();
-			if (event.type === "mousemove") {
-				if (event.buttons === 0) {endOpenDoor(); return}
-				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
-			} else if (event.type === "touchmove") {
-				mouse.x = ( event.touches[0].clientX / window.innerWidth ) * 2 - 1;
-				mouse.y = - ( event.touches[0].clientY  / window.innerHeight ) * 2 + 1;	
-			}
-			raycaster.setFromCamera( mouse, camera );
-			if (this.testDragPanel) {
-				var drag_intersect = raycaster.intersectObjects( [this.testDragPanel] )
-				if (drag_intersect.length > 0) {
-					var new_x = drag_intersect[0].point.x
-					var masterValue = initial_door + (initial_x-new_x) / DOOR_OPEN_WIDTH
-					// console.log(masterValue)
-					
-					masterValue = Math.min(DOOR_OPEN_MAX, masterValue)
-					masterValue = Math.max(DOOR_OPEN_MIN, masterValue)
-					
-					if (!this.doorStates[door].open && (new Date().getTime() > new Date(this.doorStates[door].open_date).getTime())) {
-						adjustDoorAngle(door, masterValue)
-						this.doorStates[door].masterValue = masterValue
-					} else {
-						if (masterValue > 0.1) {
-							var day_diff =  Math.ceil(( new Date(this.doorStates[door].open_date).getTime() - new Date().getTime() ) / 86400000);
-							this.props.showBadDoor(day_diff)
-							endOpenDoor(null)
-						}
-					}
-				}
-			}
-			
-		}
-		
-		const adjustDoorBoneAngle = (door = 0, bone=0, value=0) => {
-			if (this.doorArrayFront && this.doorArrayBack) {
-				this.doorArrayFront[door].skeleton.bones[bone].rotation.y = -value;
-				// fix by using this with custom raycasting check
-				// https://stackoverflow.com/questions/57332347/three-js-get-updated-vertices-with-skeletal-animations
+		const getSliderValue = (masterValue, sliderObj) => {
+			if (masterValue === 0) { return sliderObj.outcome[0]; }
+			const indexUpper = sliderObj.frac.findIndex(x => x >= masterValue);
+			const indexLower = indexUpper - 1;
+			const fraction = (masterValue - sliderObj.frac[indexLower]) / (sliderObj.frac[indexUpper] - sliderObj.frac[indexLower]);
+			return sliderObj.outcome[indexLower] + fraction * (sliderObj.outcome[indexUpper] - sliderObj.outcome[indexLower]);
+		};
 
+		const adjustDoorBoneAngle = (door, bone, value) => {
+			if (doorArrayFront && doorArrayBack) {
+				doorArrayFront[door].skeleton.bones[bone].rotation.y = -value;
 			}
-		}
-		
+		};
+
 		const adjustDoorAngle = (door, masterValue) => {
-			
-			var valueObj0 = {
-				frac: [0, 0.7, 1, 1.2],
-				outcome: [0, 0, 2, 3]
-			}
+			adjustDoorBoneAngle(door, 0, getSliderValue(masterValue, { frac: [0, 0.7, 1, 1.2], outcome: [0, 0, 2, 3] }));
+			adjustDoorBoneAngle(door, 1, getSliderValue(masterValue, { frac: [0, 0.55, 0.7, 1, 1.2], outcome: [0, 0, 1.1, 0.8, 0] }));
+			adjustDoorBoneAngle(door, 2, getSliderValue(masterValue, { frac: [0, 0.3, 0.55, 0.7, 1, 1.2], outcome: [0, 0, 1.1, 0.5, 0.4, 0] }));
+			adjustDoorBoneAngle(door, 3, getSliderValue(masterValue, { frac: [0, 0.2, 0.3, 0.55, 1, 1.2], outcome: [0, 0, 1.1, 0.3, 0.2, 0] }));
+			adjustDoorBoneAngle(door, 4, getSliderValue(masterValue, { frac: [0, 0.05, 0.2, 0.3, 1, 1.2], outcome: [0, 0, 1.1, 0.3, 0.2, 0] }));
+			adjustDoorBoneAngle(door, 5, getSliderValue(masterValue, { frac: [0, 0.05, 0.4, 0.5, 1, 1.2], outcome: [0, 2, 2, 1.5, 0, 0] }));
 
-			var valueObj1 = {
-				frac: [0, 0.55, 0.7, 1, 1.2],
-				outcome: [0, 0, 1.1, 0.8, 0]
-			}
+			if (masterValue > 0.05 && doorStates[door].panelSound[0]) { cardboardSound1.pause(); cardboardSound1.currentTime = 0; cardboardSound1.play(); doorStates[door].panelSound[0] = false; }
+			if (masterValue > 0.2 && doorStates[door].panelSound[1]) { cardboardSound2.pause(); cardboardSound2.currentTime = 0; cardboardSound2.play(); doorStates[door].panelSound[1] = false; }
+			if (masterValue > 0.3 && doorStates[door].panelSound[2]) { cardboardSound3.pause(); cardboardSound3.currentTime = 0; cardboardSound3.play(); doorStates[door].panelSound[2] = false; }
+			if (masterValue > 0.55 && doorStates[door].panelSound[3]) { cardboardSound4.pause(); cardboardSound4.currentTime = 0; cardboardSound4.play(); doorStates[door].panelSound[3] = false; }
+			if (masterValue > 0.7 && doorStates[door].panelSound[4]) { cardboardSound5.pause(); cardboardSound5.currentTime = 0; cardboardSound5.play(); doorStates[door].panelSound[4] = false; }
 
-			var valueObj2 = {
-				frac: [0, 0.3, 0.55, 0.7, 1, 1.2],
-				outcome: [0, 0, 1.1, 0.5, 0.4, 0]
-			}
+			if (masterValue >= 0.99 && !doorStates[door].open) {
+				cheerSound.pause(); cheerSound.currentTime = 0; cheerSound.play();
+				doorStates[door].open = true;
 
-			var valueObj3 = {
-				frac: [0, 0.2, 0.3, 0.55, 1, 1.2],
-				outcome: [0, 0, 1.1, 0.3, 0.2, 0]
-			}
-
-			var valueObj4 = {
-				frac: [0, 0.05, 0.2, 0.3, 1, 1.2],
-				outcome: [0, 0, 1.1, 0.3, 0.2, 0]
-			}
-
-			var valueObj5 = {
-				frac: [0, 0.05, 0.4, 0.5, 1, 1.2],
-				outcome: [0, 2, 2, 1.5, 0, 0]
-			}
-			
-			adjustDoorBoneAngle(door, 0, getSliderValue(masterValue, valueObj0))
-			adjustDoorBoneAngle(door, 1, getSliderValue(masterValue, valueObj1))
-			adjustDoorBoneAngle(door, 2, getSliderValue(masterValue, valueObj2))
-			adjustDoorBoneAngle(door, 3, getSliderValue(masterValue, valueObj3))
-			adjustDoorBoneAngle(door, 4, getSliderValue(masterValue, valueObj4))
-			adjustDoorBoneAngle(door, 5, getSliderValue(masterValue, valueObj5))
-			
-			
-			if (masterValue > 0.05 && this.doorStates[door].panelSound[0]) {this.cardboardSound1.pause(); this.cardboardSound1.currentTime=0; this.cardboardSound1.play(); this.doorStates[door].panelSound[0] = false}
-			if (masterValue > 0.2 && this.doorStates[door].panelSound[1]) {this.cardboardSound2.pause(); this.cardboardSound2.currentTime=0; this.cardboardSound2.play(); this.doorStates[door].panelSound[1] = false}
-			if (masterValue > 0.3 && this.doorStates[door].panelSound[2]) {this.cardboardSound3.pause(); this.cardboardSound3.currentTime=0; this.cardboardSound3.play(); this.doorStates[door].panelSound[2] = false}
-			if (masterValue > 0.55 && this.doorStates[door].panelSound[3]) {this.cardboardSound4.pause(); this.cardboardSound4.currentTime=0; this.cardboardSound4.play(); this.doorStates[door].panelSound[3] = false}
-			if (masterValue > 0.7 && this.doorStates[door].panelSound[4]) {this.cardboardSound5.pause(); this.cardboardSound5.currentTime=0; this.cardboardSound5.play(); this.doorStates[door].panelSound[4] = false}
-			
-			if (masterValue >= 0.99 && !this.doorStates[door].open) {
-				this.cheerSound.pause(); this.cheerSound.currentTime=0; this.cheerSound.play(); this.doorStates[door].open = true
-				
-				var confetti_r = new ExplosionConfetti(
-					{}, 
-					new THREE.Vector3(this.doorPositions[door][0]+0, this.doorPositions[door][1]+0.2, 0.1),
+				const confetti_r = new ExplosionConfetti(
+					{},
+					new THREE.Vector3(doorPositions[door][0], doorPositions[door][1] + 0.2, 0.5),
 					new THREE.Vector3(0, 0, 0.5)
 				);
-				scene.add(confetti_r)
-				this.confetti_group.push(confetti_r)
-				
-				var confetti_l = new ExplosionConfetti(
-					{}, 
-					new THREE.Vector3(this.doorPositions[door][0]-0, this.doorPositions[door][1]+0.2, 0.1),
+				scene.add(confetti_r);
+				confetti_group.push(confetti_r);
+
+				const confetti_l = new ExplosionConfetti(
+					{},
+					new THREE.Vector3(doorPositions[door][0], doorPositions[door][1] + 0.2, 0.5),
 					new THREE.Vector3(0, 0, -0.5)
 				);
-				scene.add(confetti_l)
-				this.confetti_group.push(confetti_l)
-				
-				updateCookie()
+				scene.add(confetti_l);
+				confetti_group.push(confetti_l);
+
+				cookieUpdate();
 			}
-				
-		}
-		
-		const getSliderValue = (masterValue, sliderObj) => {
-		  if (masterValue === 0) {return sliderObj.outcome[0]}
-		  
-		  var indexUpper = sliderObj.frac.findIndex(x => x >= masterValue)
-		  var indexLower = indexUpper - 1
-		  
-		  var fraction = (masterValue - sliderObj.frac[indexLower]) / (sliderObj.frac[indexUpper] - sliderObj.frac[indexLower])
-		  
-		  var output = sliderObj.outcome[indexLower] + fraction*(sliderObj.outcome[indexUpper] - sliderObj.outcome[indexLower])
-		  
-		  return output
-		  
-		  
-		}
-		
-		for (k = 0; k < 25; k++) { 
-			if (this.doorStates[k].open) {
-				adjustDoorAngle(k, 1)
+		};
+
+		// Set initially open doors
+		for (let k = 0; k < 25; k++) {
+			if (doorStates[k].open) {
+				adjustDoorAngle(k, 1);
 			}
 		}
-		
-		this.resetDoors = () => {
-			for (k = 0; k < 25; k++) { 
-				adjustDoorAngle(k, 0)
-				this.doorStates[k] = {
+
+		resetDoorsRef.current = () => {
+			for (let k = 0; k < 25; k++) {
+				adjustDoorAngle(k, 0);
+				doorStates[k] = {
 					open: false,
 					isMoving: false,
 					panelSound: [true, true, true, true, true],
 					masterValue: 0,
-					open_date: `${this.open_year}/12/${k+1}`
+					open_date: `${open_year}/12/${k + 1}`
+				};
+			}
+			cookieUpdate();
+		};
+
+		const endOpenDoor = () => {
+			const door = currentDoor;
+			if (doorStates[door].masterValue !== 1 && doorStates[door].masterValue !== 0) {
+				const target = doorStates[door].masterValue > 0.5 ? 1 : 0;
+				const time = Math.abs(doorStates[door].masterValue - target) * 2000;
+				anyDoorMoving = true;
+				new TWEEN.Tween(doorStates[door])
+					.to({ masterValue: target }, time)
+					.easing(TWEEN.Easing.Sinusoidal.Out)
+					.onUpdate(() => { adjustDoorAngle(door, doorStates[door].masterValue); })
+					.onComplete(() => { anyDoorMoving = false; })
+					.start();
+			}
+			canvas.removeEventListener('mousemove', openDoor, false);
+			canvas.removeEventListener('touchmove', openDoor, false);
+			canvas.removeEventListener('mouseup', endOpenDoor, false);
+			canvas.removeEventListener('touchend', endOpenDoor, false);
+		};
+
+		const openDoor = (event) => {
+			const door = currentDoor;
+			const initial_x = currentDoor_initialx;
+			const initial_door = currentDoor_initialMasterValue;
+			const DOOR_OPEN_WIDTH = 3.05;
+			const DOOR_OPEN_MAX = 1.2;
+			const DOOR_OPEN_MIN = 0;
+
+			const mouse = new THREE.Vector2();
+			if (event.type === "mousemove") {
+				if (event.buttons === 0) { endOpenDoor(); return; }
+				mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+				mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			} else if (event.type === "touchmove") {
+				mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+				mouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
+			}
+			raycaster.setFromCamera(mouse, camera);
+			const drag_intersect = raycaster.intersectObjects([testDragPanel]);
+			if (drag_intersect.length > 0) {
+				const new_x = drag_intersect[0].point.x;
+				let masterValue = initial_door + (initial_x - new_x) / DOOR_OPEN_WIDTH;
+				masterValue = Math.min(DOOR_OPEN_MAX, Math.max(DOOR_OPEN_MIN, masterValue));
+
+				if (!doorStates[door].open && (new Date().getTime() > new Date(doorStates[door].open_date).getTime())) {
+					adjustDoorAngle(door, masterValue);
+					doorStates[door].masterValue = masterValue;
+				} else {
+					if (masterValue > 0.1) {
+						const day_diff = Math.ceil((new Date(doorStates[door].open_date).getTime() - new Date().getTime()) / 86400000);
+						showBadDoorRef.current(day_diff);
+						endOpenDoor();
+					}
 				}
 			}
-			
-			updateCookie()
-			
-		}
-		
-		this.isMouseDragging = false
-		this.isCameraPosMoving = false
-		this.isCameraRotMoving = false
-		
-		const isDragging = (e) => {
-			if (e.buttons === 0) {
-				stopDragCheck()
-			} else {
-				this.isMouseDragging = true
+		};
+
+		const checkMouseIntersection = (event) => {
+			if (camera.position.z > 5.5) { return; }
+			const mouse = new THREE.Vector2();
+			if (event.type === "mousedown") {
+				mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+				mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			} else if (event.type === "touchstart") {
+				mouse.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
+				mouse.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
 			}
-		}
-		const stopDragCheck = () => {
-			this.canvas.removeEventListener( 'mousemove', isDragging, true );
-			this.canvas.removeEventListener( 'mouseup', stopDragCheck, true );	
-			
-		}
-		const checkForDrag = () => {
-			this.isMouseDragging = false
-			this.canvas.addEventListener( 'mousemove', isDragging, true );
-			this.canvas.addEventListener( 'mouseup', stopDragCheck, true );	
-		}
-		
-		const stopWheelZoom = (e) => {
-			e.preventDefault()
-		}
-		
+
+			currentDoor = null;
+			currentDoor_initialx = null;
+			currentDoor_initialMasterValue = null;
+			anyDoorMoving = false;
+			raycaster.setFromCamera(mouse, camera);
+
+			if (doorArrayFront) {
+				const intersects = raycaster.intersectObjects(doorArrays, true);
+				for (let i = 0; i < intersects.length; i++) {
+					const door_id = intersects[i].object.door_id;
+					if (!anyDoorMoving) {
+						const initialDoorMasterValue = doorStates[door_id].masterValue;
+						const drag_intersect = raycaster.intersectObjects([testDragPanel]);
+						if (drag_intersect.length > 0) {
+							controls.enableRotate = false;
+							currentDoor = door_id;
+							currentDoor_initialx = drag_intersect[0].point.x;
+							currentDoor_initialMasterValue = initialDoorMasterValue;
+
+							if (event.type === "mousedown") {
+								canvas.addEventListener('mousemove', openDoor, false);
+								canvas.addEventListener('mouseup', endOpenDoor, false);
+							} else if (event.type === "touchstart") {
+								canvas.addEventListener('touchmove', openDoor, false);
+								canvas.addEventListener('touchend', endOpenDoor, false);
+							}
+						}
+						break;
+					}
+				}
+			}
+		};
+
+		const stopWheelZoom = (e) => { e.preventDefault(); };
+
 		const moveToDoor = (event) => {
-			
-			var mouse = new THREE.Vector2();
-			mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-			mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;			
-			var raycaster = new THREE.Raycaster();
-			raycaster.setFromCamera( mouse, camera );
-			var intersects = raycaster.intersectObjects( this.doorsAndOutlineArray.concat(this.doorTokens), true )
-			
+			const mouse = new THREE.Vector2();
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			const rc = new THREE.Raycaster();
+			rc.setFromCamera(mouse, camera);
+			const intersects = rc.intersectObjects(doorsAndOutlineArray.concat(doorTokens), true);
+
 			if (intersects.length > 0) {
-				var door_id = intersects[0].object.door_id
-			
-				var target_pos = new THREE.Vector3(this.doorPositions[door_id][0], this.doorPositions[door_id][1], 4.5);
-				var target_controls = new THREE.Vector3(this.doorPositions[door_id][0], this.doorPositions[door_id][1], 0);
-				
-				if (!this.isCameraPosMoving) {
+				const door_id = intersects[0].object.door_id;
+				const target_pos = new THREE.Vector3(doorPositions[door_id][0], doorPositions[door_id][1], 4.5);
+				const target_controls = new THREE.Vector3(doorPositions[door_id][0], doorPositions[door_id][1], 0);
+
+				if (!isCameraPosMoving) {
 					controls.enabled = false;
-					this.isCameraPosMoving = true
-					this.canvas.addEventListener( 'wheel', stopWheelZoom, false );
-					new TWEEN.Tween( camera.position )
+					isCameraPosMoving = true;
+					canvas.addEventListener('wheel', stopWheelZoom, false);
+					new TWEEN.Tween(camera.position)
 						.to({ x: target_pos.x, y: target_pos.y, z: target_pos.z }, 1000)
 						.easing(TWEEN.Easing.Quadratic.In)
-						.onUpdate(() => {
-							controls.update()
-						 })
+						.onUpdate(() => { controls.update(); })
 						.onComplete(() => {
 							controls.enabled = true;
-							controls.update()
-							this.isCameraPosMoving = false
-							this.canvas.removeEventListener( 'wheel', stopWheelZoom, false );
-							
+							controls.update();
+							isCameraPosMoving = false;
+							canvas.removeEventListener('wheel', stopWheelZoom, false);
 						})
-						.start()
+						.start();
 				}
-				
-				if (!this.isCameraRotMoving) {
+
+				if (!isCameraRotMoving) {
 					controls.enabled = false;
-					this.isCameraRotMoving = true
-					this.canvas.addEventListener( 'wheel', stopWheelZoom, false );
-					new TWEEN.Tween( controls.target )
+					isCameraRotMoving = true;
+					canvas.addEventListener('wheel', stopWheelZoom, false);
+					new TWEEN.Tween(controls.target)
 						.to({ x: target_controls.x, y: target_controls.y, z: target_controls.z }, 1000)
 						.easing(TWEEN.Easing.Quadratic.In)
-						.onUpdate(() => {
-							controls.update()
-						 })
+						.onUpdate(() => { controls.update(); })
 						.onComplete(() => {
 							controls.enabled = true;
-							controls.update()
-							this.isCameraRotMoving = false
-							this.canvas.removeEventListener( 'wheel', stopWheelZoom, false );
+							controls.update();
+							isCameraRotMoving = false;
+							canvas.removeEventListener('wheel', stopWheelZoom, false);
 						})
-						.start()
+						.start();
 				}
 			}
+		};
 
-		}
-		
 		const checkContentsIntersect = (event) => {
-			// console.log('here')
-			var mouse = new THREE.Vector2();
-			mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
-			mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;			
-			var raycaster = new THREE.Raycaster();
-			raycaster.setFromCamera( mouse, camera );
-			var intersects = raycaster.intersectObjects( this.doorTokens, true )
+			const mouse = new THREE.Vector2();
+			mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+			mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+			const rc = new THREE.Raycaster();
+			rc.setFromCamera(mouse, camera);
+			const intersects = rc.intersectObjects(doorTokens, true);
 			if (intersects.length > 0) {
-				// console.log('here  2')
-				var door_id = intersects[0].object.door_id
-				// console.log(door_id)
-				if (this.doorStates[door_id].open) {
-					this.props.showContents(door_id)
-					return true
-				} else {
-					return false
+				const door_id = intersects[0].object.door_id;
+				if (doorStates[door_id].open) {
+					showContentsRef.current(door_id);
+					return true;
 				}
-			} else {
-				return false
 			}
-		}
-		
+			return false;
+		};
+
 		const onClick = (e) => {
-			if (this.isMouseDragging) {return}
-			
-			if (this.isMouseDragging) {return}
-			if (camera.position.z <5) {
-				if (checkContentsIntersect(e)) {return}
+			if (isMouseDragging) { return; }
+			if (camera.position.z < 5) {
+				if (checkContentsIntersect(e)) { return; }
 			} else {
-				moveToDoor(e)
+				moveToDoor(e);
 			}
-		}
-		
-		const onDblClick = (e) => {			
-			if (camera.position.z >= 5 || this.isMouseDragging) {return}
-			moveToDoor(e)
-		}
-		
-		
-		
-		
-		this.canvas.addEventListener( 'click', onClick, false)
-		this.canvas.addEventListener( 'dblclick', onDblClick, true)
-		this.canvas.addEventListener( 'mousedown', checkForDrag, false );	
-		this.canvas.addEventListener( 'mousedown', checkMouseIntersection, false );
-		this.canvas.addEventListener( 'mouseup', () => {controls.enableRotate = true}, false);
-		this.canvas.addEventListener( 'touchstart', checkMouseIntersection, false );
-		this.canvas.addEventListener( 'touchend', () => {controls.enableRotate = true}, false );
-		
-		// this.canvas.addEventListener( 'touchstart', (event) => {console.log([event.touches[0].clientX, event.touches[0].clientY]) })
-		// this.canvas.addEventListener( 'mousedown', (event) => {console.log([event.clientX, event.clientY]) })
-	
+		};
+
+		const onDblClick = (e) => {
+			if (camera.position.z >= 5 || isMouseDragging) { return; }
+			moveToDoor(e);
+		};
+
+		const isDragging = (e) => {
+			if (e.buttons === 0) {
+				stopDragCheck();
+			} else {
+				isMouseDragging = true;
+			}
+		};
+		const stopDragCheck = () => {
+			canvas.removeEventListener('mousemove', isDragging, true);
+			canvas.removeEventListener('mouseup', stopDragCheck, true);
+		};
+		const checkForDrag = () => {
+			isMouseDragging = false;
+			canvas.addEventListener('mousemove', isDragging, true);
+			canvas.addEventListener('mouseup', stopDragCheck, true);
+		};
+
+		const enableRotate = () => { controls.enableRotate = true; };
+		const enableTouchRotate = () => { controls.enableRotate = true; };
+
+		canvas.addEventListener('click', onClick, false);
+		canvas.addEventListener('dblclick', onDblClick, true);
+		canvas.addEventListener('mousedown', checkForDrag, false);
+		canvas.addEventListener('mousedown', checkMouseIntersection, false);
+		canvas.addEventListener('mouseup', enableRotate, false);
+		canvas.addEventListener('touchstart', checkMouseIntersection, false);
+		canvas.addEventListener('touchend', enableTouchRotate, false);
 
 		const animate = (timeStamp) => {
-			if (this.props.play) {
-				requestAnimationFrame( this.animate );
+			if (!playRef.current) {
+				frameIdRef.current = null;
+				return;
 			}
-
-			// line.rotation.x += 0.01;
-			// line.rotation.y += 0.01;
-			
+			frameIdRef.current = requestAnimationFrame(animate);
 			controls.update();
-			
-			// console.log(camera.position)
-			
-			updateSnowEffectParticles(snowEffectParticles, timeStamp)
-			
-			// checkMouseIntersection()
-			
-			for (var i = 0; i < this.confetti_group.length; i++) {
-				this.confetti_group[i].update()
+			updateSnowEffectParticles(snowEffectParticles, timeStamp);
+			for (let i = 0; i < confetti_group.length; i++) {
+				confetti_group[i].update();
 			}
-
 			TWEEN.update();
-			renderer.render( scene, camera );
+			renderer.render(scene, camera);
 		};
-		
-		this.scene = scene
-		
-		this.animate = animate
-		
-		
-		// requestAnimationFrame(this.animate);
-		
-		this.setState({update: !this.state.update})
 
-	}
-	
-	// requestAnimationFrame = () => {
-		// if (this.animate) {
-			// requestAnimationFrame(this.animate);
-		// }
-	// }
-	
-	render() {
-		
-		if (this.props.play) {
-			if (this.animate) {
-				requestAnimationFrame( this.animate );
+		animateFnRef.current = animate;
+
+		if (play) {
+			frameIdRef.current = requestAnimationFrame(animate);
+		}
+
+		return () => {
+			if (frameIdRef.current !== null) {
+				cancelAnimationFrame(frameIdRef.current);
+				frameIdRef.current = null;
 			}
-		} 
-		
-		return(
-			<canvas id='c' ref={ref => (this.canvas = ref)}/>
-		)
-	}
-}
+			animateFnRef.current = null;
+			resetDoorsRef.current = null;
 
+			window.removeEventListener('resize', onResize);
+			canvas.removeEventListener('click', onClick, false);
+			canvas.removeEventListener('dblclick', onDblClick, true);
+			canvas.removeEventListener('mousedown', checkForDrag, false);
+			canvas.removeEventListener('mousedown', checkMouseIntersection, false);
+			canvas.removeEventListener('mouseup', enableRotate, false);
+			canvas.removeEventListener('touchstart', checkMouseIntersection, false);
+			canvas.removeEventListener('touchend', enableTouchRotate, false);
 
+			controls.dispose();
+			renderer.dispose();
 
+			[cardboardSound1, cardboardSound2, cardboardSound3, cardboardSound4, cardboardSound5, cheerSound].forEach(s => {
+				if (s.parentNode) s.parentNode.removeChild(s);
+			});
+		};
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
-
-
-
-
-
+	return <canvas id='c' ref={canvasRef} />;
+});
 
 export default Calendar3D;

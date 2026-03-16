@@ -1,4 +1,4 @@
-import haveaniceday from "../images/haveaniceday.gif"
+import haveaniceday from "../assets/images/haveaniceday.gif"
 
 
 const sideBContents = (door_id) => {
@@ -17,7 +17,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "All I Need" 
 								src="https://www.youtube.com/embed/MJpiozQUJvE" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -31,7 +30,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "All I Need  Logic Session" 
 								src="https://www.youtube.com/embed/sRIjprauHgk" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -53,7 +51,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "BOY" 
 								src="https://www.youtube.com/embed/iILJvqrAQ_w" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -72,7 +69,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Ghost" 
 								src="https://www.youtube.com/embed/YlEb3L1PIco" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -95,7 +91,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Berenstein" 
 								src="https://www.youtube.com/embed/_rksTruhAKk" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -117,7 +112,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Pay No Mind" 
 								src="https://www.youtube.com/embed/BC_Ya4cY8RQ" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -137,7 +131,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Nonsense" 
 								src="https://www.youtube.com/embed/5e1DBLXnjeQ" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -150,7 +143,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Pop Culture Mashup" 
 								src="https://www.youtube.com/embed/lTx3G6h2xyA" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -170,7 +162,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Sleeping On My Dreams" 
 								src="https://www.youtube.com/embed/dR4IwtiEbyo" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -183,7 +174,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Moon River" 
 								src="https://www.youtube.com/embed/VPLCk-FTVvw" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -202,7 +192,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "We come together" 
 								src="https://www.youtube.com/embed/7-tNUur2YoU" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -224,7 +213,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Last 7 Letters" 
 								src="https://www.youtube.com/embed/zy5q8WLmGzE" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -244,7 +232,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Money" 
 								src="https://www.youtube.com/embed/lhjk5x54bsE" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -264,7 +251,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Milk and Cereal" 
 								src="https://www.youtube.com/embed/6fOO-N4J6bE" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -284,7 +270,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Butterfly Effect" 
 								src="https://www.youtube.com/embed/8cMhQ_teEoY" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -303,7 +288,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Natural High" 
 								src="https://www.youtube.com/embed/wVkcr1ZEs9Y" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -331,7 +315,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "World Order" 
 								src="https://www.youtube.com/embed/NGdyaDnnrLM" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -349,7 +332,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Haunted" 
 								src="https://www.youtube.com/embed/i_-wXT0zERc" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -369,7 +351,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "All of the People" 
 								src="https://www.youtube.com/embed/_q4P0SjIqoU" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -387,7 +368,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Killer Whales" 
 								src="https://www.youtube.com/embed/gSJtjPi8CcY" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -410,7 +390,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Frantic Aerobics" 
 								src="https://www.youtube.com/embed/X8hiZvxLRHY" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -422,7 +401,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "True Survivor" 
 								src="https://www.youtube.com/embed/ZTidn2dBYbY" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -442,7 +420,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Id Rather Dance With You" 
 								src="https://www.youtube.com/embed/OczRpuGKTfY" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -454,7 +431,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Electric Feel" 
 								src="https://www.youtube.com/embed/MmZexg8sxyk" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -474,7 +450,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Fiona Coyne" 
 								src="https://www.youtube.com/embed/Bw_7UrqzNUg" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -494,7 +469,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Lone Digger" 
 								src="https://www.youtube.com/embed/UbQgXeY_zi4" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -511,7 +485,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Feel A Little Love" 
 								src="https://www.youtube.com/embed/if7lP5l-LfU" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -532,7 +505,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Magic" 
 								src="https://www.youtube.com/embed/tBfE9UPTfg8" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -552,7 +524,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Christmas Comes To Our Place" 
 								src="https://www.youtube.com/embed/_hSFoHvn3HU" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
@@ -576,7 +547,6 @@ const sideBContents = (door_id) => {
 							<iframe 
 								title= "Christmas Time" 
 								src="https://www.youtube.com/embed/I54u4-lPdgg" 
-								frameBorder="0" 
 								allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
 								allowFullScreen />
 						</div>
