@@ -2,6 +2,10 @@
 
 An interactive 3D advent calendar built with React and Three.js. Each of the 25 doors can be opened to reveal a daily music recommendation, and progress is saved between visits using browser cookies.
 
+<div style="text-align: center;">
+    <img width="60%" src="./images/advent_calendar_recording.gif" alt="advent calendar demo">
+</div>
+
 ## Features
 
 - 3D cardboard calendar rendered with Three.js and WebGL
