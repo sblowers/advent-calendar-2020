@@ -2,7 +2,7 @@ import { useState, forwardRef, useImperativeHandle } from 'react';
 
 import Modal from 'react-bootstrap/Modal';
 
-import decor from "../images/modal_decor.png"
+import decor from "../assets/images/modal_decor.png"
 
 const BadDoorModal = forwardRef(function BadDoorModal({ pauseAnimation, playAnimation }, ref) {
 	const [show, setShow] = useState(false);

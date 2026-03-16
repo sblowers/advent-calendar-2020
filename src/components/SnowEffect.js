@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import snowflake from '../images/snowflake.png'
+import snowflake from '../assets/images/snowflake.png'
 
 
 const snowflake_texture = new THREE.TextureLoader().load(snowflake)

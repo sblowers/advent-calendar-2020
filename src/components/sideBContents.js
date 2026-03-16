@@ -1,4 +1,4 @@
-import haveaniceday from "../images/haveaniceday.gif"
+import haveaniceday from "../assets/images/haveaniceday.gif"
 
 
 const sideBContents = (door_id) => {

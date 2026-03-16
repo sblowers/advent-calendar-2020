@@ -5,18 +5,18 @@ import Modal from 'react-bootstrap/Modal';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
-import decor from "../images/modal_decor.png"
+import decor from "../assets/images/modal_decor.png"
 
-import cog from "../images/cog_normal.png"
-import cog_hover from "../images/cog_hover.png"
-import cog_press from "../images/cog_pressed.png"
+import cog from "../assets/images/cog_normal.png"
+import cog_hover from "../assets/images/cog_hover.png"
+import cog_press from "../assets/images/cog_pressed.png"
 
-import instructions1 from "../images/instructions1.png"
-import instructions2 from "../images/instructions2.png"
-import instructions3 from "../images/instructions3.png"
+import instructions1 from "../assets/images/instructions1.png"
+import instructions2 from "../assets/images/instructions2.png"
+import instructions3 from "../assets/images/instructions3.png"
 
-import checkmark from "../images/check_mark.png"
-import crossmark from "../images/cross_mark.png"
+import checkmark from "../assets/images/check_mark.png"
+import crossmark from "../assets/images/cross_mark.png"
 
 function SettingsModal({ pauseAnimation, playAnimation, resetDoors, showContents }) {
 	const [show, setShow] = useState(false);

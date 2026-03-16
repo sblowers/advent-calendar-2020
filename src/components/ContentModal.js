@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 
-import decor from "../images/modal_decor.png"
+import decor from "../assets/images/modal_decor.png"
 
 import titleContents from "./titleContents"
 import sideAContents from "./sideAContents"

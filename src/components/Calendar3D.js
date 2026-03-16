@@ -1,51 +1,56 @@
 import { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
 import * as THREE from 'three';
+
+// Disable Three.js colour management to preserve the original rendering look.
+// In r152+ this defaults to true, which applies sRGB↔linear conversions that
+// make textures appear pale compared to the r122 behaviour.
+THREE.ColorManagement.enabled = false;
 import * as TWEEN from '@tweenjs/tween.js'
 import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {createDoor, createDoorOutline, createAdventFrontPanel, createSidePanelLeft, createSidePanelRight, createSidePanelTop, createSidePanelBottom, createBackPanel, createInsideToken} from './MeshCreation'
 import {snowEffectParticles, updateSnowEffectParticles} from './SnowEffect'
 import ExplosionConfetti from './explosionConfetti'
 
-import advent_background from '../images/advent_background.png'
-import advent_background_rear from '../images/advent_background_rear.png'
-import cardboard_rear from '../images/cardboard_back.jpg'
-import advent_side_left from '../images/advent_side_left.png'
-import advent_side_right from '../images/advent_side_right.png'
-import advent_side_top from '../images/advent_side_top.png'
-import advent_side_bottom from '../images/advent_side_bottom.png'
+import advent_background from '../assets/images/advent_background.png'
+import advent_background_rear from '../assets/images/advent_background_rear.png'
+import cardboard_rear from '../assets/images/cardboard_back.jpg'
+import advent_side_left from '../assets/images/advent_side_left.png'
+import advent_side_right from '../assets/images/advent_side_right.png'
+import advent_side_top from '../assets/images/advent_side_top.png'
+import advent_side_bottom from '../assets/images/advent_side_bottom.png'
 
-import token_day1 from '../images/tokens/day1.png'
-import token_day2 from '../images/tokens/day2.png'
-import token_day3 from '../images/tokens/day3.png'
-import token_day4 from '../images/tokens/day4.png'
-import token_day5 from '../images/tokens/day5.png'
-import token_day6 from '../images/tokens/day6.png'
-import token_day7 from '../images/tokens/day7.png'
-import token_day8 from '../images/tokens/day8.png'
-import token_day9 from '../images/tokens/day9.png'
-import token_day10 from '../images/tokens/day10.png'
-import token_day11 from '../images/tokens/day11.png'
-import token_day12 from '../images/tokens/day12.png'
-import token_day13 from '../images/tokens/day13.png'
-import token_day14 from '../images/tokens/day14.png'
-import token_day15 from '../images/tokens/day15.png'
-import token_day16 from '../images/tokens/day16.png'
-import token_day17 from '../images/tokens/day17.png'
-import token_day18 from '../images/tokens/day18.png'
-import token_day19 from '../images/tokens/day19.png'
-import token_day20 from '../images/tokens/day20.png'
-import token_day21 from '../images/tokens/day21.png'
-import token_day22 from '../images/tokens/day22.png'
-import token_day23 from '../images/tokens/day23.png'
-import token_day24 from '../images/tokens/day24.png'
-import token_day25 from '../images/tokens/day25.png'
+import token_day1 from '../assets/images/tokens/day1.png'
+import token_day2 from '../assets/images/tokens/day2.png'
+import token_day3 from '../assets/images/tokens/day3.png'
+import token_day4 from '../assets/images/tokens/day4.png'
+import token_day5 from '../assets/images/tokens/day5.png'
+import token_day6 from '../assets/images/tokens/day6.png'
+import token_day7 from '../assets/images/tokens/day7.png'
+import token_day8 from '../assets/images/tokens/day8.png'
+import token_day9 from '../assets/images/tokens/day9.png'
+import token_day10 from '../assets/images/tokens/day10.png'
+import token_day11 from '../assets/images/tokens/day11.png'
+import token_day12 from '../assets/images/tokens/day12.png'
+import token_day13 from '../assets/images/tokens/day13.png'
+import token_day14 from '../assets/images/tokens/day14.png'
+import token_day15 from '../assets/images/tokens/day15.png'
+import token_day16 from '../assets/images/tokens/day16.png'
+import token_day17 from '../assets/images/tokens/day17.png'
+import token_day18 from '../assets/images/tokens/day18.png'
+import token_day19 from '../assets/images/tokens/day19.png'
+import token_day20 from '../assets/images/tokens/day20.png'
+import token_day21 from '../assets/images/tokens/day21.png'
+import token_day22 from '../assets/images/tokens/day22.png'
+import token_day23 from '../assets/images/tokens/day23.png'
+import token_day24 from '../assets/images/tokens/day24.png'
+import token_day25 from '../assets/images/tokens/day25.png'
 
-import sound1 from "../sounds/test.mp3"
-import sound2 from "../sounds/test2.mp3"
-import sound3 from "../sounds/test3.mp3"
-import sound4 from "../sounds/test2.mp3"
-import sound5 from "../sounds/test.mp3"
-import sound_cheer from "../sounds/cheering.mp3"
+import sound1 from "../assets/sounds/test.mp3"
+import sound2 from "../assets/sounds/test2.mp3"
+import sound3 from "../assets/sounds/test3.mp3"
+import sound4 from "../assets/sounds/test2.mp3"
+import sound5 from "../assets/sounds/test.mp3"
+import sound_cheer from "../assets/sounds/cheering.mp3"
 
 const Calendar3D = forwardRef(function Calendar3D({ play, readCookie, updateCookie, showBadDoor, showContents }, ref) {
 	const canvasRef = useRef(null);
@@ -146,6 +151,7 @@ const Calendar3D = forwardRef(function Calendar3D({ play, readCookie, updateCook
 		const cheerSound = loadSound(sound_cheer);
 
 		const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+		renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 		renderer.autoClearColor = false;
 		renderer.setSize(window.innerWidth, window.innerHeight);
 

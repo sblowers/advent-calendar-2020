@@ -1,6 +1,6 @@
 
 import { useState, useRef, useCallback } from 'react';
-import wreath from "./images/wreath.png"
+import wreath from "./assets/images/wreath.png"
 
 import Calendar3D from './components/Calendar3D'
 import SettingsModal from './components/SettingsModal'
